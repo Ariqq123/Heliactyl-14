@@ -2,32 +2,26 @@
 
 ![GitHub commit](https://img.shields.io/github/last-commit/Ariqq123/Heliactyl-14) ![GitHub release](https://img.shields.io/github/v/release/heliactyloss/heliactyl)
 
-Heliactyl is a client dashboard for the Pterodactyl Panel. This fork is configured for a production-style deployment behind Nginx + PM2, with responsive sidebar layout fixes and safer config handling.
+Heliactyl is a high-performance, modern client dashboard for the Pterodactyl Panel. It allows users to manage their servers, view resource usage, and earn coins for upgrades. This repository provides a clean, fast, and stable release with an improved responsive UI and secure configuration handling.
 
-## Important Notes
+## Features
 
-- Heliactyl 14 is **not compatible** with `settings.json` from v13 or older.
-- Keep `database.sqlite` if migrating from another v14 instance.
-- This repository now tracks `settings.example.json` (template), not `settings.json` (live secrets).
+- **Clean and responsive UI** built with Tailwind CSS
+- **Full Pterodactyl Integration** for server management
+- **Discord OAuth2** for seamless user authentication
+- **Economy & AFK Systems** for resource rewards
+- **Secure Configuration** with separate tracking for secrets
 
-## Security First
+## Getting Started
 
-Never commit real secrets to Git:
+### Prerequisites
+- Node.js (v14 or higher recommended)
+- Pterodactyl Panel (API key with admin permissions)
+- Discord Application (for OAuth2 and optional bot features)
 
-- Pterodactyl API key
-- Discord OAuth2 client secret
-- Discord bot token
-- website/app secret
-- API private codes
+### Installation
 
-Use:
-
-- `settings.example.json` as a template
-- local `settings.json` for real credentials (already ignored in `.gitignore`)
-
-## Quick Start
-
-1. Clone repository:
+1. Clone the repository:
    ```bash
    git clone https://github.com/Ariqq123/Heliactyl-14.git
    cd Heliactyl-14
@@ -38,43 +32,37 @@ Use:
    npm install
    ```
 
-3. Create runtime config:
+3. Set up your configuration:
    ```bash
    cp settings.example.json settings.json
    ```
+   *Note: `settings.json` is ignored by Git to protect your credentials. Never commit this file.*
 
-4. Edit `settings.json` and configure required fields:
-   - `pterodactyl.domain`
-   - `pterodactyl.key`
-   - `api.client.oauth2.id`
-   - `api.client.oauth2.secret`
-   - `api.client.oauth2.link`
+4. Edit `settings.json` and configure the following required fields:
+   - `pterodactyl.domain` and `pterodactyl.key`
+   - `api.client.oauth2.id` and `api.client.oauth2.secret`
+   - `api.client.oauth2.link` (e.g., `https://your-domain.com`)
    - `website.secret`
 
-5. Start locally:
-   ```bash
-   npm run start
-   ```
+## Production Deployment
 
-## Production Deployment (PM2 + Nginx + SSL)
+We recommend using **PM2** for process management and **Nginx** as a reverse proxy.
 
-### 1) Run with PM2
-
+### 1. Start with PM2
 ```bash
-npm i -g pm2
+npm install -g pm2
 pm2 start app.js --name heliactyl
 pm2 save
-pm2 startup systemd -u root --hp /root
+pm2 startup
 ```
 
-### 2) Nginx Reverse Proxy
-
-Use `dash.mcgg.me` (or your own domain):
+### 2. Nginx Reverse Proxy Setup
+Create a new site configuration in `/etc/nginx/sites-available/heliactyl`:
 
 ```nginx
 server {
     listen 80;
-    server_name dash.mcgg.me;
+    server_name your-domain.com;
 
     location / {
         proxy_pass http://127.0.0.1:3000;
@@ -88,59 +76,40 @@ server {
     }
 }
 ```
-
-Enable and reload:
-
+Enable the site and reload Nginx:
 ```bash
-ln -s /etc/nginx/sites-available/heliactyl /etc/nginx/sites-enabled/heliactyl
+ln -s /etc/nginx/sites-available/heliactyl /etc/nginx/sites-enabled/
 nginx -t
 systemctl reload nginx
 ```
 
-### 3) SSL via Certbot
-
+### 3. SSL Configuration (Certbot)
+Secure your dashboard with Let's Encrypt:
 ```bash
 apt install -y certbot python3-certbot-nginx
-certbot --nginx -d dash.mcgg.me
+certbot --nginx -d your-domain.com
 ```
 
-## Frontend / UI Notes
+## Development
 
-This fork includes dashboard layout refactoring:
-
-- sidebar + content now use proper flex shell
-- sidebar no longer overlaps main content
-- avatar text truncation and overflow handling improved
-- search area sizing and alignment improved
-- desktop layout spacing aligned across dashboard pages
-
-## Development Commands
-
+Run the app locally with hot-reloading (requires `nodemon`):
 ```bash
-npm run start    # nodemon app.js
-npm run build    # tailwind watcher
+npm run start
 ```
 
-If you need one-time CSS rebuild without watch:
-
+Rebuild Tailwind CSS manually if you make UI changes:
 ```bash
-npx tailwindcss -i ./assets/tw.conf -o ./assets/tailwind.css
+npm run build
 ```
 
-## API v2 Endpoints
+## API v2 Documentation
 
-### `/api/v2/userinfo` (GET)
-Query: `id`
+Heliactyl 14 includes a V2 API for programmatic access:
 
-### `/api/v2/setcoins` (POST)
-Body: `id`, `coins`
-
-### `/api/v2/setplan` (POST)
-Body: `id`, `package`
-
-### `/api/v2/setresources` (POST)
-Body: `id`, `ram`, `disk`, `cpu`, `servers`
+- **`GET /api/v2/userinfo`** - Fetch user details (Query: `id`)
+- **`POST /api/v2/setcoins`** - Update coin balance (Body: `id`, `coins`)
+- **`POST /api/v2/setplan`** - Update user plan (Body: `id`, `package`)
+- **`POST /api/v2/setresources`** - Modify server resources (Body: `id`, `ram`, `disk`, `cpu`, `servers`)
 
 ---
-
-If you deploy this publicly, rotate any token that was ever exposed in terminal logs or old commits.
+*Disclaimer: This fork is based on the open-source Heliactyl project.*
