@@ -6,6 +6,7 @@
  * - Subsequent: subtle entrance
  * - Hover: anime.js (cleanly cancellable)
  * - AFK counter pop: anime.js (conditional flow)
+ * - Brand SVG morph: anime.js SVG morphTo (subtle loop)
  * - Respects prefers-reduced-motion (handled in CSS)
  */
 
@@ -25,35 +26,31 @@
   };
 
   onReady(() => {
-    if (reduceMotion) {
-      // CSS handles reduced motion. Just attach interactive anime.js logic.
-      attachInteractive();
-      return;
-    }
+    if (!reduceMotion) {
+      // 1. Sidebar nav: pure CSS via class (stagger via :nth-child)
+      document.querySelectorAll('.nav-link').forEach(el => {
+        el.classList.add(`animate-entrance-${variant}`);
+      });
 
-    // 1. Sidebar nav: pure CSS via class (stagger via :nth-child)
-    document.querySelectorAll('.nav-link').forEach(el => {
-      el.classList.add(`animate-entrance-${variant}`);
-    });
+      // 2. Cards: CSS class + JS-driven stagger delay
+      const cards = document.querySelectorAll(
+        '.card, .bg-white.rounded-3xl, .bg-gray-200.rounded-2xl'
+      );
+      cards.forEach((el, i) => {
+        el.style.animationDelay = `${staggerStart + i * staggerStep}ms`;
+        el.classList.add(`animate-entrance-${variant}`);
+      });
 
-    // 2. Cards: CSS class + JS-driven stagger delay
-    const cards = document.querySelectorAll(
-      '.card, .bg-white.rounded-3xl, .bg-gray-200.rounded-2xl'
-    );
-    cards.forEach((el, i) => {
-      el.style.animationDelay = `${staggerStart + i * staggerStep}ms`;
-      el.classList.add(`animate-entrance-${variant}`);
-    });
+      // 3. Headers: CSS class + stagger delay
+      const headers = document.querySelectorAll('h1, h2, h3');
+      headers.forEach((el, i) => {
+        el.style.animationDelay = `${(firstVisit ? 150 : 20) + i * (firstVisit ? 40 : 12)}ms`;
+        el.classList.add(`animate-entrance-${variant}`);
+      });
 
-    // 3. Headers: CSS class + stagger delay
-    const headers = document.querySelectorAll('h1, h2, h3');
-    headers.forEach((el, i) => {
-      el.style.animationDelay = `${(firstVisit ? 150 : 20) + i * (firstVisit ? 40 : 12)}ms`;
-      el.classList.add(`animate-entrance-${variant}`);
-    });
-
-    if (firstVisit) {
-      sessionStorage.setItem('heliactyl_animated', '1');
+      if (firstVisit) {
+        sessionStorage.setItem('heliactyl_animated', '1');
+      }
     }
 
     attachInteractive();
@@ -63,6 +60,7 @@
    * Interactive animations (anime.js)
    * - Button hover scale
    * - AFK counter pop on text change
+   * - Brand SVG morph loop
    */
   function attachInteractive() {
     if (typeof anime === 'undefined') return;
@@ -72,7 +70,8 @@
         '.nav-link, button:not(.cf-turnstile), a[type="button"]'
       );
       interactiveTargets.forEach(attachHover);
-    }
+
+          }
 
     // AFK Coin Counter pop
     const coinCounter = document.getElementById('arciogainedcoins');
@@ -122,6 +121,27 @@
         duration: 100,
         easing: 'easeOutQuad'
       });
+    });
+  }
+
+  ],
+        duration: 2200,
+        easing: 'easeInOutCubic',
+        complete: () => {
+          idx = (idx + 1) % shapes.length;
+          setTimeout(run, 1600);
+        }
+      });
+    };
+
+    // Tiny intro scale/fade so it feels intentional, not noisy
+    anime({
+      targets: '#brand-morph',
+      opacity: [0, 1],
+      scale: [0.9, 1],
+      duration: 500,
+      easing: 'easeOutQuad',
+      complete: () => setTimeout(run, 1200)
     });
   }
 })();
