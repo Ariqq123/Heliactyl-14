@@ -1,124 +1,146 @@
-# Heliactyl
+# Heliactyl 14
 
-![GitHub commit](https://img.shields.io/github/last-commit/heliactyloss/heliactyl) ![GitHub Release](https://img.shields.io/github/v/release/heliactyloss/heliactyl)
+![GitHub commit](https://img.shields.io/github/last-commit/Ariqq123/Heliactyl-14) ![GitHub release](https://img.shields.io/github/v/release/heliactyloss/heliactyl)
 
-> [!NOTE]
-> This version of Heliactyl 14 is built to be clean, fast and stable. It lacks highly specific features such as Linkvertise and Stripe billing but retains all of the functionality of previous Heliactyl releases (v11, v12, v13).
+Heliactyl is a client dashboard for the Pterodactyl Panel. This fork is configured for a production-style deployment behind Nginx + PM2, with responsive sidebar layout fixes and safer config handling.
 
-> [!WARNING]  
-> Heliactyl 14 is not compatible with `settings.json` files from v13 or earlier. You can keep the same `database.sqlite` though without having any issues.
+## Important Notes
 
-Heliactyl is a high-performance client area for the Pterodactyl Panel. It allows your users to create, edit and delete servers, and also earn coins which can be used to upgrade their servers.
+- Heliactyl 14 is **not compatible** with `settings.json` from v13 or older.
+- Keep `database.sqlite` if migrating from another v14 instance.
+- This repository now tracks `settings.example.json` (template), not `settings.json` (live secrets).
 
-## Get started
+## Security First
 
-You can get started straight away by following these steps:
+Never commit real secrets to Git:
 
-1. Clone the repo: Run `git clone https://github.com/heliactyloss/heliactyl` on your machine
-2. Enter the directory and configure the `settings.json` file - most are optional except the Pterodactyl and OAuth2 settings which **must** be configured
-3. Check everything out and make sure you've configured Heliactyl correctly
-4. Create SSL certificates for your target domain and set up the NGINX reverse proxy
+- Pterodactyl API key
+- Discord OAuth2 client secret
+- Discord bot token
+- website/app secret
+- API private codes
 
-## NGINX Reverse Proxy
+Use:
 
-Here's a proxy config that we recommend, however you are free to change it:
+- `settings.example.json` as a template
+- local `settings.json` for real credentials (already ignored in `.gitignore`)
+
+## Quick Start
+
+1. Clone repository:
+   ```bash
+   git clone https://github.com/Ariqq123/Heliactyl-14.git
+   cd Heliactyl-14
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Create runtime config:
+   ```bash
+   cp settings.example.json settings.json
+   ```
+
+4. Edit `settings.json` and configure required fields:
+   - `pterodactyl.domain`
+   - `pterodactyl.key`
+   - `api.client.oauth2.id`
+   - `api.client.oauth2.secret`
+   - `api.client.oauth2.link`
+   - `website.secret`
+
+5. Start locally:
+   ```bash
+   npm run start
+   ```
+
+## Production Deployment (PM2 + Nginx + SSL)
+
+### 1) Run with PM2
+
+```bash
+npm i -g pm2
+pm2 start app.js --name heliactyl
+pm2 save
+pm2 startup systemd -u root --hp /root
+```
+
+### 2) Nginx Reverse Proxy
+
+Use `dash.mcgg.me` (or your own domain):
 
 ```nginx
 server {
     listen 80;
-    server_name <domain>;
-    return 301 https://$server_name$request_uri;
-}
-
-server {
-    listen 443 ssl http2;
-
-    location /ws {
-      proxy_http_version 1.1;
-      proxy_set_header Upgrade $http_upgrade;
-      proxy_set_header Connection "upgrade";
-      proxy_pass "http://localhost:<port>/ws";
-    }
-
-    server_name <domain>;
-
-    ssl_certificate /etc/letsencrypt/live/<domain>/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/<domain>/privkey.pem;
-    ssl_session_cache shared:SSL:10m;
-    ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2;
-    ssl_ciphers  HIGH:!aNULL:!MD5;
-    ssl_prefer_server_ciphers on;
+    server_name dash.mcgg.me;
 
     location / {
-      proxy_pass http://localhost:<port>/;
-      proxy_buffering off;
-      proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
     }
 }
 ```
 
-## Development Tools
+Enable and reload:
 
-These commands are available:
-```
-npm run start - starts Heliactyl via nodemon
-npm run build - builds TailwindCSS, required for making changes to the UI
-```
-
-## Heliactyl API v2
-
-In v14, we've introduced the next generation of Heliactyl's API. You can see the documentation below:
-
-### /api/v2/userinfo
-
-```
-Method: GET
-Query Parameters:
-  - id (string): The user's ID
-
-Response:
-  - status (string): "success" or an error message
-  - package (object): The user's package details
-  - extra (object): The user's additional resources
-  - userinfo (object): The user's information from the Pterodactyl panel
-  - coins (number | null): The user's coin balance (if coins is enabled)
+```bash
+ln -s /etc/nginx/sites-available/heliactyl /etc/nginx/sites-enabled/heliactyl
+nginx -t
+systemctl reload nginx
 ```
 
-### /api/v2/setcoins
+### 3) SSL via Certbot
 
-```
-Method: POST
-Request Body:
-  - id (string): The user's ID
-  - coins (number): The number of coins to set
-
-Response:
-  - status (string): "success" or an error message
+```bash
+apt install -y certbot python3-certbot-nginx
+certbot --nginx -d dash.mcgg.me
 ```
 
-### /api/v2/setplan
+## Frontend / UI Notes
 
+This fork includes dashboard layout refactoring:
+
+- sidebar + content now use proper flex shell
+- sidebar no longer overlaps main content
+- avatar text truncation and overflow handling improved
+- search area sizing and alignment improved
+- desktop layout spacing aligned across dashboard pages
+
+## Development Commands
+
+```bash
+npm run start    # nodemon app.js
+npm run build    # tailwind watcher
 ```
-Method: POST
-Request Body:
-  - id (string): The user's ID
-  - package (string, optional): The package name (if not provided, the user's package will be removed)
 
-Response:
-  - status (string): "success" or an error message
+If you need one-time CSS rebuild without watch:
+
+```bash
+npx tailwindcss -i ./assets/tw.conf -o ./assets/tailwind.css
 ```
 
-### /api/v2/setresources
+## API v2 Endpoints
 
-```
-Method: POST
-Request Body:
-  - id (string): The user's ID
-  - ram (number): The amount of RAM to set
-  - disk (number): The amount of disk space to set
-  - cpu (number): The amount of CPU to set
-  - servers (number): The number of servers to set
+### `/api/v2/userinfo` (GET)
+Query: `id`
 
-Response:
-  - status (string): "success" or an error message
-```
+### `/api/v2/setcoins` (POST)
+Body: `id`, `coins`
+
+### `/api/v2/setplan` (POST)
+Body: `id`, `package`
+
+### `/api/v2/setresources` (POST)
+Body: `id`, `ram`, `disk`, `cpu`, `servers`
+
+---
+
+If you deploy this publicly, rotate any token that was ever exposed in terminal logs or old commits.
