@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
-<body class="bg-gray-100" style="font-family: 'Inter', sans-serif;">
+<body class="bg-gray-100 flex h-screen overflow-x-hidden" style="font-family: 'Inter', sans-serif;">
   <%
      let ram = 0;
      let disk = 0;
@@ -23,7 +23,7 @@
      }
      %>
   <%- include('../components/navigation') %>
-  <div class="md:pl-48 flex flex-col flex-1 h-screen">
+  <div class="flex-1 min-w-0 flex flex-col h-screen overflow-y-auto">
     <main class="flex-1 pb-32">
       <div class="py-6">
         <% /* Skeleton loader, lasts about 0.3s to let the page content load */ %>
@@ -146,4 +146,5 @@
   </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.js" integrity="sha512-eOUPKZXJTfgptSYQqVilRmxUNYm0XVHwcRHD4mdtCLWf/fC9XWe98IT8H1xzBkLL4Mo9GL0xWMSJtgS5te9rQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  </div>
 </body>

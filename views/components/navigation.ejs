@@ -87,12 +87,12 @@
 </style>
 <div id="spinner" class="spinner mt-2 mr-2"></div>
 <!-- Static sidebar for desktop -->
-<div class="<% if (settings.testing == true) { %>mt-12 <% } %> md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
+<aside class="<% if (settings.testing == true) { %>mt-12 <% } %> flex-shrink-0 w-64 bg-gray-100 border-r border-gray-200 flex md:flex flex-col h-screen z-40 transition-all duration-300">
   <!-- This is so that the testing alert isn't in the way of the sidebar -->
   <!-- Sidebar component, swap this element with another sidebar if you like -->
-  <div class="flex-1 flex flex-col min-h-0 bg-gray-100 border-r border-gray-200">
-    <div class="flex-1 flex flex-col p-4 overflow-y-auto">
-      <nav class="navbar-nav flex-1 px-2 space-y-1">
+  <div class="flex-1 flex flex-col min-h-0">
+    <div class="flex-1 flex flex-col p-6 overflow-y-auto">
+      <nav class="navbar-nav flex-1 px-2 space-y-2">
         <div class="mb-4 flex">
           <span class="text-gray-700 text-lg font-semibold tracking-tight mt-2 mb-2"><%= settings.name %></span>
         </div>
@@ -109,8 +109,8 @@
               <div>
                 <img class="inline-block h-9 w-9 rounded-xl" src="https://cdn.discordapp.com/avatars/<%= userinfo.id %>/<%= userinfo.avatar %>?size=256" alt="">
               </div>
-              <div class="ml-3">
-                <p class="text-sm font-semibold text-gray-800"><%= userinfo.global_name %></p>
+              <div class="ml-3 overflow-hidden">
+                <p class="text-sm font-semibold text-gray-800 truncate" title="<%= userinfo.global_name %>"><%= userinfo.global_name %></p>
                 <p class="text-xs font-medium text-gray-400 group-hover:text-gray-500 transition">
                   <% if (typeof packagename.charAt(0) == 'number') { %>
                   <%= packagename %> plan
@@ -129,8 +129,8 @@
                 <div>
                   <img class="inline-block h-9 w-9 rounded-xl" src="https://cdn.discordapp.com/avatars/<%= userinfo.id %>/<%= userinfo.avatar %>?size=256" alt="">
                 </div>
-                <div class="ml-3">
-                  <p class="text-sm font-semibold text-gray-800"><%= userinfo.global_name %></p>
+                <div class="ml-3 overflow-hidden">
+                  <p class="text-sm font-semibold text-gray-800 truncate" title="<%= userinfo.global_name %>"><%= userinfo.global_name %></p>
                   <p class="text-xs font-medium text-gray-400">
                     <% if (typeof packagename.charAt(0) == 'number') { %>
                     <%= packagename %> plan
@@ -151,7 +151,7 @@
           <% } %>
         </div>
         <div class="pt-4">
-          <div class="relative mt-1 flex items-center">
+          <div class="relative mt-1 flex items-center w-full">
             <input placeholder="Search..." id="miniSearchInput" type="text" name="search" id="search" class="block w-full shadow bg-gray-100 border border-gray-300/70 rounded-2xl pr-12 focus:border-gray-500 transition focus:ring-gray-500 sm:text-sm">
             <div class="absolute inset-y-0 right-0 flex py-1.5 pr-1.5">
               <a id="miniSearchButton" class="cursor-pointer inline-flex items-center rounded-l-lg hover:bg-gray-200 transition rounded-r-xl border border-gray-300 pr-2.5 pl-2 font-sans text-sm font-medium text-gray-400">/</a>
@@ -266,7 +266,7 @@
 
     </div>
   </div>
-</div>
+</aside>
 
 <!-- Search system -->
 <%- include('../components/search') %>

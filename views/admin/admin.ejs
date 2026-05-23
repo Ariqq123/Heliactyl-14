@@ -49,10 +49,9 @@
   </script>
 </head>
 
-<body class="bg-gray-100" style="font-family: 'Inter', sans-serif;">
-  <div>
-    <%- include('../components/navigation') %>
-    <div class="md:pl-48 flex flex-col flex-1 h-screen">
+<body class="bg-gray-100 flex h-screen overflow-x-hidden" style="font-family: 'Inter', sans-serif;">
+  <%- include('../components/navigation') %>
+  <div class="flex-1 min-w-0 flex flex-col h-screen overflow-y-auto">
       <main class="flex-1 pb-32">
         <div class="py-6">
           <% /* Skeleton loader, lasts about 0.3s to let the page content load */ %>
@@ -176,6 +175,5 @@
             </div>
       </main>
       <%- include('../components/footer') %>
-    </div>
   </div>
 </body>
