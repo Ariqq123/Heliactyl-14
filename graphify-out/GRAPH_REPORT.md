@@ -1,16 +1,16 @@
 # Graph Report - heliactyl-main  (2026-05-23)
 
 ## Corpus Check
-- 43 files · ~32,016 words
+- 43 files · ~31,953 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 644 nodes · 696 edges · 35 communities (34 shown, 1 thin omitted)
+- 646 nodes · 698 edges · 29 communities
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 3 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b6ae2dca`
+- Built from commit: `28b7c4e8`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -43,12 +43,6 @@
 - [[_COMMUNITY_Community 26|Community 26]]
 - [[_COMMUNITY_Community 27|Community 27]]
 - [[_COMMUNITY_Community 28|Community 28]]
-- [[_COMMUNITY_Community 29|Community 29]]
-- [[_COMMUNITY_Community 30|Community 30]]
-- [[_COMMUNITY_Community 31|Community 31]]
-- [[_COMMUNITY_Community 32|Community 32]]
-- [[_COMMUNITY_Community 33|Community 33]]
-- [[_COMMUNITY_Community 34|Community 34]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `redirect` - 38 edges
@@ -65,7 +59,7 @@
 ## Surprising Connections (you probably didn't know these)
 - None detected - all connections are within the same source files.
 
-## Communities (35 total, 1 thin omitted)
+## Communities (29 total, 0 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.05
@@ -80,12 +74,12 @@ Cohesion: 0.05
 Nodes (39): KeyvStore, redirect, arcioerror, callback, couponcreationfailed, couponcreationsuccess, couponrevokefailed, couponrevokesuccess (+31 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.07
-Nodes (29): adminjs, cacheaccountinfo, cpu, current, disk, ejs, fetch, four0four() (+21 more)
+Cohesion: 0.06
+Nodes (31): adminjs, cacheaccountinfo, cpu, current, disk, ejs, fetch, four0four() (+23 more)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.22
-Nodes (8): database, name, testing, timezone, version, website, port, secret
+Cohesion: 0.08
+Nodes (24): antivpn, APIKey, note, status, whitelistedIPs, database, name, pterodactyl (+16 more)
 
 ### Community 5 - "Community 5"
 Cohesion: 0.06
@@ -100,8 +94,8 @@ Cohesion: 0.09
 Nodes (23): admin, user, add coins, create coupon, remove account, revoke coupon, set coins, set plan (+15 more)
 
 ### Community 8 - "Community 8"
-Cohesion: 0.11
-Nodes (18): adminjs, checkexist, cpu, disk, fetch, fs, getPteroUser, indexjs (+10 more)
+Cohesion: 0.09
+Nodes (21): adminjs, checkexist, cpu, disk, fetch, fs, getPteroUser, indexjs (+13 more)
 
 ### Community 9 - "Community 9"
 Cohesion: 0.09
@@ -125,7 +119,7 @@ Nodes (22): adminjs, arciotext, check(), ejs, fetch, fs, indexjs, log (+14 more)
 
 ### Community 14 - "Community 14"
 Cohesion: 0.04
-Nodes (48): name, package, name, package, coins, enabled, every, _note (+40 more)
+Nodes (45): name, package, name, package, coins, enabled, every, _note (+37 more)
 
 ### Community 15 - "Community 15"
 Cohesion: 0.15
@@ -172,47 +166,26 @@ Cohesion: 0.22
 Nodes (9): chalk, coinloop, currentlyonpage, ejs, fetch, indexjs, newsettings, settings (+1 more)
 
 ### Community 27 - "Community 27"
-Cohesion: 0.22
+Cohesion: 0.18
 Nodes (6): cards, coinCounter, headers, navItems, observer, otherButtons
 
 ### Community 28 - "Community 28"
-Cohesion: 0.25
-Nodes (8): newusers, overresourcessuspend, regen, server, allow, create, delete, modify
-
-### Community 29 - "Community 29"
-Cohesion: 0.40
-Nodes (5): antivpn, APIKey, note, status, whitelistedIPs
-
-### Community 30 - "Community 30"
-Cohesion: 0.50
-Nodes (4): allServers, fetch, getServersOnPage(), settings
-
-### Community 31 - "Community 31"
-Cohesion: 0.50
-Nodes (4): whitelist, note, status, users
-
-### Community 32 - "Community 32"
-Cohesion: 0.50
-Nodes (3): cacheaccountinfo, fetch, settings
-
-### Community 34 - "Community 34"
-Cohesion: 0.67
-Nodes (3): pterodactyl, domain, key
+Cohesion: 0.18
+Nodes (11): giverole, joinguild, token, bot, _comment, enabled, guildid, roleid (+3 more)
 
 ## Knowledge Gaps
 - **450 isolated node(s):** `name`, `domain`, `key`, `timezone`, `version` (+445 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **1 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `client` connect `Community 1` to `Community 6`, `Community 12`, `Community 15`, `Community 16`, `Community 17`?**
-  _High betweenness centrality (0.184) - this node is a cross-community bridge._
+  _High betweenness centrality (0.183) - this node is a cross-community bridge._
 - **Why does `api` connect `Community 1` to `Community 4`?**
-  _High betweenness centrality (0.164) - this node is a cross-community bridge._
+  _High betweenness centrality (0.163) - this node is a cross-community bridge._
 - **Why does `KeyvStore` connect `Community 2` to `Community 0`?**
-  _High betweenness centrality (0.097) - this node is a cross-community bridge._
+  _High betweenness centrality (0.096) - this node is a cross-community bridge._
 - **What connects `name`, `domain`, `key` to the rest of the system?**
   _450 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**

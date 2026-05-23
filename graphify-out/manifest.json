@@ -145,8 +145,8 @@
     "semantic_hash": ""
   },
   "/root/heliactyl/heliactyl-main/views/components/navigation.ejs": {
-    "mtime": 1779520969.4225771,
-    "ast_hash": "ca82ef64c5dff810195ea21963f1077b",
+    "mtime": 1779522947.378656,
+    "ast_hash": "1001f73dfc7b8206aecd06814d5744be",
     "semantic_hash": ""
   },
   "/root/heliactyl/heliactyl-main/views/components/search.ejs": {
@@ -230,8 +230,8 @@
     "semantic_hash": ""
   },
   "/root/heliactyl/heliactyl-main/assets/animations.js": {
-    "mtime": 1779522607.9852765,
-    "ast_hash": "6364caa0f945537370cd9c70f59fe272",
+    "mtime": 1779522936.5306118,
+    "ast_hash": "328fef5a5c7d34aead5ae1814001cfe3",
     "semantic_hash": ""
   }
 }

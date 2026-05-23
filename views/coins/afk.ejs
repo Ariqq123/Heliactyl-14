@@ -8,6 +8,10 @@
   <!-- Inter font -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <% if (settings.turnstile && settings.turnstile.enabled) { %>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <% } %>
 </head>
 
 <body class="bg-gray-100 flex h-screen overflow-x-hidden" style="font-family: 'Inter', sans-serif;">
@@ -35,12 +39,38 @@
               </div>
             </div>
           </div>
-          <p class="text-gray-500 text-sm">Countdown: <span id="arciotimer"></span> seconds</p>
-          <p class="text-gray-500 text-sm">Earnings: <span id="arciogainedcoins">0</span> coins</p>
-          <p class="text-gray-500 text-sm">Duration: <span id="sessionDuration">-</span></p>
+
+          <% if (settings.turnstile && settings.turnstile.enabled) { %>
+          <div id="afk-gate" class="bg-white rounded-3xl p-6 mb-6 shadow-sm">
+            <p class="text-sm font-medium text-gray-700 mb-3">Please verify you're human to start earning coins.</p>
+            <div class="cf-turnstile" data-sitekey="<%= settings.turnstile.siteKey %>" data-callback="onTurnstileSuccess"></div>
+            <p id="afk-gate-status" class="text-xs text-gray-500 mt-3">Waiting for verification...</p>
+          </div>
+          <div id="afk-stats" class="hidden">
+          <% } else { %>
+          <div id="afk-stats">
+          <% } %>
+            <p class="text-gray-500 text-sm">Countdown: <span id="arciotimer"></span> seconds</p>
+            <p class="text-gray-500 text-sm">Earnings: <span id="arciogainedcoins">0</span> coins</p>
+            <p class="text-gray-500 text-sm">Duration: <span id="sessionDuration">-</span></p>
+          </div>
 
           <script>
+            <% if (settings.turnstile && settings.turnstile.enabled) { %>
+            window.__turnstileToken = null;
+            window.onTurnstileSuccess = function(token) {
+              window.__turnstileToken = token;
+              document.getElementById('afk-gate').classList.add('hidden');
+              document.getElementById('afk-stats').classList.remove('hidden');
+              document.getElementById('afk-gate-status').textContent = 'Verified, connecting...';
+              startAfkSession();
+            };
+            function startAfkSession() {
+              <%- arcioafktext %>
+            }
+            <% } else { %>
             <%- arcioafktext %>
+            <% } %>
           </script>
         </div>
       </div>

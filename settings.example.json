@@ -247,5 +247,11 @@
         "view ip": true
       }
     }
+  },
+  "turnstile": {
+    "note": "Cloudflare Turnstile protects AFK page from bots. Get keys at https://dash.cloudflare.com/?to=/:account/turnstile",
+    "enabled": false,
+    "siteKey": "Your Turnstile site key",
+    "secretKey": "Your Turnstile secret key"
   }
 }

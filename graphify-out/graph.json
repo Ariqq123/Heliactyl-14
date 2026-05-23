@@ -207,7 +207,7 @@
       "source_file": "settings.example.json",
       "source_location": "L39",
       "id": "heliactyl_main_settings_example_client_bot",
-      "community": 14,
+      "community": 28,
       "norm_label": "bot"
     },
     {
@@ -216,7 +216,7 @@
       "source_file": "settings.example.json",
       "source_location": "L40",
       "id": "heliactyl_main_settings_example_bot_token",
-      "community": 14,
+      "community": 28,
       "norm_label": "token"
     },
     {
@@ -225,7 +225,7 @@
       "source_file": "settings.example.json",
       "source_location": "L41",
       "id": "heliactyl_main_settings_example_bot_joinguild",
-      "community": 14,
+      "community": 28,
       "norm_label": "joinguild"
     },
     {
@@ -234,7 +234,7 @@
       "source_file": "settings.example.json",
       "source_location": "L42",
       "id": "heliactyl_main_settings_example_joinguild_comment",
-      "community": 14,
+      "community": 28,
       "norm_label": "_comment"
     },
     {
@@ -243,7 +243,7 @@
       "source_file": "settings.example.json",
       "source_location": "L43",
       "id": "heliactyl_main_settings_example_joinguild_enabled",
-      "community": 14,
+      "community": 28,
       "norm_label": "enabled"
     },
     {
@@ -252,7 +252,7 @@
       "source_file": "settings.example.json",
       "source_location": "L44",
       "id": "heliactyl_main_settings_example_joinguild_guildid",
-      "community": 14,
+      "community": 28,
       "norm_label": "guildid"
     },
     {
@@ -261,7 +261,7 @@
       "source_file": "settings.example.json",
       "source_location": "L48",
       "id": "heliactyl_main_settings_example_bot_giverole",
-      "community": 14,
+      "community": 28,
       "norm_label": "giverole"
     },
     {
@@ -270,7 +270,7 @@
       "source_file": "settings.example.json",
       "source_location": "L49",
       "id": "heliactyl_main_settings_example_giverole_comment",
-      "community": 14,
+      "community": 28,
       "norm_label": "_comment"
     },
     {
@@ -279,7 +279,7 @@
       "source_file": "settings.example.json",
       "source_location": "L50",
       "id": "heliactyl_main_settings_example_giverole_enabled",
-      "community": 14,
+      "community": 28,
       "norm_label": "enabled"
     },
     {
@@ -288,7 +288,7 @@
       "source_file": "settings.example.json",
       "source_location": "L51",
       "id": "heliactyl_main_settings_example_giverole_guildid",
-      "community": 14,
+      "community": 28,
       "norm_label": "guildid"
     },
     {
@@ -297,7 +297,7 @@
       "source_file": "settings.example.json",
       "source_location": "L52",
       "id": "heliactyl_main_settings_example_giverole_roleid",
-      "community": 14,
+      "community": 28,
       "norm_label": "roleid"
     },
     {
@@ -342,7 +342,7 @@
       "source_file": "settings.example.json",
       "source_location": "L60",
       "id": "heliactyl_main_settings_example_client_allow",
-      "community": 28,
+      "community": 14,
       "norm_label": "allow"
     },
     {
@@ -351,7 +351,7 @@
       "source_file": "settings.example.json",
       "source_location": "L61",
       "id": "heliactyl_main_settings_example_allow_newusers",
-      "community": 28,
+      "community": 14,
       "norm_label": "newusers"
     },
     {
@@ -360,7 +360,7 @@
       "source_file": "settings.example.json",
       "source_location": "L62",
       "id": "heliactyl_main_settings_example_allow_regen",
-      "community": 28,
+      "community": 14,
       "norm_label": "regen"
     },
     {
@@ -369,7 +369,7 @@
       "source_file": "settings.example.json",
       "source_location": "L63",
       "id": "heliactyl_main_settings_example_allow_server",
-      "community": 28,
+      "community": 14,
       "norm_label": "server"
     },
     {
@@ -378,7 +378,7 @@
       "source_file": "settings.example.json",
       "source_location": "L64",
       "id": "heliactyl_main_settings_example_server_create",
-      "community": 28,
+      "community": 14,
       "norm_label": "create"
     },
     {
@@ -387,7 +387,7 @@
       "source_file": "settings.example.json",
       "source_location": "L65",
       "id": "heliactyl_main_settings_example_server_modify",
-      "community": 28,
+      "community": 14,
       "norm_label": "modify"
     },
     {
@@ -396,7 +396,7 @@
       "source_file": "settings.example.json",
       "source_location": "L66",
       "id": "heliactyl_main_settings_example_server_delete",
-      "community": 28,
+      "community": 14,
       "norm_label": "delete"
     },
     {
@@ -405,7 +405,7 @@
       "source_file": "settings.example.json",
       "source_location": "L68",
       "id": "heliactyl_main_settings_example_allow_overresourcessuspend",
-      "community": 28,
+      "community": 14,
       "norm_label": "overresourcessuspend"
     },
     {
@@ -2191,37 +2191,19 @@
       "norm_label": "animations.js"
     },
     {
-      "label": "pinFinal()",
+      "label": "onReady()",
       "file_type": "code",
       "source_file": "assets/animations.js",
-      "source_location": "L21",
-      "id": "assets_animations_pinfinal",
+      "source_location": "L19",
+      "id": "assets_animations_onready",
       "community": 27,
-      "norm_label": "pinfinal()"
-    },
-    {
-      "label": "attachHover()",
-      "file_type": "code",
-      "source_file": "assets/animations.js",
-      "source_location": "L27",
-      "id": "assets_animations_attachhover",
-      "community": 27,
-      "norm_label": "attachhover()"
-    },
-    {
-      "label": "navItems",
-      "file_type": "code",
-      "source_file": "assets/animations.js",
-      "source_location": "L63",
-      "id": "assets_animations_navitems",
-      "community": 27,
-      "norm_label": "navitems"
+      "norm_label": "onready()"
     },
     {
       "label": "cards",
       "file_type": "code",
       "source_file": "assets/animations.js",
-      "source_location": "L79",
+      "source_location": "L40",
       "id": "assets_animations_cards",
       "community": 27,
       "norm_label": "cards"
@@ -2230,37 +2212,28 @@
       "label": "headers",
       "file_type": "code",
       "source_file": "assets/animations.js",
-      "source_location": "L93",
+      "source_location": "L49",
       "id": "assets_animations_headers",
       "community": 27,
       "norm_label": "headers"
     },
     {
-      "label": "otherButtons",
+      "label": "attachInteractive()",
       "file_type": "code",
       "source_file": "assets/animations.js",
-      "source_location": "L107",
-      "id": "assets_animations_otherbuttons",
+      "source_location": "L67",
+      "id": "assets_animations_attachinteractive",
       "community": 27,
-      "norm_label": "otherbuttons"
+      "norm_label": "attachinteractive()"
     },
     {
-      "label": "coinCounter",
+      "label": "attachHover()",
       "file_type": "code",
       "source_file": "assets/animations.js",
-      "source_location": "L116",
-      "id": "assets_animations_coincounter",
+      "source_location": "L98",
+      "id": "assets_animations_attachhover",
       "community": 27,
-      "norm_label": "coincounter"
-    },
-    {
-      "label": "observer",
-      "file_type": "code",
-      "source_file": "assets/animations.js",
-      "source_location": "L118",
-      "id": "assets_animations_observer",
-      "community": 27,
-      "norm_label": "observer"
+      "norm_label": "attachhover()"
     },
     {
       "label": "getPteroUser.js",
@@ -2268,7 +2241,7 @@
       "source_file": "misc/getPteroUser.js",
       "source_location": "L1",
       "id": "misc_getpterouser_js",
-      "community": 32,
+      "community": 8,
       "norm_label": "getpterouser.js"
     },
     {
@@ -2277,7 +2250,7 @@
       "source_file": "misc/getPteroUser.js",
       "source_location": "L1",
       "id": "misc_getpterouser_fetch",
-      "community": 32,
+      "community": 8,
       "norm_label": "fetch"
     },
     {
@@ -2286,7 +2259,7 @@
       "source_file": "misc/getPteroUser.js",
       "source_location": "L2",
       "id": "misc_getpterouser_settings",
-      "community": 32,
+      "community": 8,
       "norm_label": "settings"
     },
     {
@@ -2295,7 +2268,7 @@
       "source_file": "misc/getPteroUser.js",
       "source_location": "L21",
       "id": "misc_getpterouser_cacheaccountinfo",
-      "community": 32,
+      "community": 8,
       "norm_label": "cacheaccountinfo"
     },
     {
@@ -2304,7 +2277,7 @@
       "source_file": "misc/log.js",
       "source_location": "L1",
       "id": "misc_log_js",
-      "community": 33,
+      "community": 3,
       "norm_label": "log.js"
     },
     {
@@ -2313,7 +2286,7 @@
       "source_file": "misc/log.js",
       "source_location": "L1",
       "id": "misc_log_settings",
-      "community": 33,
+      "community": 3,
       "norm_label": "settings"
     },
     {
@@ -2322,7 +2295,7 @@
       "source_file": "misc/log.js",
       "source_location": "L2",
       "id": "misc_log_fetch",
-      "community": 33,
+      "community": 3,
       "norm_label": "fetch"
     },
     {
@@ -2331,7 +2304,7 @@
       "source_file": "misc/log.js",
       "source_location": "L37",
       "id": "misc_log_hextodecimal",
-      "community": 33,
+      "community": 3,
       "norm_label": "hextodecimal()"
     },
     {
@@ -2385,7 +2358,7 @@
       "source_file": "misc/getServers.js",
       "source_location": "L1",
       "id": "misc_getservers_js",
-      "community": 30,
+      "community": 4,
       "norm_label": "getservers.js"
     },
     {
@@ -2394,7 +2367,7 @@
       "source_file": "misc/getServers.js",
       "source_location": "L1",
       "id": "misc_getservers_fetch",
-      "community": 30,
+      "community": 4,
       "norm_label": "fetch"
     },
     {
@@ -2403,7 +2376,7 @@
       "source_file": "misc/getServers.js",
       "source_location": "L2",
       "id": "misc_getservers_settings",
-      "community": 30,
+      "community": 4,
       "norm_label": "settings"
     },
     {
@@ -2412,7 +2385,7 @@
       "source_file": "misc/getServers.js",
       "source_location": "L6",
       "id": "misc_getservers_allservers",
-      "community": 30,
+      "community": 4,
       "norm_label": "allservers"
     },
     {
@@ -2421,7 +2394,7 @@
       "source_file": "misc/getServers.js",
       "source_location": "L8",
       "id": "misc_getservers_getserversonpage",
-      "community": 30,
+      "community": 4,
       "norm_label": "getserversonpage()"
     },
     {
@@ -4207,6 +4180,51 @@
       "norm_label": "api v2 documentation"
     },
     {
+      "label": "pinFinal()",
+      "file_type": "code",
+      "source_file": "assets/animations.js",
+      "source_location": "L21",
+      "community": 27,
+      "norm_label": "pinfinal()",
+      "id": "assets_animations_pinfinal"
+    },
+    {
+      "label": "navItems",
+      "file_type": "code",
+      "source_file": "assets/animations.js",
+      "source_location": "L63",
+      "community": 27,
+      "norm_label": "navitems",
+      "id": "assets_animations_navitems"
+    },
+    {
+      "label": "otherButtons",
+      "file_type": "code",
+      "source_file": "assets/animations.js",
+      "source_location": "L107",
+      "community": 27,
+      "norm_label": "otherbuttons",
+      "id": "assets_animations_otherbuttons"
+    },
+    {
+      "label": "coinCounter",
+      "file_type": "code",
+      "source_file": "assets/animations.js",
+      "source_location": "L116",
+      "community": 27,
+      "norm_label": "coincounter",
+      "id": "assets_animations_coincounter"
+    },
+    {
+      "label": "observer",
+      "file_type": "code",
+      "source_file": "assets/animations.js",
+      "source_location": "L118",
+      "community": 27,
+      "norm_label": "observer",
+      "id": "assets_animations_observer"
+    },
+    {
       "label": "settings.json",
       "file_type": "code",
       "source_file": "settings.json",
@@ -4229,7 +4247,7 @@
       "file_type": "code",
       "source_file": "settings.json",
       "source_location": "L3",
-      "community": 34,
+      "community": 4,
       "norm_label": "pterodactyl",
       "id": "heliactyl_main_settings_pterodactyl"
     },
@@ -4238,7 +4256,7 @@
       "file_type": "code",
       "source_file": "settings.json",
       "source_location": "L4",
-      "community": 34,
+      "community": 4,
       "norm_label": "domain",
       "id": "heliactyl_main_settings_pterodactyl_domain"
     },
@@ -4247,7 +4265,7 @@
       "file_type": "code",
       "source_file": "settings.json",
       "source_location": "L5",
-      "community": 34,
+      "community": 4,
       "norm_label": "key",
       "id": "heliactyl_main_settings_pterodactyl_key"
     },
@@ -5435,7 +5453,7 @@
       "file_type": "code",
       "source_file": "settings.json",
       "source_location": "L209",
-      "community": 29,
+      "community": 4,
       "norm_label": "antivpn",
       "id": "heliactyl_main_settings_antivpn"
     },
@@ -5444,7 +5462,7 @@
       "file_type": "code",
       "source_file": "settings.json",
       "source_location": "L210",
-      "community": 29,
+      "community": 4,
       "norm_label": "note",
       "id": "heliactyl_main_settings_antivpn_note"
     },
@@ -5453,7 +5471,7 @@
       "file_type": "code",
       "source_file": "settings.json",
       "source_location": "L211",
-      "community": 29,
+      "community": 4,
       "norm_label": "status",
       "id": "heliactyl_main_settings_antivpn_status"
     },
@@ -5462,7 +5480,7 @@
       "file_type": "code",
       "source_file": "settings.json",
       "source_location": "L212",
-      "community": 29,
+      "community": 4,
       "norm_label": "apikey",
       "id": "heliactyl_main_settings_antivpn_apikey"
     },
@@ -5471,7 +5489,7 @@
       "file_type": "code",
       "source_file": "settings.json",
       "source_location": "L213",
-      "community": 29,
+      "community": 4,
       "norm_label": "whitelistedips",
       "id": "heliactyl_main_settings_antivpn_whitelistedips"
     },
@@ -5480,7 +5498,7 @@
       "file_type": "code",
       "source_file": "settings.json",
       "source_location": "L217",
-      "community": 31,
+      "community": 4,
       "norm_label": "whitelist",
       "id": "heliactyl_main_settings_whitelist"
     },
@@ -5489,7 +5507,7 @@
       "file_type": "code",
       "source_file": "settings.json",
       "source_location": "L218",
-      "community": 31,
+      "community": 4,
       "norm_label": "note",
       "id": "heliactyl_main_settings_whitelist_note"
     },
@@ -5498,7 +5516,7 @@
       "file_type": "code",
       "source_file": "settings.json",
       "source_location": "L219",
-      "community": 31,
+      "community": 4,
       "norm_label": "status",
       "id": "heliactyl_main_settings_whitelist_status"
     },
@@ -5507,7 +5525,7 @@
       "file_type": "code",
       "source_file": "settings.json",
       "source_location": "L220",
-      "community": 31,
+      "community": 4,
       "norm_label": "users",
       "id": "heliactyl_main_settings_whitelist_users"
     },
@@ -5807,9 +5825,9 @@
       "source_file": "settings.example.json",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "settings_example_json",
-      "target": "heliactyl_main_settings_example_name",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_name"
     },
     {
       "relation": "contains",
@@ -5817,9 +5835,9 @@
       "source_file": "settings.example.json",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "settings_example_json",
-      "target": "heliactyl_main_settings_example_pterodactyl",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_pterodactyl"
     },
     {
       "relation": "contains",
@@ -5827,9 +5845,9 @@
       "source_file": "settings.example.json",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "settings_example_json",
-      "target": "heliactyl_main_settings_example_timezone",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_timezone"
     },
     {
       "relation": "contains",
@@ -5837,9 +5855,9 @@
       "source_file": "settings.example.json",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "settings_example_json",
-      "target": "heliactyl_main_settings_example_version",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_version"
     },
     {
       "relation": "contains",
@@ -5847,9 +5865,9 @@
       "source_file": "settings.example.json",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "settings_example_json",
-      "target": "heliactyl_main_settings_example_testing",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_testing"
     },
     {
       "relation": "contains",
@@ -5857,9 +5875,9 @@
       "source_file": "settings.example.json",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "settings_example_json",
-      "target": "heliactyl_main_settings_example_website",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_website"
     },
     {
       "relation": "contains",
@@ -5867,9 +5885,9 @@
       "source_file": "settings.example.json",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "settings_example_json",
-      "target": "heliactyl_main_settings_example_database",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_database"
     },
     {
       "relation": "contains",
@@ -5877,9 +5895,9 @@
       "source_file": "settings.example.json",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "settings_example_json",
-      "target": "heliactyl_main_settings_example_api",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_api"
     },
     {
       "relation": "contains",
@@ -5887,9 +5905,9 @@
       "source_file": "settings.example.json",
       "source_location": "L209",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "settings_example_json",
-      "target": "heliactyl_main_settings_example_antivpn",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_antivpn"
     },
     {
       "relation": "contains",
@@ -5897,9 +5915,9 @@
       "source_file": "settings.example.json",
       "source_location": "L217",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "settings_example_json",
-      "target": "heliactyl_main_settings_example_whitelist",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_whitelist"
     },
     {
       "relation": "contains",
@@ -5907,9 +5925,9 @@
       "source_file": "settings.example.json",
       "source_location": "L224",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "settings_example_json",
-      "target": "heliactyl_main_settings_example_logging",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_logging"
     },
     {
       "relation": "contains",
@@ -5917,9 +5935,9 @@
       "source_file": "settings.example.json",
       "source_location": "L251",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "settings_example_json",
-      "target": "heliactyl_main_settings_example_turnstile",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_turnstile"
     },
     {
       "relation": "contains",
@@ -5927,9 +5945,9 @@
       "source_file": "settings.example.json",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_pterodactyl",
-      "target": "heliactyl_main_settings_example_pterodactyl_domain",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_pterodactyl_domain"
     },
     {
       "relation": "contains",
@@ -5937,9 +5955,9 @@
       "source_file": "settings.example.json",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_pterodactyl",
-      "target": "heliactyl_main_settings_example_pterodactyl_key",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_pterodactyl_key"
     },
     {
       "relation": "contains",
@@ -5947,9 +5965,9 @@
       "source_file": "settings.example.json",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_website",
-      "target": "heliactyl_main_settings_example_website_port",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_website_port"
     },
     {
       "relation": "contains",
@@ -5957,9 +5975,9 @@
       "source_file": "settings.example.json",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_website",
-      "target": "heliactyl_main_settings_example_website_secret",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_website_secret"
     },
     {
       "relation": "contains",
@@ -5967,9 +5985,9 @@
       "source_file": "settings.example.json",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_api",
-      "target": "heliactyl_main_settings_example_api_client",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_api_client"
     },
     {
       "relation": "contains",
@@ -5977,9 +5995,9 @@
       "source_file": "settings.example.json",
       "source_location": "L201",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_api",
-      "target": "heliactyl_main_settings_example_api_afk",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_api_afk"
     },
     {
       "relation": "contains",
@@ -5987,9 +6005,9 @@
       "source_file": "settings.example.json",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_api_client",
-      "target": "heliactyl_main_settings_example_client_accountswitcher",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_client_accountswitcher"
     },
     {
       "relation": "contains",
@@ -5997,9 +6015,9 @@
       "source_file": "settings.example.json",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_api_client",
-      "target": "heliactyl_main_settings_example_client_api",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_client_api"
     },
     {
       "relation": "contains",
@@ -6007,9 +6025,9 @@
       "source_file": "settings.example.json",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_api_client",
-      "target": "heliactyl_main_settings_example_client_j4r",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_client_j4r"
     },
     {
       "relation": "contains",
@@ -6017,9 +6035,9 @@
       "source_file": "settings.example.json",
       "source_location": "L39",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_api_client",
-      "target": "heliactyl_main_settings_example_client_bot",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_client_bot"
     },
     {
       "relation": "contains",
@@ -6027,9 +6045,9 @@
       "source_file": "settings.example.json",
       "source_location": "L55",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_api_client",
-      "target": "heliactyl_main_settings_example_client_passwordgenerator",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_client_passwordgenerator"
     },
     {
       "relation": "contains",
@@ -6037,9 +6055,9 @@
       "source_file": "settings.example.json",
       "source_location": "L60",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_api_client",
-      "target": "heliactyl_main_settings_example_client_allow",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_client_allow"
     },
     {
       "relation": "contains",
@@ -6047,9 +6065,9 @@
       "source_file": "settings.example.json",
       "source_location": "L70",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_api_client",
-      "target": "heliactyl_main_settings_example_client_oauth2",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_client_oauth2"
     },
     {
       "relation": "contains",
@@ -6057,9 +6075,9 @@
       "source_file": "settings.example.json",
       "source_location": "L84",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_api_client",
-      "target": "heliactyl_main_settings_example_client_ratelimits",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_client_ratelimits"
     },
     {
       "relation": "contains",
@@ -6067,9 +6085,9 @@
       "source_file": "settings.example.json",
       "source_location": "L96",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_api_client",
-      "target": "heliactyl_main_settings_example_client_packages",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_client_packages"
     },
     {
       "relation": "contains",
@@ -6077,9 +6095,9 @@
       "source_file": "settings.example.json",
       "source_location": "L114",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_api_client",
-      "target": "heliactyl_main_settings_example_client_locations",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_client_locations"
     },
     {
       "relation": "contains",
@@ -6087,9 +6105,9 @@
       "source_file": "settings.example.json",
       "source_location": "L124",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_api_client",
-      "target": "heliactyl_main_settings_example_client_eggs",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_client_eggs"
     },
     {
       "relation": "contains",
@@ -6097,9 +6115,9 @@
       "source_file": "settings.example.json",
       "source_location": "L178",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_api_client",
-      "target": "heliactyl_main_settings_example_client_coins",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_client_coins"
     },
     {
       "relation": "contains",
@@ -6107,9 +6125,9 @@
       "source_file": "settings.example.json",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_api",
-      "target": "heliactyl_main_settings_example_api_enabled",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_api_enabled"
     },
     {
       "relation": "contains",
@@ -6117,9 +6135,9 @@
       "source_file": "settings.example.json",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_api",
-      "target": "heliactyl_main_settings_example_api_code",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_api_code"
     },
     {
       "relation": "contains",
@@ -6127,9 +6145,9 @@
       "source_file": "settings.example.json",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_j4r",
-      "target": "heliactyl_main_settings_example_j4r_enabled",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_j4r_enabled"
     },
     {
       "relation": "contains",
@@ -6137,9 +6155,9 @@
       "source_file": "settings.example.json",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_j4r",
-      "target": "heliactyl_main_settings_example_j4r_ads",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_j4r_ads"
     },
     {
       "relation": "contains",
@@ -6147,9 +6165,9 @@
       "source_file": "settings.example.json",
       "source_location": "L40",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_bot",
-      "target": "heliactyl_main_settings_example_bot_token",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_bot_token"
     },
     {
       "relation": "contains",
@@ -6157,9 +6175,9 @@
       "source_file": "settings.example.json",
       "source_location": "L41",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_bot",
-      "target": "heliactyl_main_settings_example_bot_joinguild",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_bot_joinguild"
     },
     {
       "relation": "contains",
@@ -6167,9 +6185,9 @@
       "source_file": "settings.example.json",
       "source_location": "L48",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_bot",
-      "target": "heliactyl_main_settings_example_bot_giverole",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_bot_giverole"
     },
     {
       "relation": "contains",
@@ -6177,9 +6195,9 @@
       "source_file": "settings.example.json",
       "source_location": "L42",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_bot_joinguild",
-      "target": "heliactyl_main_settings_example_joinguild_comment",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_joinguild_comment"
     },
     {
       "relation": "contains",
@@ -6187,9 +6205,9 @@
       "source_file": "settings.example.json",
       "source_location": "L43",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_bot_joinguild",
-      "target": "heliactyl_main_settings_example_joinguild_enabled",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_joinguild_enabled"
     },
     {
       "relation": "contains",
@@ -6197,9 +6215,9 @@
       "source_file": "settings.example.json",
       "source_location": "L44",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_bot_joinguild",
-      "target": "heliactyl_main_settings_example_joinguild_guildid",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_joinguild_guildid"
     },
     {
       "relation": "contains",
@@ -6207,9 +6225,9 @@
       "source_file": "settings.example.json",
       "source_location": "L49",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_bot_giverole",
-      "target": "heliactyl_main_settings_example_giverole_comment",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_giverole_comment"
     },
     {
       "relation": "contains",
@@ -6217,9 +6235,9 @@
       "source_file": "settings.example.json",
       "source_location": "L50",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_bot_giverole",
-      "target": "heliactyl_main_settings_example_giverole_enabled",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_giverole_enabled"
     },
     {
       "relation": "contains",
@@ -6227,9 +6245,9 @@
       "source_file": "settings.example.json",
       "source_location": "L51",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_bot_giverole",
-      "target": "heliactyl_main_settings_example_giverole_guildid",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_giverole_guildid"
     },
     {
       "relation": "contains",
@@ -6237,9 +6255,9 @@
       "source_file": "settings.example.json",
       "source_location": "L52",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_bot_giverole",
-      "target": "heliactyl_main_settings_example_giverole_roleid",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_giverole_roleid"
     },
     {
       "relation": "contains",
@@ -6247,9 +6265,9 @@
       "source_file": "settings.example.json",
       "source_location": "L56",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_passwordgenerator",
-      "target": "heliactyl_main_settings_example_passwordgenerator_signup",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_passwordgenerator_signup"
     },
     {
       "relation": "contains",
@@ -6257,9 +6275,9 @@
       "source_file": "settings.example.json",
       "source_location": "L57",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_passwordgenerator",
-      "target": "heliactyl_main_settings_example_passwordgenerator_note",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_passwordgenerator_note"
     },
     {
       "relation": "contains",
@@ -6267,9 +6285,9 @@
       "source_file": "settings.example.json",
       "source_location": "L58",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_passwordgenerator",
-      "target": "heliactyl_main_settings_example_passwordgenerator_length",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_passwordgenerator_length"
     },
     {
       "relation": "contains",
@@ -6277,9 +6295,9 @@
       "source_file": "settings.example.json",
       "source_location": "L61",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_allow",
-      "target": "heliactyl_main_settings_example_allow_newusers",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_allow_newusers"
     },
     {
       "relation": "contains",
@@ -6287,9 +6305,9 @@
       "source_file": "settings.example.json",
       "source_location": "L62",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_allow",
-      "target": "heliactyl_main_settings_example_allow_regen",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_allow_regen"
     },
     {
       "relation": "contains",
@@ -6297,9 +6315,9 @@
       "source_file": "settings.example.json",
       "source_location": "L63",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_allow",
-      "target": "heliactyl_main_settings_example_allow_server",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_allow_server"
     },
     {
       "relation": "contains",
@@ -6307,9 +6325,9 @@
       "source_file": "settings.example.json",
       "source_location": "L68",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_allow",
-      "target": "heliactyl_main_settings_example_allow_overresourcessuspend",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_allow_overresourcessuspend"
     },
     {
       "relation": "contains",
@@ -6317,9 +6335,9 @@
       "source_file": "settings.example.json",
       "source_location": "L64",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_allow_server",
-      "target": "heliactyl_main_settings_example_server_create",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_server_create"
     },
     {
       "relation": "contains",
@@ -6327,9 +6345,9 @@
       "source_file": "settings.example.json",
       "source_location": "L65",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_allow_server",
-      "target": "heliactyl_main_settings_example_server_modify",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_server_modify"
     },
     {
       "relation": "contains",
@@ -6337,9 +6355,9 @@
       "source_file": "settings.example.json",
       "source_location": "L66",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_allow_server",
-      "target": "heliactyl_main_settings_example_server_delete",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_server_delete"
     },
     {
       "relation": "contains",
@@ -6347,9 +6365,9 @@
       "source_file": "settings.example.json",
       "source_location": "L71",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_oauth2",
-      "target": "heliactyl_main_settings_example_oauth2_comment",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_oauth2_comment"
     },
     {
       "relation": "contains",
@@ -6357,9 +6375,9 @@
       "source_file": "settings.example.json",
       "source_location": "L72",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_oauth2",
-      "target": "heliactyl_main_settings_example_oauth2_id",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_oauth2_id"
     },
     {
       "relation": "contains",
@@ -6367,9 +6385,9 @@
       "source_file": "settings.example.json",
       "source_location": "L73",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_oauth2",
-      "target": "heliactyl_main_settings_example_oauth2_secret",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_oauth2_secret"
     },
     {
       "relation": "contains",
@@ -6377,9 +6395,9 @@
       "source_file": "settings.example.json",
       "source_location": "L74",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_oauth2",
-      "target": "heliactyl_main_settings_example_oauth2_link",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_oauth2_link"
     },
     {
       "relation": "contains",
@@ -6387,9 +6405,9 @@
       "source_file": "settings.example.json",
       "source_location": "L75",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_oauth2",
-      "target": "heliactyl_main_settings_example_oauth2_callbackpath",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_oauth2_callbackpath"
     },
     {
       "relation": "contains",
@@ -6397,9 +6415,9 @@
       "source_file": "settings.example.json",
       "source_location": "L76",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_oauth2",
-      "target": "heliactyl_main_settings_example_oauth2_prompt",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_oauth2_prompt"
     },
     {
       "relation": "contains",
@@ -6407,9 +6425,9 @@
       "source_file": "settings.example.json",
       "source_location": "L77",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_oauth2",
-      "target": "heliactyl_main_settings_example_oauth2_ip",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_oauth2_ip"
     },
     {
       "relation": "contains",
@@ -6417,9 +6435,9 @@
       "source_file": "settings.example.json",
       "source_location": "L78",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_oauth2_ip",
-      "target": "heliactyl_main_settings_example_ip_trust_x_forwarded_for",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_ip_trust_x_forwarded_for"
     },
     {
       "relation": "contains",
@@ -6427,9 +6445,9 @@
       "source_file": "settings.example.json",
       "source_location": "L79",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_oauth2_ip",
-      "target": "heliactyl_main_settings_example_ip_block",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_ip_block"
     },
     {
       "relation": "contains",
@@ -6437,9 +6455,9 @@
       "source_file": "settings.example.json",
       "source_location": "L80",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_oauth2_ip",
-      "target": "heliactyl_main_settings_example_ip_duplicate_check",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_ip_duplicate_check"
     },
     {
       "relation": "contains",
@@ -6447,9 +6465,9 @@
       "source_file": "settings.example.json",
       "source_location": "L81",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_oauth2_ip",
-      "target": "heliactyl_main_settings_example_ip_note",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_ip_note"
     },
     {
       "relation": "contains",
@@ -6457,9 +6475,9 @@
       "source_file": "settings.example.json",
       "source_location": "L85",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_ratelimits",
-      "target": "heliactyl_main_settings_example_ratelimits_callback",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_ratelimits_callback"
     },
     {
       "relation": "contains",
@@ -6467,9 +6485,9 @@
       "source_file": "settings.example.json",
       "source_location": "L86",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_ratelimits",
-      "target": "heliactyl_main_settings_example_ratelimits_create",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_ratelimits_create"
     },
     {
       "relation": "contains",
@@ -6477,9 +6495,9 @@
       "source_file": "settings.example.json",
       "source_location": "L87",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_ratelimits",
-      "target": "heliactyl_main_settings_example_ratelimits_delete",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_ratelimits_delete"
     },
     {
       "relation": "contains",
@@ -6487,9 +6505,9 @@
       "source_file": "settings.example.json",
       "source_location": "L88",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_ratelimits",
-      "target": "heliactyl_main_settings_example_ratelimits_modify",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_ratelimits_modify"
     },
     {
       "relation": "contains",
@@ -6497,9 +6515,9 @@
       "source_file": "settings.example.json",
       "source_location": "L89",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_ratelimits",
-      "target": "heliactyl_main_settings_example_ratelimits_updateinfo",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_ratelimits_updateinfo"
     },
     {
       "relation": "contains",
@@ -6507,9 +6525,9 @@
       "source_file": "settings.example.json",
       "source_location": "L90",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_ratelimits",
-      "target": "heliactyl_main_settings_example_ratelimits_setplan",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_ratelimits_setplan"
     },
     {
       "relation": "contains",
@@ -6517,9 +6535,9 @@
       "source_file": "settings.example.json",
       "source_location": "L91",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_ratelimits",
-      "target": "heliactyl_main_settings_example_ratelimits_admin",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_ratelimits_admin"
     },
     {
       "relation": "contains",
@@ -6527,9 +6545,9 @@
       "source_file": "settings.example.json",
       "source_location": "L92",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_ratelimits",
-      "target": "heliactyl_main_settings_example_ratelimits_regen",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_ratelimits_regen"
     },
     {
       "relation": "contains",
@@ -6537,9 +6555,9 @@
       "source_file": "settings.example.json",
       "source_location": "L93",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_ratelimits",
-      "target": "heliactyl_main_settings_example_ratelimits_renew",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_ratelimits_renew"
     },
     {
       "relation": "contains",
@@ -6547,9 +6565,9 @@
       "source_file": "settings.example.json",
       "source_location": "L94",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_ratelimits",
-      "target": "heliactyl_main_settings_example_ratelimits_api_userinfo",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_ratelimits_api_userinfo"
     },
     {
       "relation": "contains",
@@ -6557,9 +6575,9 @@
       "source_file": "settings.example.json",
       "source_location": "L97",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_packages",
-      "target": "heliactyl_main_settings_example_packages_default",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_packages_default"
     },
     {
       "relation": "contains",
@@ -6567,9 +6585,9 @@
       "source_file": "settings.example.json",
       "source_location": "L98",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_packages",
-      "target": "heliactyl_main_settings_example_packages_list",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_packages_list"
     },
     {
       "relation": "contains",
@@ -6577,9 +6595,9 @@
       "source_file": "settings.example.json",
       "source_location": "L106",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_packages",
-      "target": "heliactyl_main_settings_example_packages_rolepackages",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_packages_rolepackages"
     },
     {
       "relation": "contains",
@@ -6587,9 +6605,9 @@
       "source_file": "settings.example.json",
       "source_location": "L99",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_packages_list",
-      "target": "heliactyl_main_settings_example_list_default",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_list_default"
     },
     {
       "relation": "contains",
@@ -6597,9 +6615,9 @@
       "source_file": "settings.example.json",
       "source_location": "L100",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_list_default",
-      "target": "heliactyl_main_settings_example_default_ram",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_default_ram"
     },
     {
       "relation": "contains",
@@ -6607,9 +6625,9 @@
       "source_file": "settings.example.json",
       "source_location": "L101",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_list_default",
-      "target": "heliactyl_main_settings_example_default_disk",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_default_disk"
     },
     {
       "relation": "contains",
@@ -6617,9 +6635,9 @@
       "source_file": "settings.example.json",
       "source_location": "L102",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_list_default",
-      "target": "heliactyl_main_settings_example_default_cpu",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_default_cpu"
     },
     {
       "relation": "contains",
@@ -6627,9 +6645,9 @@
       "source_file": "settings.example.json",
       "source_location": "L103",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_list_default",
-      "target": "heliactyl_main_settings_example_default_servers",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_default_servers"
     },
     {
       "relation": "contains",
@@ -6637,9 +6655,9 @@
       "source_file": "settings.example.json",
       "source_location": "L107",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_packages_rolepackages",
-      "target": "heliactyl_main_settings_example_rolepackages_note",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_rolepackages_note"
     },
     {
       "relation": "contains",
@@ -6647,9 +6665,9 @@
       "source_file": "settings.example.json",
       "source_location": "L108",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_packages_rolepackages",
-      "target": "heliactyl_main_settings_example_rolepackages_roleserver",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_rolepackages_roleserver"
     },
     {
       "relation": "contains",
@@ -6657,9 +6675,9 @@
       "source_file": "settings.example.json",
       "source_location": "L109",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_packages_rolepackages",
-      "target": "heliactyl_main_settings_example_rolepackages_roles",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_rolepackages_roles"
     },
     {
       "relation": "contains",
@@ -6667,9 +6685,9 @@
       "source_file": "settings.example.json",
       "source_location": "L110",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_rolepackages_roles",
-      "target": "heliactyl_main_settings_example_roles_discord_role_id",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_roles_discord_role_id"
     },
     {
       "relation": "contains",
@@ -6677,9 +6695,9 @@
       "source_file": "settings.example.json",
       "source_location": "L115",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_locations",
-      "target": "heliactyl_main_settings_example_locations_1",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_locations_1"
     },
     {
       "relation": "contains",
@@ -6687,9 +6705,9 @@
       "source_file": "settings.example.json",
       "source_location": "L119",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_locations",
-      "target": "heliactyl_main_settings_example_locations_2",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_locations_2"
     },
     {
       "relation": "contains",
@@ -6697,9 +6715,9 @@
       "source_file": "settings.example.json",
       "source_location": "L116",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_locations_1",
-      "target": "heliactyl_main_settings_example_1_package",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_1_package"
     },
     {
       "relation": "contains",
@@ -6707,9 +6725,9 @@
       "source_file": "settings.example.json",
       "source_location": "L117",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_locations_1",
-      "target": "heliactyl_main_settings_example_1_name",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_1_name"
     },
     {
       "relation": "contains",
@@ -6717,9 +6735,9 @@
       "source_file": "settings.example.json",
       "source_location": "L120",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_locations_2",
-      "target": "heliactyl_main_settings_example_2_package",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_2_package"
     },
     {
       "relation": "contains",
@@ -6727,9 +6745,9 @@
       "source_file": "settings.example.json",
       "source_location": "L121",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_locations_2",
-      "target": "heliactyl_main_settings_example_2_name",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_2_name"
     },
     {
       "relation": "contains",
@@ -6737,9 +6755,9 @@
       "source_file": "settings.example.json",
       "source_location": "L125",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_eggs",
-      "target": "heliactyl_main_settings_example_eggs_paper",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_eggs_paper"
     },
     {
       "relation": "contains",
@@ -6747,9 +6765,9 @@
       "source_file": "settings.example.json",
       "source_location": "L151",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_eggs",
-      "target": "heliactyl_main_settings_example_eggs_bungeecord",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_eggs_bungeecord"
     },
     {
       "relation": "contains",
@@ -6757,9 +6775,9 @@
       "source_file": "settings.example.json",
       "source_location": "L126",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_eggs_paper",
-      "target": "heliactyl_main_settings_example_paper_display",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_paper_display"
     },
     {
       "relation": "contains",
@@ -6767,9 +6785,9 @@
       "source_file": "settings.example.json",
       "source_location": "L127",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_eggs_paper",
-      "target": "heliactyl_main_settings_example_paper_minimum",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_paper_minimum"
     },
     {
       "relation": "contains",
@@ -6777,9 +6795,9 @@
       "source_file": "settings.example.json",
       "source_location": "L132",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_eggs_paper",
-      "target": "heliactyl_main_settings_example_paper_maximum",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_paper_maximum"
     },
     {
       "relation": "contains",
@@ -6787,9 +6805,9 @@
       "source_file": "settings.example.json",
       "source_location": "L137",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_eggs_paper",
-      "target": "heliactyl_main_settings_example_paper_info",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_paper_info"
     },
     {
       "relation": "contains",
@@ -6797,9 +6815,9 @@
       "source_file": "settings.example.json",
       "source_location": "L128",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_paper_minimum",
-      "target": "heliactyl_main_settings_example_minimum_ram",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_minimum_ram"
     },
     {
       "relation": "contains",
@@ -6807,9 +6825,9 @@
       "source_file": "settings.example.json",
       "source_location": "L129",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_paper_minimum",
-      "target": "heliactyl_main_settings_example_minimum_disk",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_minimum_disk"
     },
     {
       "relation": "contains",
@@ -6817,9 +6835,9 @@
       "source_file": "settings.example.json",
       "source_location": "L130",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_paper_minimum",
-      "target": "heliactyl_main_settings_example_minimum_cpu",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_minimum_cpu"
     },
     {
       "relation": "contains",
@@ -6827,9 +6845,9 @@
       "source_file": "settings.example.json",
       "source_location": "L154",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_bungeecord_minimum",
-      "target": "heliactyl_main_settings_example_minimum_ram",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_minimum_ram"
     },
     {
       "relation": "contains",
@@ -6837,9 +6855,9 @@
       "source_file": "settings.example.json",
       "source_location": "L155",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_bungeecord_minimum",
-      "target": "heliactyl_main_settings_example_minimum_disk",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_minimum_disk"
     },
     {
       "relation": "contains",
@@ -6847,9 +6865,9 @@
       "source_file": "settings.example.json",
       "source_location": "L156",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_bungeecord_minimum",
-      "target": "heliactyl_main_settings_example_minimum_cpu",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_minimum_cpu"
     },
     {
       "relation": "contains",
@@ -6857,9 +6875,9 @@
       "source_file": "settings.example.json",
       "source_location": "L133",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_paper_maximum",
-      "target": "heliactyl_main_settings_example_maximum_ram",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_maximum_ram"
     },
     {
       "relation": "contains",
@@ -6867,9 +6885,9 @@
       "source_file": "settings.example.json",
       "source_location": "L134",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_paper_maximum",
-      "target": "heliactyl_main_settings_example_maximum_disk",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_maximum_disk"
     },
     {
       "relation": "contains",
@@ -6877,9 +6895,9 @@
       "source_file": "settings.example.json",
       "source_location": "L135",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_paper_maximum",
-      "target": "heliactyl_main_settings_example_maximum_cpu",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_maximum_cpu"
     },
     {
       "relation": "contains",
@@ -6887,9 +6905,9 @@
       "source_file": "settings.example.json",
       "source_location": "L159",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_bungeecord_maximum",
-      "target": "heliactyl_main_settings_example_maximum_ram",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_maximum_ram"
     },
     {
       "relation": "contains",
@@ -6897,9 +6915,9 @@
       "source_file": "settings.example.json",
       "source_location": "L160",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_bungeecord_maximum",
-      "target": "heliactyl_main_settings_example_maximum_disk",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_maximum_disk"
     },
     {
       "relation": "contains",
@@ -6907,9 +6925,9 @@
       "source_file": "settings.example.json",
       "source_location": "L161",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_bungeecord_maximum",
-      "target": "heliactyl_main_settings_example_maximum_cpu",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_maximum_cpu"
     },
     {
       "relation": "contains",
@@ -6917,9 +6935,9 @@
       "source_file": "settings.example.json",
       "source_location": "L138",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_paper_info",
-      "target": "heliactyl_main_settings_example_info_egg",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_info_egg"
     },
     {
       "relation": "contains",
@@ -6927,9 +6945,9 @@
       "source_file": "settings.example.json",
       "source_location": "L139",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_paper_info",
-      "target": "heliactyl_main_settings_example_info_docker_image",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_info_docker_image"
     },
     {
       "relation": "contains",
@@ -6937,9 +6955,9 @@
       "source_file": "settings.example.json",
       "source_location": "L140",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_paper_info",
-      "target": "heliactyl_main_settings_example_info_startup",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_info_startup"
     },
     {
       "relation": "contains",
@@ -6947,9 +6965,9 @@
       "source_file": "settings.example.json",
       "source_location": "L141",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_paper_info",
-      "target": "heliactyl_main_settings_example_info_environment",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_info_environment"
     },
     {
       "relation": "contains",
@@ -6957,9 +6975,9 @@
       "source_file": "settings.example.json",
       "source_location": "L145",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_paper_info",
-      "target": "heliactyl_main_settings_example_info_feature_limits",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_info_feature_limits"
     },
     {
       "relation": "contains",
@@ -6967,9 +6985,9 @@
       "source_file": "settings.example.json",
       "source_location": "L164",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_bungeecord_info",
-      "target": "heliactyl_main_settings_example_info_egg",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_info_egg"
     },
     {
       "relation": "contains",
@@ -6977,9 +6995,9 @@
       "source_file": "settings.example.json",
       "source_location": "L165",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_bungeecord_info",
-      "target": "heliactyl_main_settings_example_info_docker_image",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_info_docker_image"
     },
     {
       "relation": "contains",
@@ -6987,9 +7005,9 @@
       "source_file": "settings.example.json",
       "source_location": "L166",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_bungeecord_info",
-      "target": "heliactyl_main_settings_example_info_startup",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_info_startup"
     },
     {
       "relation": "contains",
@@ -6997,9 +7015,9 @@
       "source_file": "settings.example.json",
       "source_location": "L168",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_info_environment",
-      "target": "heliactyl_main_settings_example_environment_server_jarfile",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_environment_server_jarfile"
     },
     {
       "relation": "contains",
@@ -7007,9 +7025,9 @@
       "source_file": "settings.example.json",
       "source_location": "L143",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_info_environment",
-      "target": "heliactyl_main_settings_example_environment_build_number",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_environment_build_number"
     },
     {
       "relation": "contains",
@@ -7017,9 +7035,9 @@
       "source_file": "settings.example.json",
       "source_location": "L167",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_bungeecord_info",
-      "target": "heliactyl_main_settings_example_info_environment",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_info_environment"
     },
     {
       "relation": "contains",
@@ -7027,9 +7045,9 @@
       "source_file": "settings.example.json",
       "source_location": "L169",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_info_environment",
-      "target": "heliactyl_main_settings_example_environment_bungee_version",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_environment_bungee_version"
     },
     {
       "relation": "contains",
@@ -7037,9 +7055,9 @@
       "source_file": "settings.example.json",
       "source_location": "L172",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_info_feature_limits",
-      "target": "heliactyl_main_settings_example_feature_limits_databases",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_feature_limits_databases"
     },
     {
       "relation": "contains",
@@ -7047,9 +7065,9 @@
       "source_file": "settings.example.json",
       "source_location": "L173",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_info_feature_limits",
-      "target": "heliactyl_main_settings_example_feature_limits_backups",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_feature_limits_backups"
     },
     {
       "relation": "contains",
@@ -7057,9 +7075,9 @@
       "source_file": "settings.example.json",
       "source_location": "L171",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_bungeecord_info",
-      "target": "heliactyl_main_settings_example_info_feature_limits",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_info_feature_limits"
     },
     {
       "relation": "contains",
@@ -7067,9 +7085,9 @@
       "source_file": "settings.example.json",
       "source_location": "L152",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_eggs_bungeecord",
-      "target": "heliactyl_main_settings_example_bungeecord_display",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_bungeecord_display"
     },
     {
       "relation": "contains",
@@ -7077,9 +7095,9 @@
       "source_file": "settings.example.json",
       "source_location": "L153",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_eggs_bungeecord",
-      "target": "heliactyl_main_settings_example_bungeecord_minimum",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_bungeecord_minimum"
     },
     {
       "relation": "contains",
@@ -7087,9 +7105,9 @@
       "source_file": "settings.example.json",
       "source_location": "L158",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_eggs_bungeecord",
-      "target": "heliactyl_main_settings_example_bungeecord_maximum",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_bungeecord_maximum"
     },
     {
       "relation": "contains",
@@ -7097,9 +7115,9 @@
       "source_file": "settings.example.json",
       "source_location": "L163",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_eggs_bungeecord",
-      "target": "heliactyl_main_settings_example_bungeecord_info",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_bungeecord_info"
     },
     {
       "relation": "contains",
@@ -7107,9 +7125,9 @@
       "source_file": "settings.example.json",
       "source_location": "L179",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_coins",
-      "target": "heliactyl_main_settings_example_coins_enabled",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_coins_enabled"
     },
     {
       "relation": "contains",
@@ -7117,9 +7135,9 @@
       "source_file": "settings.example.json",
       "source_location": "L180",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_client_coins",
-      "target": "heliactyl_main_settings_example_coins_store",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_coins_store"
     },
     {
       "relation": "contains",
@@ -7127,9 +7145,9 @@
       "source_file": "settings.example.json",
       "source_location": "L181",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_coins_store",
-      "target": "heliactyl_main_settings_example_store_enabled",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_store_enabled"
     },
     {
       "relation": "contains",
@@ -7137,9 +7155,9 @@
       "source_file": "settings.example.json",
       "source_location": "L182",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_coins_store",
-      "target": "heliactyl_main_settings_example_store_ram",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_store_ram"
     },
     {
       "relation": "contains",
@@ -7147,9 +7165,9 @@
       "source_file": "settings.example.json",
       "source_location": "L186",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_coins_store",
-      "target": "heliactyl_main_settings_example_store_disk",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_store_disk"
     },
     {
       "relation": "contains",
@@ -7157,9 +7175,9 @@
       "source_file": "settings.example.json",
       "source_location": "L190",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_coins_store",
-      "target": "heliactyl_main_settings_example_store_cpu",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_store_cpu"
     },
     {
       "relation": "contains",
@@ -7167,9 +7185,9 @@
       "source_file": "settings.example.json",
       "source_location": "L194",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_coins_store",
-      "target": "heliactyl_main_settings_example_store_servers",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_store_servers"
     },
     {
       "relation": "contains",
@@ -7177,9 +7195,9 @@
       "source_file": "settings.example.json",
       "source_location": "L183",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_store_ram",
-      "target": "heliactyl_main_settings_example_ram_cost",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_ram_cost"
     },
     {
       "relation": "contains",
@@ -7187,9 +7205,9 @@
       "source_file": "settings.example.json",
       "source_location": "L184",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_store_ram",
-      "target": "heliactyl_main_settings_example_ram_per",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_ram_per"
     },
     {
       "relation": "contains",
@@ -7197,9 +7215,9 @@
       "source_file": "settings.example.json",
       "source_location": "L187",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_store_disk",
-      "target": "heliactyl_main_settings_example_disk_cost",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_disk_cost"
     },
     {
       "relation": "contains",
@@ -7207,9 +7225,9 @@
       "source_file": "settings.example.json",
       "source_location": "L188",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_store_disk",
-      "target": "heliactyl_main_settings_example_disk_per",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_disk_per"
     },
     {
       "relation": "contains",
@@ -7217,9 +7235,9 @@
       "source_file": "settings.example.json",
       "source_location": "L191",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_store_cpu",
-      "target": "heliactyl_main_settings_example_cpu_cost",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_cpu_cost"
     },
     {
       "relation": "contains",
@@ -7227,9 +7245,9 @@
       "source_file": "settings.example.json",
       "source_location": "L192",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_store_cpu",
-      "target": "heliactyl_main_settings_example_cpu_per",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_cpu_per"
     },
     {
       "relation": "contains",
@@ -7237,9 +7255,9 @@
       "source_file": "settings.example.json",
       "source_location": "L195",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_store_servers",
-      "target": "heliactyl_main_settings_example_servers_cost",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_servers_cost"
     },
     {
       "relation": "contains",
@@ -7247,9 +7265,9 @@
       "source_file": "settings.example.json",
       "source_location": "L196",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_store_servers",
-      "target": "heliactyl_main_settings_example_servers_per",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_servers_per"
     },
     {
       "relation": "contains",
@@ -7257,9 +7275,9 @@
       "source_file": "settings.example.json",
       "source_location": "L202",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_api_afk",
-      "target": "heliactyl_main_settings_example_afk_note",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_afk_note"
     },
     {
       "relation": "contains",
@@ -7267,9 +7285,9 @@
       "source_file": "settings.example.json",
       "source_location": "L203",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_api_afk",
-      "target": "heliactyl_main_settings_example_afk_path",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_afk_path"
     },
     {
       "relation": "contains",
@@ -7277,9 +7295,9 @@
       "source_file": "settings.example.json",
       "source_location": "L204",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_api_afk",
-      "target": "heliactyl_main_settings_example_afk_every",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_afk_every"
     },
     {
       "relation": "contains",
@@ -7287,9 +7305,9 @@
       "source_file": "settings.example.json",
       "source_location": "L205",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_api_afk",
-      "target": "heliactyl_main_settings_example_afk_coins",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_afk_coins"
     },
     {
       "relation": "contains",
@@ -7297,9 +7315,9 @@
       "source_file": "settings.example.json",
       "source_location": "L206",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_api_afk",
-      "target": "heliactyl_main_settings_example_afk_enabled",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_afk_enabled"
     },
     {
       "relation": "contains",
@@ -7307,9 +7325,9 @@
       "source_file": "settings.example.json",
       "source_location": "L210",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_antivpn",
-      "target": "heliactyl_main_settings_example_antivpn_note",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_antivpn_note"
     },
     {
       "relation": "contains",
@@ -7317,9 +7335,9 @@
       "source_file": "settings.example.json",
       "source_location": "L211",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_antivpn",
-      "target": "heliactyl_main_settings_example_antivpn_status",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_antivpn_status"
     },
     {
       "relation": "contains",
@@ -7327,9 +7345,9 @@
       "source_file": "settings.example.json",
       "source_location": "L212",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_antivpn",
-      "target": "heliactyl_main_settings_example_antivpn_apikey",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_antivpn_apikey"
     },
     {
       "relation": "contains",
@@ -7337,9 +7355,9 @@
       "source_file": "settings.example.json",
       "source_location": "L213",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_antivpn",
-      "target": "heliactyl_main_settings_example_antivpn_whitelistedips",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_antivpn_whitelistedips"
     },
     {
       "relation": "contains",
@@ -7347,9 +7365,9 @@
       "source_file": "settings.example.json",
       "source_location": "L218",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_whitelist",
-      "target": "heliactyl_main_settings_example_whitelist_note",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_whitelist_note"
     },
     {
       "relation": "contains",
@@ -7357,9 +7375,9 @@
       "source_file": "settings.example.json",
       "source_location": "L219",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_whitelist",
-      "target": "heliactyl_main_settings_example_whitelist_status",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_whitelist_status"
     },
     {
       "relation": "contains",
@@ -7367,9 +7385,9 @@
       "source_file": "settings.example.json",
       "source_location": "L220",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_whitelist",
-      "target": "heliactyl_main_settings_example_whitelist_users",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_whitelist_users"
     },
     {
       "relation": "contains",
@@ -7377,9 +7395,9 @@
       "source_file": "settings.example.json",
       "source_location": "L225",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_logging",
-      "target": "heliactyl_main_settings_example_logging_note",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_logging_note"
     },
     {
       "relation": "contains",
@@ -7387,9 +7405,9 @@
       "source_file": "settings.example.json",
       "source_location": "L226",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_logging",
-      "target": "heliactyl_main_settings_example_logging_status",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_logging_status"
     },
     {
       "relation": "contains",
@@ -7397,9 +7415,9 @@
       "source_file": "settings.example.json",
       "source_location": "L227",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_logging",
-      "target": "heliactyl_main_settings_example_logging_webhook",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_logging_webhook"
     },
     {
       "relation": "contains",
@@ -7407,9 +7425,9 @@
       "source_file": "settings.example.json",
       "source_location": "L228",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_logging",
-      "target": "heliactyl_main_settings_example_logging_actions",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_logging_actions"
     },
     {
       "relation": "contains",
@@ -7417,9 +7435,9 @@
       "source_file": "settings.example.json",
       "source_location": "L229",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_logging_actions",
-      "target": "heliactyl_main_settings_example_actions_user",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_actions_user"
     },
     {
       "relation": "contains",
@@ -7427,9 +7445,9 @@
       "source_file": "settings.example.json",
       "source_location": "L239",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_logging_actions",
-      "target": "heliactyl_main_settings_example_actions_admin",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_actions_admin"
     },
     {
       "relation": "contains",
@@ -7437,9 +7455,9 @@
       "source_file": "settings.example.json",
       "source_location": "L230",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_actions_user",
-      "target": "heliactyl_main_settings_example_user_signup",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_user_signup"
     },
     {
       "relation": "contains",
@@ -7447,9 +7465,9 @@
       "source_file": "settings.example.json",
       "source_location": "L231",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_actions_user",
-      "target": "heliactyl_main_settings_example_user_create_server",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_user_create_server"
     },
     {
       "relation": "contains",
@@ -7457,9 +7475,9 @@
       "source_file": "settings.example.json",
       "source_location": "L232",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_actions_user",
-      "target": "heliactyl_main_settings_example_user_gifted_coins",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_user_gifted_coins"
     },
     {
       "relation": "contains",
@@ -7467,9 +7485,9 @@
       "source_file": "settings.example.json",
       "source_location": "L233",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_actions_user",
-      "target": "heliactyl_main_settings_example_user_modify_server",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_user_modify_server"
     },
     {
       "relation": "contains",
@@ -7477,9 +7495,9 @@
       "source_file": "settings.example.json",
       "source_location": "L234",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_actions_user",
-      "target": "heliactyl_main_settings_example_user_buy_servers",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_user_buy_servers"
     },
     {
       "relation": "contains",
@@ -7487,9 +7505,9 @@
       "source_file": "settings.example.json",
       "source_location": "L235",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_actions_user",
-      "target": "heliactyl_main_settings_example_user_buy_ram",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_user_buy_ram"
     },
     {
       "relation": "contains",
@@ -7497,9 +7515,9 @@
       "source_file": "settings.example.json",
       "source_location": "L236",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_actions_user",
-      "target": "heliactyl_main_settings_example_user_buy_cpu",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_user_buy_cpu"
     },
     {
       "relation": "contains",
@@ -7507,9 +7525,9 @@
       "source_file": "settings.example.json",
       "source_location": "L237",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_actions_user",
-      "target": "heliactyl_main_settings_example_user_buy_disk",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_user_buy_disk"
     },
     {
       "relation": "contains",
@@ -7517,9 +7535,9 @@
       "source_file": "settings.example.json",
       "source_location": "L240",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_actions_admin",
-      "target": "heliactyl_main_settings_example_admin_set_coins",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_admin_set_coins"
     },
     {
       "relation": "contains",
@@ -7527,9 +7545,9 @@
       "source_file": "settings.example.json",
       "source_location": "L241",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_actions_admin",
-      "target": "heliactyl_main_settings_example_admin_add_coins",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_admin_add_coins"
     },
     {
       "relation": "contains",
@@ -7537,9 +7555,9 @@
       "source_file": "settings.example.json",
       "source_location": "L242",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_actions_admin",
-      "target": "heliactyl_main_settings_example_admin_set_resources",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_admin_set_resources"
     },
     {
       "relation": "contains",
@@ -7547,9 +7565,9 @@
       "source_file": "settings.example.json",
       "source_location": "L243",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_actions_admin",
-      "target": "heliactyl_main_settings_example_admin_set_plan",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_admin_set_plan"
     },
     {
       "relation": "contains",
@@ -7557,9 +7575,9 @@
       "source_file": "settings.example.json",
       "source_location": "L244",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_actions_admin",
-      "target": "heliactyl_main_settings_example_admin_create_coupon",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_admin_create_coupon"
     },
     {
       "relation": "contains",
@@ -7567,9 +7585,9 @@
       "source_file": "settings.example.json",
       "source_location": "L245",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_actions_admin",
-      "target": "heliactyl_main_settings_example_admin_revoke_coupon",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_admin_revoke_coupon"
     },
     {
       "relation": "contains",
@@ -7577,9 +7595,9 @@
       "source_file": "settings.example.json",
       "source_location": "L246",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_actions_admin",
-      "target": "heliactyl_main_settings_example_admin_remove_account",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_admin_remove_account"
     },
     {
       "relation": "contains",
@@ -7587,9 +7605,9 @@
       "source_file": "settings.example.json",
       "source_location": "L247",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_actions_admin",
-      "target": "heliactyl_main_settings_example_admin_view_ip",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_admin_view_ip"
     },
     {
       "relation": "contains",
@@ -7597,9 +7615,9 @@
       "source_file": "settings.example.json",
       "source_location": "L252",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_turnstile",
-      "target": "heliactyl_main_settings_example_turnstile_note",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_turnstile_note"
     },
     {
       "relation": "contains",
@@ -7607,9 +7625,9 @@
       "source_file": "settings.example.json",
       "source_location": "L253",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_turnstile",
-      "target": "heliactyl_main_settings_example_turnstile_enabled",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_turnstile_enabled"
     },
     {
       "relation": "contains",
@@ -7617,9 +7635,9 @@
       "source_file": "settings.example.json",
       "source_location": "L254",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_turnstile",
-      "target": "heliactyl_main_settings_example_turnstile_sitekey",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_turnstile_sitekey"
     },
     {
       "relation": "contains",
@@ -7627,9 +7645,9 @@
       "source_file": "settings.example.json",
       "source_location": "L255",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_settings_example_turnstile",
-      "target": "heliactyl_main_settings_example_turnstile_secretkey",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_settings_example_turnstile_secretkey"
     },
     {
       "relation": "contains",
@@ -8450,30 +8468,10 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "assets/animations.js",
-      "source_location": "L21",
+      "source_location": "L19",
       "weight": 1.0,
       "source": "assets_animations_js",
-      "target": "assets_animations_pinfinal",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "assets/animations.js",
-      "source_location": "L27",
-      "weight": 1.0,
-      "source": "assets_animations_js",
-      "target": "assets_animations_attachhover",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "assets/animations.js",
-      "source_location": "L63",
-      "weight": 1.0,
-      "source": "assets_animations_js",
-      "target": "assets_animations_navitems",
+      "target": "assets_animations_onready",
       "confidence_score": 1.0
     },
     {
@@ -8482,9 +8480,9 @@
       "source_file": "assets/animations.js",
       "source_location": "L79",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "assets_animations_js",
-      "target": "assets_animations_cards",
-      "confidence_score": 1.0
+      "target": "assets_animations_cards"
     },
     {
       "relation": "contains",
@@ -8492,9 +8490,49 @@
       "source_file": "assets/animations.js",
       "source_location": "L93",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "assets_animations_js",
-      "target": "assets_animations_headers",
+      "target": "assets_animations_headers"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/animations.js",
+      "source_location": "L67",
+      "weight": 1.0,
+      "source": "assets_animations_js",
+      "target": "assets_animations_attachinteractive",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/animations.js",
+      "source_location": "L27",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "assets_animations_js",
+      "target": "assets_animations_attachhover"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/animations.js",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "assets_animations_js",
+      "target": "assets_animations_pinfinal"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "assets/animations.js",
+      "source_location": "L63",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "assets_animations_js",
+      "target": "assets_animations_navitems"
     },
     {
       "relation": "contains",
@@ -8502,9 +8540,9 @@
       "source_file": "assets/animations.js",
       "source_location": "L107",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "assets_animations_js",
-      "target": "assets_animations_otherbuttons",
-      "confidence_score": 1.0
+      "target": "assets_animations_otherbuttons"
     },
     {
       "relation": "contains",
@@ -8512,9 +8550,9 @@
       "source_file": "assets/animations.js",
       "source_location": "L116",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "assets_animations_js",
-      "target": "assets_animations_coincounter",
-      "confidence_score": 1.0
+      "target": "assets_animations_coincounter"
     },
     {
       "relation": "contains",
@@ -8522,9 +8560,9 @@
       "source_file": "assets/animations.js",
       "source_location": "L118",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "assets_animations_js",
-      "target": "assets_animations_observer",
-      "confidence_score": 1.0
+      "target": "assets_animations_observer"
     },
     {
       "relation": "contains",
@@ -9162,9 +9200,9 @@
       "source_file": "api/afk.js",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_afk_js",
-      "target": "api_afk_fetch",
-      "confidence_score": 1.0
+      "target": "api_afk_fetch"
     },
     {
       "relation": "contains",
@@ -9182,9 +9220,9 @@
       "source_file": "api/afk.js",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_afk_js",
-      "target": "api_afk_verifyturnstile",
-      "confidence_score": 1.0
+      "target": "api_afk_verifyturnstile"
     },
     {
       "relation": "contains",
@@ -9224,9 +9262,9 @@
       "source_file": "api/afk.js",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_afk_verifyturnstile",
-      "target": "api_afk_fetch",
-      "confidence_score": 1.0
+      "target": "api_afk_fetch"
     },
     {
       "relation": "contains",
@@ -10685,9 +10723,9 @@
       "source_file": "README.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "readme_md",
-      "target": "heliactyl_main_readme_heliactyl_14",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_readme_heliactyl_14"
     },
     {
       "relation": "contains",
@@ -10705,9 +10743,9 @@
       "source_file": "README.md",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_readme_heliactyl_14",
-      "target": "heliactyl_main_readme_features",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_readme_features"
     },
     {
       "relation": "contains",
@@ -10715,9 +10753,9 @@
       "source_file": "README.md",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_readme_heliactyl_14",
-      "target": "heliactyl_main_readme_getting_started",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_readme_getting_started"
     },
     {
       "relation": "contains",
@@ -10725,9 +10763,9 @@
       "source_file": "README.md",
       "source_location": "L47",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_readme_heliactyl_14",
-      "target": "heliactyl_main_readme_production_deployment",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_readme_production_deployment"
     },
     {
       "relation": "contains",
@@ -10735,9 +10773,9 @@
       "source_file": "README.md",
       "source_location": "L93",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_readme_heliactyl_14",
-      "target": "heliactyl_main_readme_development",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_readme_development"
     },
     {
       "relation": "contains",
@@ -10745,9 +10783,9 @@
       "source_file": "README.md",
       "source_location": "L105",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_readme_heliactyl_14",
-      "target": "heliactyl_main_readme_api_v2_documentation",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_readme_api_v2_documentation"
     },
     {
       "relation": "contains",
@@ -10755,9 +10793,9 @@
       "source_file": "README.md",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_readme_getting_started",
-      "target": "heliactyl_main_readme_prerequisites",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_readme_prerequisites"
     },
     {
       "relation": "contains",
@@ -10765,9 +10803,9 @@
       "source_file": "README.md",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_readme_getting_started",
-      "target": "heliactyl_main_readme_installation",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_readme_installation"
     },
     {
       "relation": "contains",
@@ -10775,9 +10813,9 @@
       "source_file": "README.md",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_readme_installation",
-      "target": "heliactyl_main_readme_codeblock_1",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_readme_codeblock_1"
     },
     {
       "relation": "contains",
@@ -10785,9 +10823,9 @@
       "source_file": "README.md",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_readme_installation",
-      "target": "heliactyl_main_readme_codeblock_2",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_readme_codeblock_2"
     },
     {
       "relation": "contains",
@@ -10795,9 +10833,9 @@
       "source_file": "README.md",
       "source_location": "L36",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_readme_installation",
-      "target": "heliactyl_main_readme_codeblock_3",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_readme_codeblock_3"
     },
     {
       "relation": "contains",
@@ -10835,9 +10873,9 @@
       "source_file": "README.md",
       "source_location": "L51",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_readme_production_deployment",
-      "target": "heliactyl_main_readme_1_start_with_pm2",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_readme_1_start_with_pm2"
     },
     {
       "relation": "contains",
@@ -10845,9 +10883,9 @@
       "source_file": "README.md",
       "source_location": "L59",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_readme_production_deployment",
-      "target": "heliactyl_main_readme_2_nginx_reverse_proxy_setup",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_readme_2_nginx_reverse_proxy_setup"
     },
     {
       "relation": "contains",
@@ -10855,9 +10893,9 @@
       "source_file": "README.md",
       "source_location": "L86",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_readme_production_deployment",
-      "target": "heliactyl_main_readme_3_ssl_configuration_certbot",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_readme_3_ssl_configuration_certbot"
     },
     {
       "relation": "contains",
@@ -10865,9 +10903,9 @@
       "source_file": "README.md",
       "source_location": "L52",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_readme_1_start_with_pm2",
-      "target": "heliactyl_main_readme_codeblock_4",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_readme_codeblock_4"
     },
     {
       "relation": "contains",
@@ -10885,9 +10923,9 @@
       "source_file": "README.md",
       "source_location": "L62",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_readme_2_nginx_reverse_proxy_setup",
-      "target": "heliactyl_main_readme_codeblock_5",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_readme_codeblock_5"
     },
     {
       "relation": "contains",
@@ -10895,9 +10933,9 @@
       "source_file": "README.md",
       "source_location": "L80",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_readme_2_nginx_reverse_proxy_setup",
-      "target": "heliactyl_main_readme_codeblock_6",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_readme_codeblock_6"
     },
     {
       "relation": "contains",
@@ -10925,9 +10963,9 @@
       "source_file": "README.md",
       "source_location": "L88",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_readme_3_ssl_configuration_certbot",
-      "target": "heliactyl_main_readme_codeblock_7",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_readme_codeblock_7"
     },
     {
       "relation": "contains",
@@ -10935,9 +10973,9 @@
       "source_file": "README.md",
       "source_location": "L96",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_readme_development",
-      "target": "heliactyl_main_readme_codeblock_8",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_readme_codeblock_8"
     },
     {
       "relation": "contains",
@@ -10945,9 +10983,9 @@
       "source_file": "README.md",
       "source_location": "L101",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "heliactyl_main_readme_development",
-      "target": "heliactyl_main_readme_codeblock_9",
-      "confidence_score": 1.0
+      "target": "heliactyl_main_readme_codeblock_9"
     },
     {
       "relation": "contains",
@@ -12811,5 +12849,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "b6ae2dca7a394ea2cc6626299b3df299012818f9"
+  "built_at_commit": "28b7c4e8bf5ffcb69f9c991e069bc0e1f6b3b83f"
 }
