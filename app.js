@@ -131,13 +131,20 @@ if (cluster.isMaster) {
     next();
   });
 
+  app.set('trust proxy', 1); // Trust X-Forwarded-* headers from Nginx
+
   app.use(
     session({
       store: new KeyvStore({ uri: settings.database }),
       secret: settings.website.secret,
       resave: false,
       saveUninitialized: false,
-      cookie: { secure: false },
+      cookie: {
+        secure: true,      // Require HTTPS
+        httpOnly: true,    // Prevent XSS access
+        sameSite: 'lax',   // CSRF protection
+        maxAge: 1000 * 60 * 60 * 24 * 7  // 7 days
+      },
     })
   );
 
