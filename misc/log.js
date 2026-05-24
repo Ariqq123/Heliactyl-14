@@ -7,6 +7,10 @@ const fetch = require('node-fetch')
  * @param {string} message 
  */
 module.exports = (action, message) => {
+    // Always log to console/PM2 for server admins
+    const timestamp = new Date().toISOString();
+    console.log(`[${timestamp}] [ADMIN ACTION: ${action}] ${message}`);
+
     if (!settings.logging.status) return
     if (!settings.logging.actions.user[action] && !settings.logging.actions.admin[action]) return
 
