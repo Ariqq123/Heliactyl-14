@@ -1,5 +1,6 @@
 const settings = require('../settings.json')
 const fetch = require('node-fetch')
+const Keyv = require('keyv')
 
 /**
  * In-memory log buffer (last MAX_BUFFER entries).
@@ -7,10 +8,24 @@ const fetch = require('node-fetch')
  */
 const MAX_BUFFER = 500;
 const logBuffer = [];
+const SHARED_LOG_KEY = 'system:action_logs';
+const sharedLogStore = new Keyv(settings.database);
 
 function pushLog(entry) {
     logBuffer.push(entry);
     if (logBuffer.length > MAX_BUFFER) logBuffer.shift();
+
+    // Persist to shared DB so logs are visible across cluster workers.
+    // Best-effort async write (non-blocking for request flow).
+    (async () => {
+        try {
+            let history = await sharedLogStore.get(SHARED_LOG_KEY);
+            history = Array.isArray(history) ? history : [];
+            history.push(entry);
+            if (history.length > MAX_BUFFER) history = history.slice(-MAX_BUFFER);
+            await sharedLogStore.set(SHARED_LOG_KEY, history);
+        } catch (_) {}
+    })();
 }
 
 /**
@@ -53,8 +68,16 @@ function log(action, message, correlationId) {
 }
 
 log.buffer = logBuffer;
-log.getRecent = (limit) => {
+log.getRecent = async (limit) => {
     const n = Math.max(1, Math.min(MAX_BUFFER, limit || MAX_BUFFER));
+
+    try {
+        const history = await sharedLogStore.get(SHARED_LOG_KEY);
+        if (Array.isArray(history) && history.length) {
+            return history.slice(-n).reverse();
+        }
+    } catch (_) {}
+
     return logBuffer.slice(-n).reverse();
 };
 

@@ -67,7 +67,7 @@ module.exports.renderdataeval = `(async () => {
       }),
     packages: req.session.userinfo ? newsettings.api.client.packages.list[await db.get("package-" + req.session.userinfo.id) ? await db.get("package-" + req.session.userinfo.id) : newsettings.api.client.packages.default] : null,
       coins: newsettings.api.client.coins.enabled == true ? (req.session.userinfo ? (await db.get("coins-" + req.session.userinfo.id) ? await db.get("coins-" + req.session.userinfo.id) : 0) : null) : null,
-      logs: actionLog.getRecent(500),
+      logs: await actionLog.getRecent(500),
       x: 'aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1wVGZKZm5pUUZTOA==',
       pterodactyl: req.session.pterodactyl,
       extra: theme.settings.variables,
