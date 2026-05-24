@@ -55,6 +55,53 @@ module.exports.load = async function (app, db) {
     res.redirect("/security");
   });
 
+  app.get("/delete_my_account", async (req, res) => {
+    if (!req.session.pterodactyl || !req.session.userinfo) return res.redirect("/login");
+
+    const discordid = req.session.userinfo.id;
+    const pteroid = await db.get("users-" + discordid);
+
+    if (!pteroid) return res.redirect("/security?err=ACCOUNTNOTFOUND");
+
+    let selected_ip = await db.get("ip-" + discordid);
+
+    if (selected_ip) {
+      let allips = (await db.get("ips")) || [];
+      allips = allips.filter((ip) => ip !== selected_ip);
+
+      if (allips.length == 0) {
+        await db.delete("ips");
+      } else {
+        await db.set("ips", allips);
+      }
+
+      await db.delete("ip-" + discordid);
+    }
+
+    let userids = (await db.get("users")) || [];
+    userids = userids.filter((user) => user !== pteroid);
+
+    if (userids.length == 0) {
+      await db.delete("users");
+    } else {
+      await db.set("users", userids);
+    }
+
+    await db.delete("users-" + discordid);
+    await db.delete("coins-" + discordid);
+    await db.delete("extra-" + discordid);
+    await db.delete("package-" + discordid);
+
+    log(
+      "Self Delete Account",
+      `${req.session.userinfo.username}#${req.session.userinfo.discriminator} removed their own account with the ID \`${discordid}\`.`
+    );
+
+    req.session.destroy(() => {
+      return res.redirect("/?success=ACCOUNTDELETED");
+    });
+  });
+
   /* Create a Queue */
   const queue = new Queue();
 
