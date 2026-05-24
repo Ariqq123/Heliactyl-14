@@ -6,8 +6,14 @@ const scheme = document.location.protocol === "https:" ? "wss" : "ws";
 const hostname = window.location.hostname;
 const port = window.location.port ? ':' + window.location.port : '';
 
-// Establish a ws connection using the current hostname, port, and path
-const connection = new WebSocket(\`\${scheme}://\${hostname}\${port}/\${wspath}\`);
+// Build the WebSocket URL and append Turnstile token if available
+let wsUrl = \`\${scheme}://\${hostname}\${port}/\${wspath}\`;
+if (typeof window.__turnstileToken !== 'undefined' && window.__turnstileToken) {
+  wsUrl += '?turnstile=' + encodeURIComponent(window.__turnstileToken);
+}
+
+// Establish a ws connection
+const connection = new WebSocket(wsUrl);
 
 let sessionStartTime = new Date();
 let sessionDurationElement = document.getElementById("sessionDuration");
