@@ -1,27 +1,26 @@
-<footer class="bottom-0 bg-gray-100 py-4">
-  <div class="max-w-7xl mx-auto py-3 sm:px-4 md:px-4 flex justify-between shadow-sm items-center text-xs text-gray-500 rounded-2xl border border-gray-200">
-    <div>
-      <p class="font-medium text-gray-600">&copy; 2024 <%= settings.name %>. All rights reserved.</p>
-    </div>
-    <div>
-      <span class="font-thin text-gray-500">
-        Powered by
-        <a class="transition hover:text-gray-700" href="https://github.com/heliactyloss/heliactyl">Heliactyl</a>
-        <span class="bg-gray-200 text-gray-500 px-3 py-1 rounded-full mr-1 ml-2">v<%= settings.version %></span>
-        <span class="bg-gray-200 text-gray-500 px-3 py-1 rounded-full" id="loadingTime"></span>
-      </span>
+<footer class="mt-auto bg-transparent py-4">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+    <div class="bg-white border border-gray-200/60 rounded-2xl shadow-sm px-5 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs text-gray-500">
+      <p class="font-medium text-gray-600">&copy; <span id="footerYear"></span> <%= settings.name %>. All rights reserved.</p>
+      <div class="flex flex-wrap items-center gap-2 font-light">
+        <span>Powered by</span>
+        <a class="font-medium text-gray-700 hover:text-indigo-600 transition" href="https://github.com/heliactyloss/heliactyl">Heliactyl</a>
+        <span class="inline-flex items-center rounded-full bg-gray-100 border border-gray-200/70 px-2.5 py-0.5 font-mono text-[11px] text-gray-600">v<%= settings.version %></span>
+        <span class="inline-flex items-center rounded-full bg-gray-100 border border-gray-200/70 px-2.5 py-0.5 font-mono text-[11px] text-gray-600" id="loadingTime">…</span>
+      </div>
     </div>
   </div>
 </footer>
 <script>
-  var before_loadtime = new Date().getTime();
-  window.onload = Pageloadtime;
-
-  function Pageloadtime() {
-    var aftr_loadtime = new Date().getTime();
-    // Time calculating in seconds  
-    pgloadtime = (aftr_loadtime - before_loadtime) / 1000
-
-    document.getElementById("loadingTime").innerHTML = pgloadtime + "s";
-  }
+  (function () {
+    document.getElementById('footerYear').textContent = new Date().getFullYear();
+    var startedAt = window.__pageStartedAt || performance.timing.navigationStart || Date.now();
+    var loadEl = document.getElementById('loadingTime');
+    function paintLoadTime() {
+      var t = (Date.now() - startedAt) / 1000;
+      if (loadEl) loadEl.textContent = t.toFixed(2) + 's';
+    }
+    if (document.readyState === 'complete') paintLoadTime();
+    else window.addEventListener('load', paintLoadTime);
+  })();
 </script>
