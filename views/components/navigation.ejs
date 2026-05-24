@@ -89,9 +89,31 @@
     }
   }
 </style>
+<style>
+  @media (max-width: 767px) {
+    body {
+      padding-top: <% if (settings.testing == true) { %>7.5rem<% } else { %>4.5rem<% } %>;
+    }
+  }
+</style>
 <div id="spinner" class="spinner mt-2 mr-2"></div>
+
+<!-- Mobile Topbar -->
+<header class="md:hidden fixed top-0 left-0 right-0 z-30 bg-white/90 backdrop-blur border-b border-gray-200 px-4 py-3 flex items-center justify-between <% if (settings.testing == true) { %>mt-12<% } %>">
+  <div class="flex items-center gap-3">
+    <button id="sidebarToggle" type="button" class="inline-flex items-center justify-center w-10 h-10 rounded-xl text-gray-600 hover:bg-gray-100 transition">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+      </svg>
+    </button>
+    <span class="text-gray-800 text-base font-semibold tracking-tight"><%= settings.name %></span>
+  </div>
+</header>
+<!-- Mobile Sidebar Backdrop -->
+<div id="sidebarBackdrop" class="md:hidden fixed inset-0 bg-gray-900/40 backdrop-blur-sm z-30 hidden transition-opacity opacity-0"></div>
+
 <!-- Static sidebar for desktop -->
-<aside class="<% if (settings.testing == true) { %>mt-12 <% } %> flex-shrink-0 w-64 bg-gray-100 border-r border-gray-200 flex md:flex flex-col h-screen z-40 transition-all duration-300">
+<aside id="sidebar" class="<% if (settings.testing == true) { %>md:mt-12 <% } %> fixed md:relative inset-y-0 left-0 -translate-x-full md:translate-x-0 flex-shrink-0 w-64 bg-gray-100 border-r border-gray-200 flex flex-col h-screen z-40 transition-transform duration-300 ease-out">
   <!-- This is so that the testing alert isn't in the way of the sidebar -->
   <!-- Sidebar component, swap this element with another sidebar if you like -->
   <div class="flex-1 flex flex-col min-h-0">
@@ -111,7 +133,7 @@
           <a href="#" class="flex-shrink-0 w-full group block">
             <div class="flex items-center">
               <div>
-                <img class="inline-block h-9 w-9 rounded-xl" src="https://cdn.discordapp.com/avatars/<%= userinfo.id %>/<%= userinfo.avatar %>?size=256" alt="">
+                <img class="inline-block h-9 w-9 rounded-xl" src="<%= userinfo.avatar ? `https://cdn.discordapp.com/avatars/${userinfo.id}/${userinfo.avatar}?size=256` : `https://cdn.discordapp.com/embed/avatars/${parseInt(userinfo.id) % 6}.png` %>" alt="">
               </div>
               <div class="ml-3 overflow-hidden">
                 <p class="text-sm font-semibold text-gray-800 truncate" title="<%= userinfo.global_name %>"><%= userinfo.global_name %></p>
@@ -131,7 +153,7 @@
             <div class="flex items-center justify-between">
               <div class="flex items-center">
                 <div>
-                  <img class="inline-block h-9 w-9 rounded-xl" src="https://cdn.discordapp.com/avatars/<%= userinfo.id %>/<%= userinfo.avatar %>?size=256" alt="">
+                  <img class="inline-block h-9 w-9 rounded-xl" src="<%= userinfo.avatar ? `https://cdn.discordapp.com/avatars/${userinfo.id}/${userinfo.avatar}?size=256` : `https://cdn.discordapp.com/embed/avatars/${parseInt(userinfo.id) % 6}.png` %>" alt="">
                 </div>
                 <div class="ml-3 overflow-hidden">
                   <p class="text-sm font-semibold text-gray-800 truncate" title="<%= userinfo.global_name %>"><%= userinfo.global_name %></p>
@@ -446,3 +468,25 @@
     /* Show the modal content when it has the 'visible' class */
   }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const sidebar = document.getElementById('sidebar');
+    const toggle = document.getElementById('sidebarToggle');
+    const backdrop = document.getElementById('sidebarBackdrop');
+    
+    if(toggle && sidebar && backdrop) {
+      toggle.addEventListener('click', () => {
+        sidebar.classList.toggle('-translate-x-full');
+        backdrop.classList.toggle('hidden');
+        setTimeout(() => backdrop.classList.toggle('opacity-0'), 10);
+      });
+      
+      backdrop.addEventListener('click', () => {
+        sidebar.classList.add('-translate-x-full');
+        backdrop.classList.add('opacity-0');
+        setTimeout(() => backdrop.classList.add('hidden'), 300);
+      });
+    }
+  });
+</script>

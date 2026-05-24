@@ -124,24 +124,4 @@
     });
   }
 
-  ],
-        duration: 2200,
-        easing: 'easeInOutCubic',
-        complete: () => {
-          idx = (idx + 1) % shapes.length;
-          setTimeout(run, 1600);
-        }
-      });
-    };
-
-    // Tiny intro scale/fade so it feels intentional, not noisy
-    anime({
-      targets: '#brand-morph',
-      opacity: [0, 1],
-      scale: [0.9, 1],
-      duration: 500,
-      easing: 'easeOutQuad',
-      complete: () => setTimeout(run, 1200)
-    });
-  }
 })();

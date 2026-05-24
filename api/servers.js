@@ -279,9 +279,34 @@ module.exports.load = async function (app, db) {
             );
             await serverinfo;
             if (serverinfo.statusText !== "Created") {
-              console.log(await serverinfo.text());
+              let errorBody = await serverinfo.text();
+              console.log(errorBody);
+
+              let errorDetail = "Unknown panel error";
+              try {
+                let parsedError = JSON.parse(errorBody);
+                if (
+                  parsedError &&
+                  parsedError.errors &&
+                  parsedError.errors[0] &&
+                  parsedError.errors[0].detail
+                ) {
+                  errorDetail = parsedError.errors[0].detail;
+                } else if (parsedError.error) {
+                  errorDetail = parsedError.error;
+                }
+              } catch {
+                if (typeof errorBody == "string" && errorBody.trim().length > 0) {
+                  errorDetail = errorBody.trim().slice(0, 300);
+                }
+              }
+
               cb();
-              return res.redirect(`${redirectlink}?err=ERRORONCREATE`);
+              return res.redirect(
+                `${redirectlink}?err=ERRORONCREATE&detail=${encodeURIComponent(
+                  errorDetail
+                )}`
+              );
             }
             let serverinfotext = await serverinfo.json();
             let newpterodactylinfo = req.session.pterodactyl;
