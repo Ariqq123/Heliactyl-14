@@ -15,6 +15,7 @@ const fs = require("fs");
 const getPteroUser = require("../misc/getPteroUser");
 const Queue = require("../managers/Queue");
 const log = require("../misc/log");
+const csrf = require("../misc/csrf");
 
 if (settings.pterodactyl)
   if (settings.pterodactyl.domain) {
@@ -25,6 +26,7 @@ if (settings.pterodactyl)
 module.exports.load = async function (app, db) {
   app.get("/updateinfo", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect("/login");
+    if (!csrf.verify(req)) return res.redirect("/profile?err=CSRF");
     const cacheaccount = await getPteroUser(req.session.userinfo.id, db).catch(
       () => {
         return res.send(
@@ -34,15 +36,25 @@ module.exports.load = async function (app, db) {
     );
     if (!cacheaccount) return;
     req.session.pterodactyl = cacheaccount.attributes;
-    if (req.query.redirect)
-      if (typeof req.query.redirect == "string")
-        return res.redirect("/" + req.query.redirect);
+    if (req.query.redirect && typeof req.query.redirect === "string") {
+      const target = req.query.redirect;
+      // Only allow same-origin paths: must start with a single slash and not
+      // be protocol-relative (//) or include a scheme.
+      if (
+        !target.startsWith("/") &&
+        !target.startsWith("\\") &&
+        !target.includes("://")
+      ) {
+        return res.redirect("/" + target);
+      }
+    }
     res.redirect("/servers");
   });
 
   const queue = new Queue();
   app.get("/create", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect("/login");
+    if (!csrf.verify(req)) return res.redirect("/servers/new?err=CSRF");
 
     let theme = indexjs.get(req);
 
@@ -339,6 +351,7 @@ module.exports.load = async function (app, db) {
 
   app.get("/modify", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect("/login");
+    if (!csrf.verify(req)) return res.redirect("/servers?err=CSRF");
 
     let theme = indexjs.get(req);
 
@@ -545,6 +558,7 @@ module.exports.load = async function (app, db) {
 
   app.get("/delete", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect("/login");
+    if (!csrf.verify(req)) return res.redirect("/servers?err=CSRF");
 
     if (!req.query.id) return res.send("Missing id.");
 

@@ -113,7 +113,7 @@ module.exports.load = async function (app, db) {
 
     let ip =
       newsettings.api.client.oauth2.ip["trust x-forwarded-for"] == true
-        ? req.headers["x-forwarded-for"] || req.connection.remoteAddress
+        ? (req.ip || req.connection.remoteAddress)
         : req.connection.remoteAddress;
     ip = (ip ? ip : "::1")
       .replace(/::1/g, "::ffff:127.0.0.1")
@@ -210,7 +210,7 @@ module.exports.load = async function (app, db) {
             );
             return;
           } else if (!ipuser) {
-            await db.set(`ipuser-${ip}`, userinfo.id);
+            await db.set(`ipuser-${ip}`, userinfo.id, 1000 * 60 * 60 * 24 * 30);
           }
         }
 

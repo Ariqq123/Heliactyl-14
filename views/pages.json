@@ -63,7 +63,9 @@
     "/servers",
     "/store",
     "/coins",
-    "/afk"
+    "/afk",
+    "/profile",
+    "/transfer"
   ],
   "mustbeadmin": [
     "/admin",

@@ -106,11 +106,12 @@
           </div>
 
           <script>
+            const __csrf = "<%= csrfToken %>";
             function updatePtero() {
               const url = 'https://' + document.getElementById('url').value;
               const key = document.getElementById('key').value;
-              fetch(`/settings/update?setting=pterodactyl.domain&value=${encodeURIComponent(url)}`)
-                .then(r => r.ok ? fetch(`/settings/update?setting=pterodactyl.key&value=${encodeURIComponent(key)}`) : Promise.reject())
+              fetch(`/settings/update?setting=pterodactyl.domain&value=${encodeURIComponent(url)}&token=${__csrf}`)
+                .then(r => r.ok ? fetch(`/settings/update?setting=pterodactyl.key&value=${encodeURIComponent(key)}&token=${__csrf}`) : Promise.reject())
                 .then(r => r.ok ? window.location.href = '/settings?err=none' : Promise.reject())
                 .catch(() => alert('Failed to update Pterodactyl settings'));
             }
@@ -119,9 +120,9 @@
               const id = document.getElementById('cID').value;
               const secret = document.getElementById('cSecret').value;
               const url = 'https://' + (document.getElementById('callbackUrl').value).replace('/callback', '');
-              fetch(`/settings/update?setting=api.client.oauth2.id&value=${encodeURIComponent(id)}`)
-                .then(r => r.ok ? fetch(`/settings/update?setting=api.client.oauth2.secret&value=${encodeURIComponent(secret)}`) : Promise.reject())
-                .then(r => r.ok ? fetch(`/settings/update?setting=api.client.oauth2.link&value=${encodeURIComponent(url)}`) : Promise.reject())
+              fetch(`/settings/update?setting=api.client.oauth2.id&value=${encodeURIComponent(id)}&token=${__csrf}`)
+                .then(r => r.ok ? fetch(`/settings/update?setting=api.client.oauth2.secret&value=${encodeURIComponent(secret)}&token=${__csrf}`) : Promise.reject())
+                .then(r => r.ok ? fetch(`/settings/update?setting=api.client.oauth2.link&value=${encodeURIComponent(url)}&token=${__csrf}`) : Promise.reject())
                 .then(r => r.ok ? window.location.href = '/settings?err=none' : Promise.reject())
                 .catch(() => alert('Failed to update OAuth2 settings'));
             }

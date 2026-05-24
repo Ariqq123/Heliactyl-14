@@ -162,7 +162,7 @@
               let disk = encodeURIComponent(document.getElementById("disk").value);
               let cpu = encodeURIComponent(document.getElementById("cpu").value);
               let location = encodeURIComponent(document.getElementById("location").value);
-              document.location.href = `/create?name=${name}&egg=${egg}&ram=${ram*1024}&disk=${disk*1024}&cpu=${cpu*100}&location=${location}`;
+              document.location.href = `/create?name=${name}&egg=${egg}&ram=${ram*1024}&disk=${disk*1024}&cpu=${cpu*100}&location=${location}&token=<%= csrfToken %>`;
             }
           </script>
           <% } else { %>

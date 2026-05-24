@@ -5,12 +5,14 @@ const fs = require("fs");
 const ejs = require("ejs");
 const log = require("../misc/log");
 const Queue = require("../managers/Queue.js");
+const csrf = require("../misc/csrf");
 
 const storeQueue = new Queue();
 
 module.exports.load = async function (app, db) {
   app.get("/buy", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect("/login");
+    if (!csrf.verify(req)) return res.redirect("/store?err=CSRF");
 
     let newsettings = await enabledCheck(req, res);
     if (!newsettings) return;
@@ -37,6 +39,11 @@ module.exports.load = async function (app, db) {
         const { per, cost } = newsettings.api.client.coins.store[type];
         const purchaseCost = cost * parsedAmount;
 
+        if (!Number.isFinite(purchaseCost) || purchaseCost < 0) {
+          cb();
+          return res.redirect(`${failedCallbackPath}?err=CANNOTAFFORD`);
+        }
+
         if (userCoins < purchaseCost) {
           cb();
           return res.redirect(`${failedCallbackPath}?err=CANNOTAFFORD`);
@@ -45,6 +52,15 @@ module.exports.load = async function (app, db) {
         const newUserCoins = userCoins - purchaseCost;
         const newResourceCap = resourceCap + parsedAmount;
         const extraResource = per * parsedAmount;
+
+        if (
+          !Number.isFinite(newUserCoins) ||
+          newUserCoins < 0 ||
+          !Number.isFinite(newResourceCap)
+        ) {
+          cb();
+          return res.redirect(`${failedCallbackPath}?err=CANNOTAFFORD`);
+        }
 
         if (newUserCoins === 0) {
           await db.delete(`coins-${req.session.userinfo.id}`);

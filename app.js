@@ -53,6 +53,7 @@ const defaultthemesettings = {
 module.exports.renderdataeval = `(async () => {
    const JavaScriptObfuscator = require('javascript-obfuscator');
    const actionLog = require('./misc/log');
+   const csrf = require('./misc/csrf');
    let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));
     let renderdata = {
       req: req,
@@ -71,6 +72,7 @@ module.exports.renderdataeval = `(async () => {
       x: 'aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1wVGZKZm5pUUZTOA==',
       pterodactyl: req.session.pterodactyl,
       extra: theme.settings.variables,
+      csrfToken: csrf.getToken(req),
     db: db
     };
      renderdata.arcioafktext = JavaScriptObfuscator.obfuscate(\`

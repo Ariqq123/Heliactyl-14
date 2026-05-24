@@ -12,6 +12,8 @@ const fs = require("fs");
 const indexjs = require("../app.js");
 const fetch = require("node-fetch");
 const Queue = require("../managers/Queue");
+const log = require("../misc/log");
+const csrf = require("../misc/csrf");
 
 module.exports.load = async function (app, db) {
   app.get("/panel", async (req, res) => {
@@ -20,6 +22,7 @@ module.exports.load = async function (app, db) {
 
   app.get("/regen", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect("/login");
+    if (!csrf.verify(req)) return res.redirect("/security?err=CSRF");
 
     let newsettings = JSON.parse(fs.readFileSync("./settings.json"));
 
@@ -57,6 +60,7 @@ module.exports.load = async function (app, db) {
 
   app.get("/delete_my_account", async (req, res) => {
     if (!req.session.pterodactyl || !req.session.userinfo) return res.redirect("/login");
+    if (!csrf.verify(req)) return res.redirect("/security?err=CSRF");
 
     const discordid = req.session.userinfo.id;
     const pteroid = await db.get("users-" + discordid);
@@ -107,44 +111,70 @@ module.exports.load = async function (app, db) {
   const queue = new Queue();
 
   app.get("/transfercoins", async (req, res) => {
-    if (!req.session.pterodactyl) return res.redirect("/");
+    if (!req.session.pterodactyl || !req.session.userinfo)
+      return res.redirect("/");
+    if (!csrf.verify(req)) return res.redirect("/transfer?err=CSRF");
 
-    const coins = parseInt(req.query.coins);
-    if (!req.query.id || isNaN(coins))
+    const coins = parseFloat(req.query.coins);
+    if (!req.query.id || !Number.isFinite(coins))
       return res.redirect("/transfer?err=MISSINGFIELDS");
-      
-    if (req.query.id === req.session.userinfo.id)
+
+    const targetId = String(req.query.id);
+    if (targetId === String(req.session.userinfo.id))
       return res.redirect("/transfer?err=CANNOTGIFTYOURSELF");
 
     if (coins < 1) return res.redirect("/transfer?err=TOOLOWCOINS");
+    if (coins > 999999999999999)
+      return res.redirect("/transfer?err=TOOLOWCOINS");
 
     queue.addJob(async (cb) => {
-      const usercoins = parseInt(await db.get("coins-" + req.session.userinfo.id)) || 0;
-      const othercoins = parseInt(await db.get("coins-" + req.query.id)) || 0;
-      
-      const targetUser = await db.get("users-" + req.query.id);
-      if (!targetUser) {
-        cb();
-        return res.redirect("/transfer?err=USERDOESNTEXIST");
-      }
-      
-      if (usercoins < coins) {
-        cb();
-        return res.redirect("/transfer?err=CANTAFFORD");
-      }
+      try {
+        const usercoins = parseFloat(await db.get("coins-" + req.session.userinfo.id)) || 0;
+        const othercoins = parseFloat(await db.get("coins-" + targetId)) || 0;
 
-      await db.set("coins-" + req.query.id, othercoins + coins);
-      await db.set("coins-" + req.session.userinfo.id, usercoins - coins);
+        const targetUser = await db.get("users-" + targetId);
+        if (!targetUser) {
+          cb();
+          return res.redirect("/transfer?err=USERDOESNTEXIST");
+        }
 
-      log(
-        "Gifted Coins",
-        `${req.session.userinfo.username}#${req.session.userinfo.discriminator} sent ${coins} coins to the user with the ID \`${req.query.id}\`.`,
-        req.cid
-      );
-      cb();
-      return res.redirect("/transfer?err=none");
+        if (usercoins < coins) {
+          cb();
+          return res.redirect("/transfer?err=CANTAFFORD");
+        }
+
+        const newSender = usercoins - coins;
+        const newRecipient = othercoins + coins;
+        if (
+          !Number.isFinite(newSender) ||
+          !Number.isFinite(newRecipient) ||
+          newSender < 0 ||
+          newRecipient > 999999999999999
+        ) {
+          cb();
+          return res.redirect("/transfer?err=TOOLOWCOINS");
+        }
+
+        await db.set("coins-" + targetId, newRecipient);
+        if (newSender === 0) {
+          await db.delete("coins-" + req.session.userinfo.id);
+        } else {
+          await db.set("coins-" + req.session.userinfo.id, newSender);
+        }
+
+        log(
+          "Gifted Coins",
+          `${req.session.userinfo.username}#${req.session.userinfo.discriminator} sent ${coins} coins to the user with the ID \`${targetId}\`.`,
+          req.cid
+        );
+        cb();
+        return res.redirect("/transfer?err=none");
+      } catch (e) {
+        console.error("transfercoins error", e);
+        cb();
+        if (!res.headersSent) res.redirect("/transfer?err=INTERNAL");
+      }
     });
-  });
   });
 };
 

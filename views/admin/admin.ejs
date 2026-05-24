@@ -173,10 +173,11 @@
           </div>
 
           <script>
+            const __csrf = "<%= csrfToken %>";
             function addCoins() {
               let id = encodeURIComponent(document.getElementById('id1').value);
               let amount = encodeURIComponent(document.getElementById('amount1').value);
-              document.location.href = '/addcoins?id=' + id + '&coins=' + amount;
+              document.location.href = '/addcoins?id=' + id + '&coins=' + amount + '&token=' + __csrf;
             }
             function addResources() {
               let id = encodeURIComponent(document.getElementById('id2').value);
@@ -184,12 +185,12 @@
               let memory = encodeURIComponent(document.getElementById('memory').value * 1024);
               let storage = encodeURIComponent(document.getElementById('storage').value * 1024);
               let servers = encodeURIComponent(document.getElementById('servers').value);
-              document.location.href = '/addresources?id=' + id + '&cpu=' + cpu + '&ram=' + memory + '&disk=' + storage + '&servers=' + servers;
+              document.location.href = '/addresources?id=' + id + '&cpu=' + cpu + '&ram=' + memory + '&disk=' + storage + '&servers=' + servers + '&token=' + __csrf;
             }
             function removeAccount() {
               if (!confirm('Are you sure you want to permanently delete this account?')) return;
               let id = encodeURIComponent(document.getElementById('id3').value);
-              document.location.href = '/remove_account?id=' + id;
+              document.location.href = '/remove_account?id=' + id + '&token=' + __csrf;
             }
           </script>
 

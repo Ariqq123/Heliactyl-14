@@ -22,6 +22,7 @@ const adminjs = require("./admin.js");
 const ejs = require("ejs");
 const log = require("../misc/log");
 const Queue = require("../managers/Queue.js");
+const csrf = require("../misc/csrf");
 
 const adminQueue = new Queue();
 
@@ -31,6 +32,7 @@ module.exports.load = async function (app, db) {
     if (!req.session.pterodactyl || !req.session.pterodactyl.root_admin) {
       return res.status(403).send("Unauthorized");
     }
+    if (!csrf.verify(req)) return res.status(403).send("Invalid or missing CSRF token.");
 
     const setting = req.query.setting;
     const value = req.query.value;
@@ -89,6 +91,8 @@ module.exports.load = async function (app, db) {
       return four0four(req, res, theme);
 
     let failredirect = theme.settings.redirect.failedsetcoins || "/";
+
+    if (!csrf.verify(req)) return res.redirect(`${failredirect}?err=CSRF`);
 
     let id = req.query.id;
     let coins = req.query.coins;
@@ -161,6 +165,8 @@ module.exports.load = async function (app, db) {
       return four0four(req, res, theme);
 
     let failredirect = theme.settings.redirect.failedsetcoins || "/";
+
+    if (!csrf.verify(req)) return res.redirect(`${failredirect}?err=CSRF`);
 
     let id = req.query.id;
     let coins = req.query.coins;
@@ -238,6 +244,8 @@ module.exports.load = async function (app, db) {
       return four0four(req, res, theme);
 
     let failredirect = theme.settings.redirect.failedsetresources || "/";
+
+    if (!csrf.verify(req)) return res.redirect(`${failredirect}?err=CSRF`);
 
     if (!req.query.id) return res.redirect(`${failredirect}?err=MISSINGID`);
 
@@ -365,6 +373,8 @@ module.exports.load = async function (app, db) {
       ? theme.settings.redirect.failedsetresources
       : "/";
 
+    if (!csrf.verify(req)) return res.redirect(`${failredirect}?err=CSRF`);
+
     if (!req.query.id) return res.redirect(`${failredirect}?err=MISSINGID`);
 
     if (!(await db.get("users-" + req.query.id)))
@@ -486,6 +496,8 @@ module.exports.load = async function (app, db) {
 
     let failredirect = theme.settings.redirect.failedsetplan || "/";
 
+    if (!csrf.verify(req)) return res.redirect(`${failredirect}?err=CSRF`);
+
     if (!req.query.id) return res.redirect(`${failredirect}?err=MISSINGID`);
 
     if (!(await db.get("users-" + req.query.id)))
@@ -493,30 +505,42 @@ module.exports.load = async function (app, db) {
 
     let successredirect = theme.settings.redirect.setplan || "/";
 
-    if (!req.query.package) {
-      await db.delete("package-" + req.query.id);
-      adminjs.suspend(req.query.id);
+    adminQueue.addJob(async (cb) => {
+      try {
+        if (!req.query.package) {
+          await db.delete("package-" + req.query.id);
+          adminjs.suspend(req.query.id).catch(err => console.error(err));
 
-      log(
-        `set plan`,
-        `${req.session.userinfo.username}#${req.session.userinfo.discriminator} removed the plan of the user with the ID \`${req.query.id}\`.`
-      );
-      return res.redirect(successredirect + "?err=none");
-    } else {
-      let newsettings = JSON.parse(
-        fs.readFileSync("./settings.json").toString()
-      );
-      if (!newsettings.api.client.packages.list[req.query.package])
-        return res.redirect(`${failredirect}?err=INVALIDPACKAGE`);
-      await db.set("package-" + req.query.id, req.query.package);
-      adminjs.suspend(req.query.id);
+          log(
+            `set plan`,
+            `[cid:${req.cid || "-"}] ${req.session.userinfo.username}#${req.session.userinfo.discriminator} removed the plan of the user with the ID \`${req.query.id}\`.`
+          );
+          cb();
+          return res.redirect(successredirect + "?err=none");
+        }
 
-      log(
-        `set plan`,
-        `${req.session.userinfo.username}#${req.session.userinfo.discriminator} set the plan of the user with the ID \`${req.query.id}\` to \`${req.query.package}\`.`
-      );
-      return res.redirect(successredirect + "?err=none");
-    }
+        let newsettings = JSON.parse(
+          fs.readFileSync("./settings.json").toString()
+        );
+        if (!newsettings.api.client.packages.list[req.query.package]) {
+          cb();
+          return res.redirect(`${failredirect}?err=INVALIDPACKAGE`);
+        }
+        await db.set("package-" + req.query.id, req.query.package);
+        adminjs.suspend(req.query.id).catch(err => console.error(err));
+
+        log(
+          `set plan`,
+          `[cid:${req.cid || "-"}] ${req.session.userinfo.username}#${req.session.userinfo.discriminator} set the plan of the user with the ID \`${req.query.id}\` to \`${req.query.package}\`.`
+        );
+        cb();
+        return res.redirect(successredirect + "?err=none");
+      } catch (e) {
+        console.error("setplan error", e);
+        cb();
+        if (!res.headersSent) res.redirect(failredirect + "?err=INTERNAL");
+      }
+    });
   });
 
   app.get("/create_coupon", async (req, res) => {
@@ -544,6 +568,11 @@ module.exports.load = async function (app, db) {
     req.session.pterodactyl = cacheaccountinfo.attributes;
     if (cacheaccountinfo.attributes.root_admin !== true)
       return four0four(req, res, theme);
+
+    if (!csrf.verify(req))
+      return res.redirect(
+        (theme.settings.redirect.couponcreationfailed || "/") + "?err=CSRF"
+      );
 
     let code = req.query.code
       ? req.query.code.slice(0, 200)
@@ -641,9 +670,14 @@ module.exports.load = async function (app, db) {
     if (cacheaccountinfo.attributes.root_admin !== true)
       return four0four(req, res, theme);
 
+    if (!csrf.verify(req))
+      return res.redirect(
+        (theme.settings.redirect.couponrevokefailed || "/") + "?err=CSRF"
+      );
+
     let code = req.query.code;
 
-    if (!code.match(/^[a-z0-9]+$/i))
+    if (!code || !code.match(/^[a-z0-9]+$/i))
       return res.redirect(
         theme.settings.redirect.couponrevokefailed +
           "?err=REVOKECOUPONCANNOTFINDCODE"
@@ -691,6 +725,11 @@ module.exports.load = async function (app, db) {
     req.session.pterodactyl = cacheaccountinfo.attributes;
     if (cacheaccountinfo.attributes.root_admin !== true)
       return four0four(req, res, theme);
+
+    if (!csrf.verify(req))
+      return res.redirect(
+        (theme.settings.redirect.removeaccountfailed || "/") + "?err=CSRF"
+      );
 
     // This doesn't delete the account and doesn't touch the renewal system.
 

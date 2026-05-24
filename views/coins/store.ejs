@@ -133,10 +133,10 @@
           </div>
 
           <script>
-            function buyRAM(){ document.location.href = `/buy?type=ram&amount=${encodeURIComponent(document.getElementById('ram').value)}`; }
-            function buyCPU(){ document.location.href = `/buy?type=cpu&amount=${encodeURIComponent(document.getElementById('cpu').value)}`; }
-            function buyDisk(){ document.location.href = `/buy?type=disk&amount=${encodeURIComponent(document.getElementById('disk').value)}`; }
-            function buyServers(){ document.location.href = `/buy?type=servers&amount=${encodeURIComponent(document.getElementById('servers').value)}`; }
+            function buyRAM(){ document.location.href = `/buy?type=ram&amount=${encodeURIComponent(document.getElementById('ram').value)}&token=<%= csrfToken %>`; }
+            function buyCPU(){ document.location.href = `/buy?type=cpu&amount=${encodeURIComponent(document.getElementById('cpu').value)}&token=<%= csrfToken %>`; }
+            function buyDisk(){ document.location.href = `/buy?type=disk&amount=${encodeURIComponent(document.getElementById('disk').value)}&token=<%= csrfToken %>`; }
+            function buyServers(){ document.location.href = `/buy?type=servers&amount=${encodeURIComponent(document.getElementById('servers').value)}&token=<%= csrfToken %>`; }
           </script>
 
         </div>

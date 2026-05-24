@@ -59,7 +59,7 @@
                       <% if (req.session.password) { %>
                       <a href="../security" class="inline-flex items-center rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">Hide Password</a>
                       <% } else { %>
-                      <a href="../regen" class="inline-flex items-center rounded-xl bg-rose-600 px-4 py-2 text-sm font-medium text-white hover:bg-rose-700 transition-colors">Show Password</a>
+                      <a href="../regen?token=<%= csrfToken %>" class="inline-flex items-center rounded-xl bg-rose-600 px-4 py-2 text-sm font-medium text-white hover:bg-rose-700 transition-colors">Show Password</a>
                       <% } %>
                     </div>
                   </div>
@@ -125,7 +125,7 @@
               if (confirmed) {
                 const finalConfirm = prompt("Type DELETE (in capital letters) to confirm account deletion:");
                 if (finalConfirm === "DELETE") {
-                  window.location.href = "/delete_my_account";
+                  window.location.href = "/delete_my_account?token=<%= csrfToken %>";
                 } else {
                   alert("Account deletion cancelled. The text did not match.");
                 }

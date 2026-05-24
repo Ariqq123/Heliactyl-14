@@ -94,10 +94,11 @@
           </div>
 
           <script>
+            const __csrf = "<%= csrfToken %>";
             function submitForm(){
               let id = encodeURIComponent(document.getElementById('dc').value);
               let coins = encodeURIComponent(document.getElementById('amount').value);
-              document.location.href = `/giftcoins?id=${id}&coins=${coins}`;
+              document.location.href = `/transfercoins?id=${id}&coins=${coins}&token=${__csrf}`;
             }
           </script>
         </div>

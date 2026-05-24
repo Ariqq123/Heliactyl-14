@@ -42,7 +42,7 @@
                     <p class="mt-1 text-sm text-gray-500">Adjust resource limits or remove this server.</p>
                   </div>
                 </div>
-                <a href="../delete?id=<%= req.query.id %>" class="mt-6 lg:mt-0 inline-flex items-center rounded-xl bg-rose-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-rose-700 transition-colors">Delete Server</a>
+                <a href="../delete?id=<%= req.query.id %>&token=<%= csrfToken %>" class="mt-6 lg:mt-0 inline-flex items-center rounded-xl bg-rose-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-rose-700 transition-colors">Delete Server</a>
               </div>
             </div>
 
@@ -109,7 +109,7 @@
                 let ram = encodeURIComponent(document.getElementById("ram").value);
                 let disk = encodeURIComponent(document.getElementById("disk").value);
                 let cpu = encodeURIComponent(document.getElementById("cpu").value);
-                document.location.href = `/modify?id=<%= req.query.id %>&ram=${ram*1024}&disk=${disk*1024}&cpu=${cpu*100}`;
+                document.location.href = `/modify?id=<%= req.query.id %>&ram=${ram*1024}&disk=${disk*1024}&cpu=${cpu*100}&token=<%= csrfToken %>`;
               }
             </script>
             <% } else { %>
