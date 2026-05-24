@@ -4,6 +4,9 @@ const settings = require("../settings.json");
 const fs = require("fs");
 const ejs = require("ejs");
 const log = require("../misc/log");
+const Queue = require("../managers/Queue.js");
+
+const storeQueue = new Queue();
 
 module.exports.load = async function (app, db) {
   app.get("/buy", async (req, res) => {
@@ -26,55 +29,65 @@ module.exports.load = async function (app, db) {
     const failedCallbackPath =
       theme.settings.redirect[`failedpurchase${type}`] || "/";
 
-    const userCoins = (await db.get(`coins-${req.session.userinfo.id}`)) || 0;
-    const resourceCap =
-      (await db.get(`${type}-${req.session.userinfo.id}`)) || 0;
+    storeQueue.addJob(async (cb) => {
+      try {
+        const userCoins = parseFloat(await db.get(`coins-${req.session.userinfo.id}`)) || 0;
+        const resourceCap = parseFloat(await db.get(`${type}-${req.session.userinfo.id}`)) || 0;
 
-    const { per, cost } = newsettings.api.client.coins.store[type];
-    const purchaseCost = cost * parsedAmount;
+        const { per, cost } = newsettings.api.client.coins.store[type];
+        const purchaseCost = cost * parsedAmount;
 
-    if (userCoins < purchaseCost)
-      return res.redirect(`${failedCallbackPath}?err=CANNOTAFFORD`);
+        if (userCoins < purchaseCost) {
+          cb();
+          return res.redirect(`${failedCallbackPath}?err=CANNOTAFFORD`);
+        }
 
-    const newUserCoins = userCoins - purchaseCost;
-    const newResourceCap = resourceCap + parsedAmount;
-    const extraResource = per * parsedAmount;
+        const newUserCoins = userCoins - purchaseCost;
+        const newResourceCap = resourceCap + parsedAmount;
+        const extraResource = per * parsedAmount;
 
-    if (newUserCoins === 0) {
-      await db.delete(`coins-${req.session.userinfo.id}`);
-      await db.set(`${type}-${req.session.userinfo.id}`, newResourceCap);
-    } else {
-      await db.set(`coins-${req.session.userinfo.id}`, newUserCoins);
-      await db.set(`${type}-${req.session.userinfo.id}`, newResourceCap);
-    }
+        if (newUserCoins === 0) {
+          await db.delete(`coins-${req.session.userinfo.id}`);
+        } else {
+          await db.set(`coins-${req.session.userinfo.id}`, newUserCoins);
+        }
+        await db.set(`${type}-${req.session.userinfo.id}`, newResourceCap);
 
-    let extra = (await db.get(`extra-${req.session.userinfo.id}`)) || {
-      ram: 0,
-      disk: 0,
-      cpu: 0,
-      servers: 0,
-    };
+        let extra = (await db.get(`extra-${req.session.userinfo.id}`)) || {
+          ram: 0,
+          disk: 0,
+          cpu: 0,
+          servers: 0,
+        };
 
-    extra[type] += extraResource;
+        extra[type] += extraResource;
 
-    if (Object.values(extra).every((v) => v === 0)) {
-      await db.delete(`extra-${req.session.userinfo.id}`);
-    } else {
-      await db.set(`extra-${req.session.userinfo.id}`, extra);
-    }
+        if (Object.values(extra).every((v) => v === 0)) {
+          await db.delete(`extra-${req.session.userinfo.id}`);
+        } else {
+          await db.set(`extra-${req.session.userinfo.id}`, extra);
+        }
 
-    adminjs.suspend(req.session.userinfo.id);
+        adminjs.suspend(req.session.userinfo.id);
 
-    log(
-      `Resources Purchased`,
-      `${req.session.userinfo.username}#${req.session.userinfo.discriminator} bought ${extraResource} ${type} from the store for \`${purchaseCost}\` coins.`
-    );
+        log(
+          `Resources Purchased`,
+          `${req.session.userinfo.username}#${req.session.userinfo.discriminator} bought ${extraResource} ${type} from the store for \`${purchaseCost}\` coins.`,
+          req.cid
+        );
 
-    res.redirect(
-      (theme.settings.redirect[`purchase${type}`]
-        ? theme.settings.redirect[`purchase${type}`]
-        : "/") + "?err=none"
-    );
+        cb();
+        res.redirect(
+          (theme.settings.redirect[`purchase${type}`]
+            ? theme.settings.redirect[`purchase${type}`]
+            : "/") + "?err=none"
+        );
+      } catch (err) {
+        cb();
+        console.error(err);
+        res.send("An error occurred during purchase");
+      }
+    });
   });
 
   async function enabledCheck(req, res) {

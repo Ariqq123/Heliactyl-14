@@ -107,38 +107,44 @@ module.exports.load = async function (app, db) {
   const queue = new Queue();
 
   app.get("/transfercoins", async (req, res) => {
-    if (!req.session.pterodactyl) return res.redirect(`/`);
+    if (!req.session.pterodactyl) return res.redirect("/");
 
     const coins = parseInt(req.query.coins);
-    if (!coins || !req.query.id)
-      return res.redirect(`/transfer?err=MISSINGFIELDS`);
-    if (req.query.id.includes(`${req.session.userinfo.id}`))
-      return res.redirect(`/transfer?err=CANNOTGIFTYOURSELF`);
+    if (!req.query.id || isNaN(coins))
+      return res.redirect("/transfer?err=MISSINGFIELDS");
+      
+    if (req.query.id === req.session.userinfo.id)
+      return res.redirect("/transfer?err=CANNOTGIFTYOURSELF");
 
-    if (coins < 1) return res.redirect(`/transfer?err=TOOLOWCOINS`);
+    if (coins < 1) return res.redirect("/transfer?err=TOOLOWCOINS");
 
     queue.addJob(async (cb) => {
-      const usercoins = await db.get(`coins-${req.session.userinfo.id}`);
-      const othercoins = await db.get(`coins-${req.query.id}`);
-      if (!othercoins) {
+      const usercoins = parseInt(await db.get("coins-" + req.session.userinfo.id)) || 0;
+      const othercoins = parseInt(await db.get("coins-" + req.query.id)) || 0;
+      
+      const targetUser = await db.get("users-" + req.query.id);
+      if (!targetUser) {
         cb();
-        return res.redirect(`/transfer?err=USERDOESNTEXIST`);
+        return res.redirect("/transfer?err=USERDOESNTEXIST");
       }
+      
       if (usercoins < coins) {
         cb();
-        return res.redirect(`/transfer?err=CANTAFFORD`);
+        return res.redirect("/transfer?err=CANTAFFORD");
       }
 
-      await db.set(`coins-${req.query.id}`, othercoins + coins);
-      await db.set(`coins-${req.session.userinfo.id}`, usercoins - coins);
+      await db.set("coins-" + req.query.id, othercoins + coins);
+      await db.set("coins-" + req.session.userinfo.id, usercoins - coins);
 
       log(
         "Gifted Coins",
-        `${req.session.userinfo.username}#${req.session.userinfo.discriminator} sent ${coins}\ coins to the user with the ID \`${req.query.id}\`.`
+        `${req.session.userinfo.username}#${req.session.userinfo.discriminator} sent ${coins} coins to the user with the ID \`${req.query.id}\`.`,
+        req.cid
       );
       cb();
-      return res.redirect(`/transfer?err=none`);
+      return res.redirect("/transfer?err=none");
     });
+  });
   });
 };
 
