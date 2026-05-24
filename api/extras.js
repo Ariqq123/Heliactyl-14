@@ -94,7 +94,8 @@ module.exports.load = async function (app, db) {
 
     log(
       "Self Delete Account",
-      `${req.session.userinfo.username}#${req.session.userinfo.discriminator} removed their own account with the ID \`${discordid}\`.`
+      `${req.session.userinfo.username}#${req.session.userinfo.discriminator} removed their own account with the ID \`${discordid}\`.`,
+      req.cid
     );
 
     req.session.destroy(() => {

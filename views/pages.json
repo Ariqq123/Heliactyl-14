@@ -52,7 +52,8 @@
     "servers": "servers/servers.ejs",
     "accounts": "accounts.ejs",
     "admin": "admin/admin.ejs",
-    "settings": "admin/settings.ejs"
+    "settings": "admin/settings.ejs",
+    "logs": "admin/logs.ejs"
   },
   "mustbeloggedin": [
     "/dashboard",
@@ -66,6 +67,7 @@
   ],
   "mustbeadmin": [
     "/admin",
-    "/settings"
+    "/settings",
+    "/logs"
   ]
 }
