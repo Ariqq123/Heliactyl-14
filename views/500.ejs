@@ -1,30 +1,57 @@
 <html class="h-full">
-
 <head>
-  <title><%= settings.name %></title>
+  <title>500 - <%= settings.name %></title>
   <link rel="icon" type="image/x-icon" href="../assets/favicon.png">
   <link rel="stylesheet" href="../assets/tailwind.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
-
-  <!-- Inter font -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .bg-grid-pattern {
+      background-image: radial-gradient(circle at 1px 1px, rgb(203 213 225 / 0.4) 1px, transparent 0);
+      background-size: 24px 24px;
+    }
+  </style>
 </head>
+<body class="h-full bg-slate-50 antialiased relative overflow-hidden">
+  <!-- Subtle grid background -->
+  <div class="absolute inset-0 bg-grid-pattern pointer-events-none"></div>
+  <!-- Gradient blur blobs -->
+  <div class="absolute -top-24 -left-24 w-72 h-72 bg-rose-100 rounded-full blur-3xl opacity-40 pointer-events-none"></div>
+  <div class="absolute bottom-0 right-0 w-96 h-96 bg-amber-100 rounded-full blur-3xl opacity-30 pointer-events-none"></div>
 
-<body class="h-full bg-gray-100 p-12" style="font-family: 'Inter'">
-  <main class="grid min-h-full place-items-center px-6 py-24 sm:py-32 lg:px-8">
-    <div class="text-center">
-      <p class="text-base font-semibold text-gray-400">500</p>
-      <h1 class="mt-4 text-3xl font-bold tracking-tight text-gray-700 sm:text-5xl">Internal server error</h1>
-      <p class="mt-6 text-base leading-7 text-gray-600">This error was encountered on page render:</p>
-    </div>
-    <div class="bg-gray-300 px-8 py-2 w-3/4 mt-4 rounded-t-3xl text-gray-600"><span class="text-gray-600 text-xs font-semibold">Node.js process error on Heliactyl 14</span></div>
-    <pre class="text-xs bg-gray-200 pb-8 w-3/4 pl-8 pr-8 pt-2 mb-6 rounded-b-3xl text-gray-600"><%= err %></pre>
-    <div class="text-center">
+  <main class="relative grid min-h-full place-items-center px-6 py-24 sm:py-32 lg:px-8 z-10">
+    <div class="text-center w-full max-w-2xl">
+      <div class="inline-flex items-center justify-center bg-rose-100 text-rose-600 font-bold px-3 py-1 rounded-full text-sm mb-4">
+        Error 500
+      </div>
+      <h1 class="mt-2 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">Internal server error</h1>
+      <p class="mt-4 text-base leading-7 text-slate-500">This error was encountered during page render.</p>
+      
+      <div class="mt-8 text-left border border-slate-200/60 rounded-3xl overflow-hidden shadow-sm bg-white">
+        <div class="bg-slate-100 border-b border-slate-200/60 px-6 py-3 flex items-center">
+          <div class="flex space-x-2 mr-4">
+            <div class="w-3 h-3 rounded-full bg-rose-400"></div>
+            <div class="w-3 h-3 rounded-full bg-amber-400"></div>
+            <div class="w-3 h-3 rounded-full bg-emerald-400"></div>
+          </div>
+          <span class="text-slate-500 font-mono text-xs font-semibold">Node.js process error</span>
+        </div>
+        <div class="p-6 overflow-x-auto">
+          <pre class="text-xs font-mono text-slate-600 whitespace-pre-wrap break-words"><%= err %></pre>
+        </div>
+      </div>
+
       <div class="mt-10 flex items-center justify-center gap-x-6">
-        <a href="../dashboard" class="transition inline-flex items-center rounded-2xl bg-gray-200 px-8 py-2 text-sm font-medium text-gray-600 hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">Go back</a>
+        <a href="../dashboard" class="transition inline-flex items-center justify-center rounded-xl bg-slate-800 px-8 py-3 text-sm font-semibold text-white shadow-sm hover:bg-slate-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-800">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 mr-2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+          </svg>
+          Back to Dashboard
+        </a>
       </div>
     </div>
   </main>
 </body>
+</html>
