@@ -51,38 +51,8 @@ const defaultthemesettings = {
 };
 
 module.exports.renderdataeval = `(async () => {
-   const JavaScriptObfuscator = require('javascript-obfuscator');
-   const actionLog = require('./misc/log');
-   const csrf = require('./misc/csrf');
-   let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));
-    let renderdata = {
-      req: req,
-      settings: newsettings,
-      userinfo: req.session.userinfo,
-      packagename: req.session.userinfo ? await db.get("package-" + req.session.userinfo.id) ? await db.get("package-" + req.session.userinfo.id) : newsettings.api.client.packages.default : null,
-      extraresources: !req.session.userinfo ? null : (await db.get("extra-" + req.session.userinfo.id) ? await db.get("extra-" + req.session.userinfo.id) : {
-        ram: 0,
-        disk: 0,
-        cpu: 0,
-        servers: 0
-      }),
-    packages: req.session.userinfo ? newsettings.api.client.packages.list[await db.get("package-" + req.session.userinfo.id) ? await db.get("package-" + req.session.userinfo.id) : newsettings.api.client.packages.default] : null,
-      coins: newsettings.api.client.coins.enabled == true ? (req.session.userinfo ? (await db.get("coins-" + req.session.userinfo.id) ? await db.get("coins-" + req.session.userinfo.id) : 0) : null) : null,
-      logs: await actionLog.getRecent(500),
-      x: 'aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1wVGZKZm5pUUZTOA==',
-      pterodactyl: req.session.pterodactyl,
-      extra: theme.settings.variables,
-      csrfToken: csrf.getToken(req),
-    db: db
-    };
-     renderdata.arcioafktext = JavaScriptObfuscator.obfuscate(\`
-     let everywhat = \${newsettings.api.afk.every};
-     let gaincoins = \${newsettings.api.afk.coins};
-     let wspath = "ws";
-
-     \${arciotext}
-    \`);
-    return renderdata;
+   const { buildRenderData } = require('./misc/renderdata');
+   return await buildRenderData(req, db, theme);
   })();`;
 
 // Load database
@@ -129,6 +99,7 @@ if (cluster.isMaster) {
 
   // Load the website.
   module.exports.app = app;
+  const { buildRenderData } = require("./misc/renderdata");
 
   app.use((req, res, next) => {
     res.setHeader("X-Powered-By", "14th Gen Heliactyl (Cascade Ridge)");
@@ -164,6 +135,23 @@ if (cluster.isMaster) {
       verify: undefined,
     })
   );
+
+  // Per-request render data: build once after the session middleware, expose
+  // on req for handlers and on res.locals so templates can read variables
+  // without each route building its own data object. Static asset requests
+  // skip this to avoid a DB hit and a settings.json read on every image.
+  app.use(async (req, res, next) => {
+    if (req.path.startsWith("/assets/")) return next();
+    try {
+      const theme = indexjs.get(req);
+      const data = await buildRenderData(req, db, theme);
+      req.renderData = data;
+      Object.assign(res.locals, data);
+      next();
+    } catch (err) {
+      next(err);
+    }
+  });
 
   const listener = app.listen(settings.website.port, function () {
     console.log(
@@ -231,7 +219,7 @@ if (cluster.isMaster) {
     if (theme.settings.mustbeadmin.includes(req._parsedUrl.pathname)) {
       ejs.renderFile(
         `./views/${theme.settings.notfound}`,
-        await eval(indexjs.renderdataeval),
+        req.renderData,
         null,
         async function (err, str) {
           delete req.session.newaccount;
@@ -282,7 +270,7 @@ if (cluster.isMaster) {
                 ? theme.settings.pages[req._parsedUrl.pathname.slice(1)]
                 : theme.settings.notfound
             }`,
-            await eval(indexjs.renderdataeval),
+            await buildRenderData(req, db, theme),
             null,
             function (err, str) {
               delete req.session.newaccount;
@@ -299,7 +287,7 @@ if (cluster.isMaster) {
       );
       return;
     }
-    const data = await eval(indexjs.renderdataeval);
+    const data = req.renderData;
     ejs.renderFile(
       `./views/${
         theme.settings.pages[req._parsedUrl.pathname.slice(1)]
@@ -354,7 +342,7 @@ async function renderTemplate(theme, renderdataeval, req, res, db) {
   return new Promise(async (resolve, reject) => {
     ejs.renderFile(
       `./views/${theme.settings.index}`,
-      await eval(renderdataeval),
+      req.renderData || (await require("./misc/renderdata").buildRenderData(req, db, theme)),
       null,
       async function (err, str) {
         if (err) {

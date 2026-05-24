@@ -33,25 +33,7 @@ module.exports.load = async function (app, db) {
         return res.redirect("/login");
       }
 
-      if (theme.settings.mustbeadmin.includes(req._parsedUrl.pathname)) {
-        let str = await renderTemplate(
-          theme,
-          indexjs.renderdataeval,
-          req,
-          res,
-          db
-        );
-        res.send(str);
-        return;
-      }
-
-      let str = await renderTemplate(
-        theme,
-        indexjs.renderdataeval,
-        req,
-        res,
-        db
-      );
+      let str = await renderTemplate(theme, req, res, db);
       res.send(str);
     } catch (err) {
       console.log(err);
@@ -62,11 +44,11 @@ module.exports.load = async function (app, db) {
   app.use("/assets", express.static("./assets"));
 };
 
-async function renderTemplate(theme, renderdataeval, req, res, db) {
+async function renderTemplate(theme, req, res, db) {
   return new Promise(async (resolve, reject) => {
     ejs.renderFile(
       `./views/${theme.settings.index}`,
-      await eval(renderdataeval),
+      req.renderData,
       null,
       async function (err, str) {
         if (err) {

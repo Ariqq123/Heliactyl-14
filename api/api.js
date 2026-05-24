@@ -294,7 +294,7 @@ module.exports.load = async function (app, db) {
     let theme = indexjs.get(req);
     ejs.renderFile(
       `./views/${theme.settings.notfound}`,
-      await eval(indexjs.renderdataeval),
+      req.renderData,
       null,
       function (err, str) {
         delete req.session.newaccount;
