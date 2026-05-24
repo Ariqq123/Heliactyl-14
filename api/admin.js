@@ -21,6 +21,9 @@ const indexjs = require("../app.js");
 const adminjs = require("./admin.js");
 const ejs = require("ejs");
 const log = require("../misc/log");
+const Queue = require("../managers/Queue.js");
+
+const adminQueue = new Queue();
 
 module.exports.load = async function (app, db) {
   app.get("/settings/update", async (req, res) => {
@@ -96,26 +99,39 @@ module.exports.load = async function (app, db) {
 
     if (!coins) return res.redirect(failredirect + "?err=MISSINGCOINS");
 
-    coins = parseFloat(coins);
-
-    if (isNaN(coins))
-      return res.redirect(failredirect + "?err=INVALIDCOINNUMBER");
-
-    if (coins < 0 || coins > 999999999999999)
-      return res.redirect(`${failredirect}?err=COINSIZE`);
-
-    if (coins == 0) {
-      await db.delete("coins-" + id);
-    } else {
-      await db.set("coins-" + id, coins);
-    }
-
     let successredirect = theme.settings.redirect.setcoins || "/";
-    log(
-      `set coins`,
-      `${req.session.userinfo.username}#${req.session.userinfo.discriminator} set the coins of the user with the ID \`${id}\` to \`${coins}\`.`
-    );
-    res.redirect(successredirect + "?err=none");
+
+    adminQueue.addJob(async (cb) => {
+      try {
+        const val = parseFloat(coins);
+
+        if (isNaN(val)) {
+          cb();
+          return res.redirect(failredirect + "?err=INVALIDCOINNUMBER");
+        }
+        if (val < 0 || val > 999999999999999) {
+          cb();
+          return res.redirect(`${failredirect}?err=COINSIZE`);
+        }
+
+        if (val == 0) {
+          await db.delete("coins-" + id);
+        } else {
+          await db.set("coins-" + id, val);
+        }
+
+        log(
+          `set coins`,
+          `[cid:${req.cid || "-"}] ${req.session.userinfo.username}#${req.session.userinfo.discriminator} set the coins of the user with the ID \`${id}\` to \`${val}\`.`
+        );
+        cb();
+        res.redirect(successredirect + "?err=none");
+      } catch (e) {
+        console.error("setcoins error", e);
+        cb();
+        if (!res.headersSent) res.redirect(failredirect + "?err=INTERNAL");
+      }
+    });
   });
 
   app.get("/addcoins", async (req, res) => {
@@ -155,28 +171,44 @@ module.exports.load = async function (app, db) {
 
     if (!coins) return res.redirect(failredirect + "?err=MISSINGCOINS");
 
-    let currentcoins = (await db.get("coins-" + id)) || 0;
-
-    coins = currentcoins + parseFloat(coins);
-
-    if (isNaN(coins))
+    const delta = parseFloat(coins);
+    if (isNaN(delta))
       return res.redirect(failredirect + "?err=INVALIDCOINNUMBER");
 
-    if (coins < 0 || coins > 999999999999999)
-      return res.redirect(`${failredirect}?err=COINSIZE`);
-
-    if (coins == 0) {
-      await db.delete("coins-" + id);
-    } else {
-      await db.set("coins-" + id, coins);
-    }
-
     let successredirect = theme.settings.redirect.setcoins || "/";
-    log(
-      `add coins`,
-      `${req.session.userinfo.username}#${req.session.userinfo.discriminator} added \`${req.query.coins}\` coins to the user with the ID \`${id}\`'s account.`
-    );
-    res.redirect(successredirect + "?err=none");
+
+    adminQueue.addJob(async (cb) => {
+      try {
+        let currentcoins = parseFloat(await db.get("coins-" + id)) || 0;
+        let total = currentcoins + delta;
+
+        if (isNaN(total)) {
+          cb();
+          return res.redirect(failredirect + "?err=INVALIDCOINNUMBER");
+        }
+        if (total < 0 || total > 999999999999999) {
+          cb();
+          return res.redirect(`${failredirect}?err=COINSIZE`);
+        }
+
+        if (total == 0) {
+          await db.delete("coins-" + id);
+        } else {
+          await db.set("coins-" + id, total);
+        }
+
+        log(
+          `add coins`,
+          `[cid:${req.cid || "-"}] ${req.session.userinfo.username}#${req.session.userinfo.discriminator} added \`${req.query.coins}\` coins to the user with the ID \`${id}\`'s account.`
+        );
+        cb();
+        res.redirect(successredirect + "?err=none");
+      } catch (e) {
+        console.error("addcoins error", e);
+        cb();
+        if (!res.headersSent) res.redirect(failredirect + "?err=INTERNAL");
+      }
+    });
   });
 
   app.get("/setresources", async (req, res) => {
@@ -221,70 +253,83 @@ module.exports.load = async function (app, db) {
       let serversstring = req.query.servers;
       let id = req.query.id;
 
-      let currentextra = await db.get("extra-" + req.query.id);
-      let extra;
+      adminQueue.addJob(async (cb) => {
+        try {
+          let currentextra = await db.get("extra-" + req.query.id);
+          let extra;
 
-      if (typeof currentextra == "object") {
-        extra = currentextra;
-      } else {
-        extra = {
-          ram: 0,
-          disk: 0,
-          cpu: 0,
-          servers: 0,
-        };
-      }
+          if (typeof currentextra == "object" && currentextra !== null) {
+            extra = currentextra;
+          } else {
+            extra = {
+              ram: 0,
+              disk: 0,
+              cpu: 0,
+              servers: 0,
+            };
+          }
 
-      if (ramstring) {
-        let ram = parseFloat(ramstring);
-        if (ram < 0 || ram > 999999999999999) {
-          return res.redirect(`${failredirect}?err=RAMSIZE`);
+          if (ramstring) {
+            let ram = parseFloat(ramstring);
+            if (ram < 0 || ram > 999999999999999) {
+              cb();
+              return res.redirect(`${failredirect}?err=RAMSIZE`);
+            }
+            extra.ram = ram;
+          }
+
+          if (diskstring) {
+            let disk = parseFloat(diskstring);
+            if (disk < 0 || disk > 999999999999999) {
+              cb();
+              return res.redirect(`${failredirect}?err=DISKSIZE`);
+            }
+            extra.disk = disk;
+          }
+
+          if (cpustring) {
+            let cpu = parseFloat(cpustring);
+            if (cpu < 0 || cpu > 999999999999999) {
+              cb();
+              return res.redirect(`${failredirect}?err=CPUSIZE`);
+            }
+            extra.cpu = cpu;
+          }
+
+          if (serversstring) {
+            let servers = parseFloat(serversstring);
+            if (servers < 0 || servers > 999999999999999) {
+              cb();
+              return res.redirect(`${failredirect}?err=SERVERSIZE`);
+            }
+            extra.servers = servers;
+          }
+
+          if (
+            extra.ram == 0 &&
+            extra.disk == 0 &&
+            extra.cpu == 0 &&
+            extra.servers == 0
+          ) {
+            await db.delete("extra-" + req.query.id);
+          } else {
+            await db.set("extra-" + req.query.id, extra);
+          }
+
+          log(
+            `set resources`,
+            `[cid:${req.cid || "-"}] ${req.session.userinfo.username}#${req.session.userinfo.discriminator} set the resources of the user with the ID \`${id}\` to:\`\`\`servers: ${serversstring}\nCPU: ${cpustring}%\nMemory: ${ramstring} MB\nDisk: ${diskstring} MB\`\`\``
+          );
+          
+          cb();
+          adminjs.suspend(req.query.id).catch(err => console.error(err));
+          return res.redirect(successredirect + "?err=none");
+        } catch (e) {
+          console.error("setresources error", e);
+          cb();
+          if (!res.headersSent) res.redirect(failredirect + "?err=INTERNAL");
         }
-        extra.ram = ram;
-      }
-
-      if (diskstring) {
-        let disk = parseFloat(diskstring);
-        if (disk < 0 || disk > 999999999999999) {
-          return res.redirect(`${failredirect}?err=DISKSIZE`);
-        }
-        extra.disk = disk;
-      }
-
-      if (cpustring) {
-        let cpu = parseFloat(cpustring);
-        if (cpu < 0 || cpu > 999999999999999) {
-          return res.redirect(`${failredirect}?err=CPUSIZE`);
-        }
-        extra.cpu = cpu;
-      }
-
-      if (serversstring) {
-        let servers = parseFloat(serversstring);
-        if (servers < 0 || servers > 999999999999999) {
-          return res.redirect(`${failredirect}?err=SERVERSIZE`);
-        }
-        extra.servers = servers;
-      }
-
-      if (
-        extra.ram == 0 &&
-        extra.disk == 0 &&
-        extra.cpu == 0 &&
-        extra.servers == 0
-      ) {
-        await db.delete("extra-" + req.query.id);
-      } else {
-        await db.set("extra-" + req.query.id, extra);
-      }
-
-      adminjs.suspend(req.query.id);
-
-      log(
-        `set resources`,
-        `${req.session.userinfo.username}#${req.session.userinfo.discriminator} set the resources of the user with the ID \`${id}\` to:\`\`\`servers: ${serversstring}\nCPU: ${cpustring}%\nMemory: ${ramstring} MB\nDisk: ${diskstring} MB\`\`\``
-      );
-      return res.redirect(successredirect + "?err=none");
+      });
     } else {
       res.redirect(`${failredirect}?err=MISSINGVARIABLES`);
     }
@@ -335,65 +380,79 @@ module.exports.load = async function (app, db) {
       let cpustring = req.query.cpu;
       let serversstring = req.query.servers;
 
-      let currentextra = await db.get("extra-" + req.query.id);
-      let extra;
+      adminQueue.addJob(async (cb) => {
+        try {
+          let currentextra = await db.get("extra-" + req.query.id);
+          let extra;
 
-      if (typeof currentextra == "object") {
-        extra = currentextra;
-      } else {
-        extra = {
-          ram: 0,
-          disk: 0,
-          cpu: 0,
-          servers: 0,
-        };
-      }
+          if (typeof currentextra == "object" && currentextra !== null) {
+            extra = currentextra;
+          } else {
+            extra = {
+              ram: 0,
+              disk: 0,
+              cpu: 0,
+              servers: 0,
+            };
+          }
 
-      if (ramstring) {
-        let ram = parseFloat(ramstring);
-        if (ram < 0 || ram > 999999999999999) {
-          return res.redirect(`${failredirect}?err=RAMSIZE`);
+          if (ramstring) {
+            let ram = parseFloat(ramstring);
+            if (ram < 0 || ram > 999999999999999) {
+              cb();
+              return res.redirect(`${failredirect}?err=RAMSIZE`);
+            }
+            extra.ram = extra.ram + ram;
+          }
+
+          if (diskstring) {
+            let disk = parseFloat(diskstring);
+            if (disk < 0 || disk > 999999999999999) {
+              cb();
+              return res.redirect(`${failredirect}?err=DISKSIZE`);
+            }
+            extra.disk = extra.disk + disk;
+          }
+
+          if (cpustring) {
+            let cpu = parseFloat(cpustring);
+            if (cpu < 0 || cpu > 999999999999999) {
+              cb();
+              return res.redirect(`${failredirect}?err=CPUSIZE`);
+            }
+            extra.cpu = extra.cpu + cpu;
+          }
+
+          if (serversstring) {
+            let servers = parseFloat(serversstring);
+            if (servers < 0 || servers > 999999999999999) {
+              cb();
+              return res.redirect(`${failredirect}?err=SERVERSIZE`);
+            }
+            extra.servers = extra.servers + servers;
+          }
+
+          if (
+            extra.ram == 0 &&
+            extra.disk == 0 &&
+            extra.cpu == 0 &&
+            extra.servers == 0
+          ) {
+            await db.delete("extra-" + req.query.id);
+          } else {
+            await db.set("extra-" + req.query.id, extra);
+          }
+
+          cb();
+          // Call suspend outside queue to not block other admin tasks for long
+          adminjs.suspend(req.query.id).catch(err => console.error(err));
+          return res.redirect(successredirect + "?err=none");
+        } catch (e) {
+          console.error("addresources error", e);
+          cb();
+          if (!res.headersSent) res.redirect(failredirect + "?err=INTERNAL");
         }
-        extra.ram = extra.ram + ram;
-      }
-
-      if (diskstring) {
-        let disk = parseFloat(diskstring);
-        if (disk < 0 || disk > 999999999999999) {
-          return res.redirect(`${failredirect}?err=DISKSIZE`);
-        }
-        extra.disk = extra.disk + disk;
-      }
-
-      if (cpustring) {
-        let cpu = parseFloat(cpustring);
-        if (cpu < 0 || cpu > 999999999999999) {
-          return res.redirect(`${failredirect}?err=CPUSIZE`);
-        }
-        extra.cpu = extra.cpu + cpu;
-      }
-
-      if (serversstring) {
-        let servers = parseFloat(serversstring);
-        if (servers < 0 || servers > 999999999999999) {
-          return res.redirect(`${failredirect}?err=SERVERSIZE`);
-        }
-        extra.servers = extra.servers + servers;
-      }
-
-      if (
-        extra.ram == 0 &&
-        extra.disk == 0 &&
-        extra.cpu == 0 &&
-        extra.servers == 0
-      ) {
-        await db.delete("extra-" + req.query.id);
-      } else {
-        await db.set("extra-" + req.query.id, extra);
-      }
-
-      adminjs.suspend(req.query.id);
-      return res.redirect(successredirect + "?err=none");
+      });
     } else {
       res.redirect(`${failredirect}?err=MISSINGVARIABLES`);
     }
