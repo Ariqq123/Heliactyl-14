@@ -134,7 +134,7 @@ module.exports.load = async function (app, db) {
         cb();
         res.redirect(successredirect + "?err=none");
       } catch (e) {
-        logger.error("setcoins error", e);
+        logger.error(e, "setcoins error");
         cb();
         if (!res.headersSent) res.redirect(failredirect + "?err=INTERNAL");
       }
@@ -214,7 +214,7 @@ module.exports.load = async function (app, db) {
         if (isHtmx(req)) return sendAlert(res, "success", "Coins added", `Added ${req.query.coins} coins to user ${id}. New balance: ${total}`);
         res.redirect(successredirect + "?err=none");
       } catch (e) {
-        logger.error("addcoins error", e);
+        logger.error(e, "addcoins error");
         cb();
         if (!res.headersSent) {
           if (isHtmx(req)) return sendAlert(res, "error", "Failed", "An internal error occurred.");
@@ -340,7 +340,7 @@ module.exports.load = async function (app, db) {
           adminjs.suspend(req.query.id).catch(err => logger.error(err));
           return res.redirect(successredirect + "?err=none");
         } catch (e) {
-          logger.error("setresources error", e);
+          logger.error(e, "setresources error");
           cb();
           if (!res.headersSent) res.redirect(failredirect + "?err=INTERNAL");
         }
@@ -466,7 +466,7 @@ module.exports.load = async function (app, db) {
           if (isHtmx(req)) return sendAlert(res, "success", "Resources added", `Resources updated for user ${req.query.id}.`);
           return res.redirect(successredirect + "?err=none");
         } catch (e) {
-          logger.error("addresources error", e);
+          logger.error(e, "addresources error");
           cb();
           if (!res.headersSent) {
             if (isHtmx(req)) return sendAlert(res, "error", "Failed", "An internal error occurred.");
@@ -547,7 +547,7 @@ module.exports.load = async function (app, db) {
         cb();
         return res.redirect(successredirect + "?err=none");
       } catch (e) {
-        logger.error("setplan error", e);
+        logger.error(e, "setplan error");
         cb();
         if (!res.headersSent) res.redirect(failredirect + "?err=INTERNAL");
       }

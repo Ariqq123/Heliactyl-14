@@ -33,40 +33,29 @@
           <!-- Filter input -->
           <div x-show="open" x-transition class="bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 rounded-3xl p-4 mb-6">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <input type="text" x-model="query" x-on:input="
-                var q = query.toLowerCase().trim();
-                var cid = cidFilter.toLowerCase().trim();
-                var rows = document.querySelectorAll('.log-row');
-                var visible = 0;
-                rows.forEach(function(r) {
-                  var a = r.dataset.action || '';
-                  var m = r.dataset.message || '';
-                  var c = (r.dataset.cid || '').toLowerCase();
-                  var matchQ = !q || a.includes(q) || m.includes(q);
-                  var matchCid = !cid || c.includes(cid);
-                  if (matchQ && matchCid) { r.classList.remove('hidden'); visible++; }
-                  else { r.classList.add('hidden'); }
-                });
-                document.getElementById('visibleCount').textContent = visible;
-              " placeholder="Search action or message..." class="w-full rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2 text-sm text-gray-700 dark:text-slate-300 shadow-sm focus:border-violet-400 focus:ring-violet-500 placeholder:text-gray-400 dark:placeholder:text-slate-500">
-              <input type="text" x-model="cidFilter" x-on:input="
-                var q = query.toLowerCase().trim();
-                var cid = cidFilter.toLowerCase().trim();
-                var rows = document.querySelectorAll('.log-row');
-                var visible = 0;
-                rows.forEach(function(r) {
-                  var a = r.dataset.action || '';
-                  var m = r.dataset.message || '';
-                  var c = (r.dataset.cid || '').toLowerCase();
-                  var matchQ = !q || a.includes(q) || m.includes(q);
-                  var matchCid = !cid || c.includes(cid);
-                  if (matchQ && matchCid) { r.classList.remove('hidden'); visible++; }
-                  else { r.classList.add('hidden'); }
-                });
-                document.getElementById('visibleCount').textContent = visible;
-              " placeholder="Filter by correlation ID..." class="w-full rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2 text-sm text-gray-700 dark:text-slate-300 shadow-sm focus:border-violet-400 focus:ring-violet-500 placeholder:text-gray-400 dark:placeholder:text-slate-500">
+              <input type="text" x-model="query" x-on:input="$dispatch('filter-logs')" placeholder="Search action or message..." class="w-full rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2 text-sm text-gray-700 dark:text-slate-300 shadow-sm focus:border-violet-400 focus:ring-violet-500 placeholder:text-gray-400 dark:placeholder:text-slate-500">
+              <input type="text" x-model="cidFilter" x-on:input="$dispatch('filter-logs')" placeholder="Filter by correlation ID..." class="w-full rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2 text-sm text-gray-700 dark:text-slate-300 shadow-sm focus:border-violet-400 focus:ring-violet-500 placeholder:text-gray-400 dark:placeholder:text-slate-500">
             </div>
           </div>
+
+          <script>
+            document.addEventListener('filter-logs', function() {
+              let q = (document.querySelector('[x-model=query]') || {}).value || '';
+              let cid = (document.querySelector('[x-model=cidFilter]') || {}).value || '';
+              q = q.toLowerCase().trim();
+              cid = cid.toLowerCase().trim();
+              let rows = document.querySelectorAll('.log-row');
+              let visible = 0;
+              rows.forEach(function(r) {
+                let a = r.dataset.action || '';
+                let m = r.dataset.message || '';
+                let c = (r.dataset.cid || '').toLowerCase();
+                if ((!q || a.includes(q) || m.includes(q)) && (!cid || c.includes(cid))) { r.classList.remove('hidden'); visible++; }
+                else { r.classList.add('hidden'); }
+              });
+              document.getElementById('visibleCount').textContent = visible;
+            });
+          </script>
 
           <% if (!safeLogs || safeLogs.length === 0) { %>
           <div class="text-center bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700/60 dark:border-slate-700 rounded-3xl py-24 px-6 shadow-sm">

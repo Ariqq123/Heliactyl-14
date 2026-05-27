@@ -11,13 +11,15 @@ function pushLog(entry) {
     logBuffer.push(entry);
     if (logBuffer.length > MAX_BUFFER) logBuffer.shift();
 
-    try {
-        let history = db.get(SHARED_LOG_KEY);
-        history = Array.isArray(history) ? history : [];
-        history.push(entry);
-        if (history.length > MAX_BUFFER) history = history.slice(-MAX_BUFFER);
-        db.set(SHARED_LOG_KEY, history);
-    } catch (_) {}
+    setImmediate(() => {
+        try {
+            let history = db.get(SHARED_LOG_KEY);
+            history = Array.isArray(history) ? history : [];
+            history.push(entry);
+            if (history.length > MAX_BUFFER) history = history.slice(-MAX_BUFFER);
+            db.set(SHARED_LOG_KEY, history);
+        } catch (_) {}
+    });
 }
 
 function log(action, message, correlationId) {
