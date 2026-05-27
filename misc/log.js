@@ -1,26 +1,23 @@
 const settings = require('../settings.json')
 const fetch = require('node-fetch')
-const Keyv = require('keyv')
+const db = require('./database')
 const logger = require('./logger').child({ module: 'action' })
 
 const MAX_BUFFER = 500;
 const logBuffer = [];
 const SHARED_LOG_KEY = 'system:action_logs';
-const sharedLogStore = new Keyv(settings.database);
 
 function pushLog(entry) {
     logBuffer.push(entry);
     if (logBuffer.length > MAX_BUFFER) logBuffer.shift();
 
-    (async () => {
-        try {
-            let history = await sharedLogStore.get(SHARED_LOG_KEY);
-            history = Array.isArray(history) ? history : [];
-            history.push(entry);
-            if (history.length > MAX_BUFFER) history = history.slice(-MAX_BUFFER);
-            await sharedLogStore.set(SHARED_LOG_KEY, history);
-        } catch (_) {}
-    })();
+    try {
+        let history = db.get(SHARED_LOG_KEY);
+        history = Array.isArray(history) ? history : [];
+        history.push(entry);
+        if (history.length > MAX_BUFFER) history = history.slice(-MAX_BUFFER);
+        db.set(SHARED_LOG_KEY, history);
+    } catch (_) {}
 }
 
 function log(action, message, correlationId) {
@@ -55,7 +52,7 @@ log.getRecent = async (limit) => {
     const n = Math.max(1, Math.min(MAX_BUFFER, limit || MAX_BUFFER));
 
     try {
-        const history = await sharedLogStore.get(SHARED_LOG_KEY);
+        const history = db.get(SHARED_LOG_KEY);
         if (Array.isArray(history) && history.length) {
             return history.slice(-n).reverse();
         }

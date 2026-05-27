@@ -108,12 +108,7 @@ module.exports.renderdataeval = `(async () => {
   })();`;
 
 // Load database
-const Keyv = require("keyv");
-const db = new Keyv(settings.database);
-
-db.on("error", (err) => {
-  logger.error(err, "Database connection error");
-});
+const db = require("./misc/database");
 
 module.exports.db = db;
 
