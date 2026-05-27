@@ -16,6 +16,7 @@ const getPteroUser = require("../misc/getPteroUser");
 const Queue = require("../managers/Queue");
 const log = require("../misc/log");
 const csrf = require("../misc/csrf");
+const logger = require("../misc/logger").child({ module: "servers" });
 
 if (settings.pterodactyl)
   if (settings.pterodactyl.domain) {
@@ -293,7 +294,7 @@ module.exports.load = async function (app, db) {
             await serverinfo;
             if (serverinfo.statusText !== "Created") {
               let errorBody = await serverinfo.text();
-              console.log(errorBody);
+              logger.error({ errorBody }, "Server API error");
 
               let errorDetail = "Unknown panel error";
               try {

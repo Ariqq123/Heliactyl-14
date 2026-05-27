@@ -16,6 +16,7 @@ const chalk = require("chalk");
 const fetch = require("node-fetch");
 const Keyv = require("keyv");
 const crypto = require("crypto");
+const logger = require("../misc/logger").child({ module: "afk" });
 
 const afkLock = new Keyv(settings.database, { namespace: "afklock" });
 afkLock.on("error", () => {});
@@ -74,7 +75,7 @@ module.exports.load = async function(app, db) {
           return ws.close();
         }
       } catch (e) {
-        console.error("[AFK] Turnstile verification error:", e.message);
+        logger.error({ error: e.message }, "Turnstile verification error");
         ws.send(JSON.stringify({ type: "error", message: "Captcha verification error." }));
         await afkLock.delete(userId);
         return ws.close();
@@ -100,7 +101,7 @@ module.exports.load = async function(app, db) {
           await db.set("coins-" + userId, usercoins);
         }
       } catch (e) {
-        console.error("[AFK] tick error:", e.message);
+        logger.error({ error: e.message }, "AFK tick error");
       }
     }, intervalMs);
 

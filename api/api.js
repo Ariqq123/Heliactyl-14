@@ -16,6 +16,7 @@ const NodeCache = require("node-cache");
 const Queue = require("../managers/Queue.js");
 const log = require("../misc/log");
 const arciotext = require("../misc/afk");
+const logger = require("../misc/logger").child({ module: "api" });
 
 const myCache = new NodeCache({ deleteOnExpire: true, stdTTL: 59 });
 
@@ -95,11 +96,7 @@ module.exports.load = async function (app, db) {
       }
     );
     if ((await userinforeq.statusText) == "Not Found") {
-      console.log(
-        "App ― An error has occured while attempting to get a user's information"
-      );
-      console.log("- Discord ID: " + req.query.id);
-      console.log("- Pterodactyl Panel ID: " + pterodactylid);
+      logger.error({ discordId: req.query.id, pteroId: pterodactylid }, "Failed to get user information");
       return res.send({ status: "could not find user on panel" });
     }
     let userinfo = await userinforeq.json();
@@ -302,10 +299,7 @@ module.exports.load = async function (app, db) {
       function (err, str) {
         delete req.session.newaccount;
         if (err) {
-          console.log(
-            `App ― An error has occured on path ${req._parsedUrl.pathname}:`
-          );
-          console.log(err);
+          logger.error(err, `Render error on ${req._parsedUrl.pathname}`);
           return res.send(
             "Internal Server Error"
           );

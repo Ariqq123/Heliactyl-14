@@ -1,11 +1,8 @@
 const settings = require('../settings.json')
 const fetch = require('node-fetch')
 const Keyv = require('keyv')
+const logger = require('./logger').child({ module: 'action' })
 
-/**
- * In-memory log buffer (last MAX_BUFFER entries).
- * Note: with cluster mode each worker has its own buffer.
- */
 const MAX_BUFFER = 500;
 const logBuffer = [];
 const SHARED_LOG_KEY = 'system:action_logs';
@@ -15,8 +12,6 @@ function pushLog(entry) {
     logBuffer.push(entry);
     if (logBuffer.length > MAX_BUFFER) logBuffer.shift();
 
-    // Persist to shared DB so logs are visible across cluster workers.
-    // Best-effort async write (non-blocking for request flow).
     (async () => {
         try {
             let history = await sharedLogStore.get(SHARED_LOG_KEY);
@@ -28,22 +23,10 @@ function pushLog(entry) {
     })();
 }
 
-/**
- * Log an action.
- * Always prints to console/PM2 logs.
- * Always stored in memory buffer (read via /logs).
- * Optionally pushes to Discord webhook if configured in settings.json.
- *
- * @param {string} action
- * @param {string} message
- * @param {string} [correlationId] optional request correlation ID
- */
 function log(action, message, correlationId) {
     const timestamp = new Date().toISOString();
-    const cidPart = correlationId ? `[cid:${correlationId}] ` : '';
-    const line = `[${timestamp}] ${cidPart}[ACTION: ${action}] ${message}`;
 
-    console.log(line);
+    logger.info({ action, correlationId: correlationId || null }, message);
 
     pushLog({ timestamp, action, message, correlationId: correlationId || null });
 

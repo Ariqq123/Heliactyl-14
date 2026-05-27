@@ -6,6 +6,8 @@ const ejs = require("ejs");
 const log = require("../misc/log");
 const Queue = require("../managers/Queue.js");
 const csrf = require("../misc/csrf");
+const { isHtmx, sendAlert } = require("../misc/htmx");
+const logger = require("../misc/logger").child({ module: "store" });
 
 const storeQueue = new Queue();
 
@@ -46,6 +48,7 @@ module.exports.load = async function (app, db) {
 
         if (userCoins < purchaseCost) {
           cb();
+          if (isHtmx(req)) return sendAlert(res, "error", "Purchase failed", "You cannot afford this purchase.");
           return res.redirect(`${failedCallbackPath}?err=CANNOTAFFORD`);
         }
 
@@ -93,6 +96,7 @@ module.exports.load = async function (app, db) {
         );
 
         cb();
+        if (isHtmx(req)) return sendAlert(res, "success", "Resources purchased", "You can now edit one of your servers and add the extra resources.");
         res.redirect(
           (theme.settings.redirect[`purchase${type}`]
             ? theme.settings.redirect[`purchase${type}`]
@@ -100,7 +104,8 @@ module.exports.load = async function (app, db) {
         );
       } catch (err) {
         cb();
-        console.error(err);
+        logger.error(err, "Purchase error");
+        if (isHtmx(req)) return sendAlert(res, "error", "Purchase failed", "An error occurred during purchase.");
         res.send("An error occurred during purchase");
       }
     });
@@ -120,10 +125,7 @@ module.exports.load = async function (app, db) {
       function (err, str) {
         delete req.session.newaccount;
         if (err) {
-          console.log(
-            `App ― An error has occurred on path ${req._parsedUrl.pathname}:`
-          );
-          console.log(err);
+          logger.error(err, `Render error on ${req._parsedUrl.pathname}`);
           return res.send(
             "An error has occurred while attempting to load this page. Please contact an administrator to fix this."
           );

@@ -1,12 +1,12 @@
 <%- include("../layouts/head") %>
 <%
   const coinText = Number(coins || 0).toFixed(2);
-  const heroCoinAction = `<div class="inline-flex items-center rounded-2xl bg-amber-50 border border-amber-200/60 px-4 py-2 text-amber-800 shadow-sm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-2 text-amber-500"><path d="M10 8c3.866 0 7-1.343 7-3s-3.134-3-7-3-7 1.343-7 3 3.134 3 7 3Z" /><path d="M3 8.236V10c0 1.657 3.134 3 7 3s7-1.343 7-3V8.236C15.54 9.313 12.97 10 10 10s-5.54-.687-7-1.764Z" /><path d="M3 13.236V15c0 1.657 3.134 3 7 3s7-1.343 7-3v-1.764C15.54 14.313 12.97 15 10 15s-5.54-.687-7-1.764Z" /></svg><span class="text-sm font-semibold">${coinText} coins available</span></div>`;
+  const heroCoinAction = `<div class="inline-flex items-center rounded-2xl bg-amber-50 dark:bg-amber-950 border border-amber-200/60 dark:border-amber-800/60 px-4 py-2 text-amber-800 dark:text-amber-200 shadow-sm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-2 text-amber-500 dark:text-amber-400"><path d="M10 8c3.866 0 7-1.343 7-3s-3.134-3-7-3-7 1.343-7 3 3.134 3 7 3Z" /><path d="M3 8.236V10c0 1.657 3.134 3 7 3s7-1.343 7-3V8.236C15.54 9.313 12.97 10 10 10s-5.54-.687-7-1.764Z" /><path d="M3 13.236V15c0 1.657 3.134 3 7 3s7-1.343 7-3v-1.764C15.54 14.313 12.97 15 10 15s-5.54-.687-7-1.764Z" /></svg><span class="text-sm font-semibold">${coinText} coins available</span></div>`;
 %>
 
 <%- include("../components/page-hero", {
   icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path fill-rule="evenodd" d="M7.5 6v.75H5.513c-.96 0-1.764.724-1.865 1.679l-1.263 12A1.875 1.875 0 0 0 4.25 22.5h15.5a1.875 1.875 0 0 0 1.865-2.071l-1.263-12a1.875 1.875 0 0 0-1.865-1.679H16.5V6a4.5 4.5 0 1 0-9 0ZM12 3a3 3 0 0 0-3 3v.75h6V6a3 3 0 0 0-3-3Zm-3 8.25a3 3 0 1 0 6 0v-.75a.75.75 0 0 1 1.5 0v.75a4.5 4.5 0 1 1-9 0v-.75a.75.75 0 0 1 1.5 0v.75Z" clip-rule="evenodd" /></svg>',
-  iconClass: 'bg-emerald-50 border border-emerald-100/50 text-emerald-500',
+  iconClass: 'bg-emerald-50 dark:bg-emerald-950 border border-emerald-100/50 dark:border-emerald-800/50 text-emerald-500 dark:text-emerald-400',
   gradient: 'from-emerald-50 to-teal-100',
   title: 'Store',
   subtitle: 'Spend coins to expand your account quotas.',
@@ -40,6 +40,9 @@
           <% } %>
           <% } %>
 
+          <!-- Alert target for htmx responses -->
+          <div id="store-alerts"></div>
+
           <!-- Pricing grid -->
           <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
 
@@ -54,13 +57,13 @@
                 <option value="<%= m %>"><%= settings.api.client.coins.store.ram.per/1024 * m %> GiB &mdash; <%= settings.api.client.coins.store.ram.cost * m %> coin<%= (settings.api.client.coins.store.ram.cost * m) == 1 ? "" : "s" %></option>
                 <% } %>
               </select>
-              <button onclick="buyRAM()" class="w-full inline-flex items-center justify-center rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700 transition-colors">Purchase Memory</button>
+              <button hx-get="/buy" hx-vals="js:{type:'ram', amount: document.getElementById('ram').value}" hx-target="#store-alerts" hx-swap="innerHTML" class="w-full inline-flex items-center justify-center rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700 transition-colors">Purchase Memory</button>
             </div>
 
             <!-- CPU card -->
             <div class="bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 rounded-3xl p-6 shadow-sm hover:shadow-md transition-shadow">
               <div class="flex items-center mb-4">
-                <div class="bg-blue-50 text-blue-600 rounded-xl p-2.5"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" /></svg></div>
+                <div class="bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 rounded-xl p-2.5"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" /></svg></div>
                 <h3 class="ml-3 text-base font-semibold text-gray-900 dark:text-slate-100">CPU</h3>
               </div>
               <p class="text-xs text-gray-500 dark:text-slate-400 mb-4"><%= settings.api.client.coins.store.cpu.per/100 %> Core(s) per <%= settings.api.client.coins.store.cpu.cost %> coin<%= settings.api.client.coins.store.cpu.cost == 1 ? "" : "s" %></p>
@@ -69,13 +72,13 @@
                 <option value="<%= c %>"><%= settings.api.client.coins.store.cpu.per/100 * c %> Cores &mdash; <%= settings.api.client.coins.store.cpu.cost * c %> coin<%= (settings.api.client.coins.store.cpu.cost * c) == 1 ? "" : "s" %></option>
                 <% } %>
               </select>
-              <button onclick="buyCPU()" class="w-full inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 transition-colors">Purchase CPU</button>
+              <button hx-get="/buy" hx-vals="js:{type:'cpu', amount: document.getElementById('cpu').value}" hx-target="#store-alerts" hx-swap="innerHTML" class="w-full inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 transition-colors">Purchase CPU</button>
             </div>
 
             <!-- Disk card -->
             <div class="bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 rounded-3xl p-6 shadow-sm hover:shadow-md transition-shadow">
               <div class="flex items-center mb-4">
-                <div class="bg-emerald-50 text-emerald-600 rounded-xl p-2.5"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 0 1-3-3m3 3a3 3 0 1 0 0 6h13.5a3 3 0 1 0 0-6m-16.5-3a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3m-19.5 0a4.5 4.5 0 0 1 .9-2.7L5.737 5.1a3.375 3.375 0 0 1 2.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 0 1 .9 2.7m0 0a3 3 0 0 1-3 3m0 3h.008v.008h-.008v-.008Zm0-6h.008v.008h-.008v-.008Zm-3 6h.008v.008h-.008v-.008Zm0-6h.008v.008h-.008v-.008Z" /></svg></div>
+                <div class="bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 rounded-xl p-2.5"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 0 1-3-3m3 3a3 3 0 1 0 0 6h13.5a3 3 0 1 0 0-6m-16.5-3a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3m-19.5 0a4.5 4.5 0 0 1 .9-2.7L5.737 5.1a3.375 3.375 0 0 1 2.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 0 1 .9 2.7m0 0a3 3 0 0 1-3 3m0 3h.008v.008h-.008v-.008Zm0-6h.008v.008h-.008v-.008Zm-3 6h.008v.008h-.008v-.008Zm0-6h.008v.008h-.008v-.008Z" /></svg></div>
                 <h3 class="ml-3 text-base font-semibold text-gray-900 dark:text-slate-100">Storage</h3>
               </div>
               <p class="text-xs text-gray-500 dark:text-slate-400 mb-4"><%= settings.api.client.coins.store.disk.per/1024 %> GiB per <%= settings.api.client.coins.store.disk.cost %> coin<%= settings.api.client.coins.store.disk.cost == 1 ? "" : "s" %></p>
@@ -84,13 +87,13 @@
                 <option value="<%= d %>"><%= settings.api.client.coins.store.disk.per/1024 * d %> GiB &mdash; <%= settings.api.client.coins.store.disk.cost * d %> coin<%= (settings.api.client.coins.store.disk.cost * d) == 1 ? "" : "s" %></option>
                 <% } %>
               </select>
-              <button onclick="buyDisk()" class="w-full inline-flex items-center justify-center rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 transition-colors">Purchase Storage</button>
+              <button hx-get="/buy" hx-vals="js:{type:'disk', amount: document.getElementById('disk').value}" hx-target="#store-alerts" hx-swap="innerHTML" class="w-full inline-flex items-center justify-center rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 transition-colors">Purchase Storage</button>
             </div>
 
             <!-- Servers card -->
             <div class="bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 rounded-3xl p-6 shadow-sm hover:shadow-md transition-shadow">
               <div class="flex items-center mb-4">
-                <div class="bg-amber-50 text-amber-600 rounded-xl p-2.5"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 17.25v-.228a4.5 4.5 0 0 0-.12-1.03l-2.268-9.64a3.375 3.375 0 0 0-3.285-2.602H7.923a3.375 3.375 0 0 0-3.285 2.602l-2.268 9.64a4.5 4.5 0 0 0-.12 1.03v.228m19.5 0a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3m19.5 0a3 3 0 0 0-3-3H5.25a3 3 0 0 0-3 3" /></svg></div>
+                <div class="bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400 rounded-xl p-2.5"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 17.25v-.228a4.5 4.5 0 0 0-.12-1.03l-2.268-9.64a3.375 3.375 0 0 0-3.285-2.602H7.923a3.375 3.375 0 0 0-3.285 2.602l-2.268 9.64a4.5 4.5 0 0 0-.12 1.03v.228m19.5 0a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3m19.5 0a3 3 0 0 0-3-3H5.25a3 3 0 0 0-3 3" /></svg></div>
                 <h3 class="ml-3 text-base font-semibold text-gray-900 dark:text-slate-100">Server Slots</h3>
               </div>
               <p class="text-xs text-gray-500 dark:text-slate-400 mb-4"><%= settings.api.client.coins.store.servers.per %> slot(s) per <%= settings.api.client.coins.store.servers.cost %> coin<%= settings.api.client.coins.store.servers.cost == 1 ? "" : "s" %></p>
@@ -99,15 +102,9 @@
                 <option value="<%= s %>"><%= settings.api.client.coins.store.servers.per * s %> Slots &mdash; <%= settings.api.client.coins.store.servers.cost * s %> coin<%= (settings.api.client.coins.store.servers.cost * s) == 1 ? "" : "s" %></option>
                 <% } %>
               </select>
-              <button onclick="buyServers()" class="w-full inline-flex items-center justify-center rounded-xl bg-amber-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-amber-700 transition-colors">Purchase Slots</button>
+              <button hx-get="/buy" hx-vals="js:{type:'servers', amount: document.getElementById('servers').value}" hx-target="#store-alerts" hx-swap="innerHTML" class="w-full inline-flex items-center justify-center rounded-xl bg-amber-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-amber-700 transition-colors">Purchase Slots</button>
             </div>
 
           </div>
 
-          <script>
-            function buyRAM(){ document.location.href = `/buy?type=ram&amount=${encodeURIComponent(document.getElementById('ram').value)}&token=<%= csrfToken %>`; }
-            function buyCPU(){ document.location.href = `/buy?type=cpu&amount=${encodeURIComponent(document.getElementById('cpu').value)}&token=<%= csrfToken %>`; }
-            function buyDisk(){ document.location.href = `/buy?type=disk&amount=${encodeURIComponent(document.getElementById('disk').value)}&token=<%= csrfToken %>`; }
-            function buyServers(){ document.location.href = `/buy?type=servers&amount=${encodeURIComponent(document.getElementById('servers').value)}&token=<%= csrfToken %>`; }
-          </script>
 <%- include("../layouts/tail") %>

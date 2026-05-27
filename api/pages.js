@@ -13,6 +13,7 @@ const express = require("express");
 const settings = require("../settings.json");
 const fetch = require("node-fetch");
 const arciotext = require("../misc/afk");
+const logger = require("../misc/logger").child({ module: "pages" });
 
 module.exports.load = async function (app, db) {
   app.all("/", async (req, res) => {
@@ -40,7 +41,7 @@ module.exports.load = async function (app, db) {
       let str = await renderTemplate(theme, req, res, db);
       res.send(str);
     } catch (err) {
-      console.log(err);
+      logger.error(err, "Page render error");
       res.render("500.ejs", { err });
     }
   });

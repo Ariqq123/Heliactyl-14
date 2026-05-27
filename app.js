@@ -12,7 +12,7 @@
 "use strict";
 
 // Load logging.
-require("./misc/console.js")();
+const logger = require("./misc/logger");
 
 // Load packages.
 const path = require("path");
@@ -112,27 +112,23 @@ const Keyv = require("keyv");
 const db = new Keyv(settings.database);
 
 db.on("error", (err) => {
-  console.log(
-    chalk.red(
-      "Database ― An error has occurred when attempting to access the SQLite database."
-    )
-  );
+  logger.error(err, "Database connection error");
 });
 
 module.exports.db = db;
 
 if (cluster.isMaster) {
   const numCPUs = 8;
-  console.log(chalk.gray('Starting workers on Heliactyl 14 (Cascade Ridge)'))
-  console.log(chalk.gray(`Master ${process.pid} is running`));
-  console.log(chalk.gray(`Forking ${numCPUs} workers...`));
+  logger.info('Starting workers on Heliactyl 14 (Cascade Ridge)');
+  logger.info({ pid: process.pid }, 'Master is running');
+  logger.info({ workers: numCPUs }, 'Forking workers');
 
   for (let i = 0; i < numCPUs; i++) {
     cluster.fork();
   }
 
   cluster.on('exit', (worker, code, signal) => {
-    console.log(chalk.red(`Worker ${worker.process.pid} died. Forking a new worker...`));
+    logger.warn({ pid: worker.process.pid, code, signal }, 'Worker died, forking replacement');
     cluster.fork();
   });
 
@@ -206,9 +202,7 @@ if (cluster.isMaster) {
   });
 
   const listener = app.listen(settings.website.port, function () {
-    console.log(
-      chalk.white("State updated: ") + chalk.green('online')
-    );
+    logger.info({ port: settings.website.port, pid: process.pid }, 'Worker online');
   });
 
   var cache = false;
@@ -280,7 +274,7 @@ if (cluster.isMaster) {
           delete req.session.password;
           if (!req.session.userinfo || !req.session.pterodactyl) {
             if (err) {
-              console.log(err);
+              logger.error(err, "Render error");
               return res.render("500.ejs", { err });
             }
             res.status(200);
@@ -302,7 +296,7 @@ if (cluster.isMaster) {
           );
           if ((await cacheaccount.statusText) == "Not Found") {
             if (err) {
-              console.log(err);
+              logger.error(err, "Render error");
               return res.render("500.ejs", { err });
             }
             return res.send(str);
@@ -312,7 +306,7 @@ if (cluster.isMaster) {
           req.session.pterodactyl = cacheaccountinfo.attributes;
           if (cacheaccountinfo.attributes.root_admin !== true) {
             if (err) {
-              console.log(err);
+              logger.error(err, "Render error");
               return res.render("500.ejs", { err });
             }
             return res.send(str);
@@ -330,7 +324,7 @@ if (cluster.isMaster) {
               delete req.session.newaccount;
               delete req.session.password;
               if (err) {
-                console.log(err);
+                logger.error(err, "Render error");
                 return res.render("500.ejs", { err });
               }
               res.status(200);
@@ -354,7 +348,7 @@ if (cluster.isMaster) {
         delete req.session.newaccount;
         delete req.session.password;
         if (err) {
-          console.log(err);
+          logger.error(err, "Render error");
           return res.render("500.ejs", { err });
         }
         res.status(200);
@@ -382,11 +376,11 @@ if (cluster.isMaster) {
   };
 
   process.on('uncaughtException', (error) => {
-    console.error('Uncaught Exception:', error);
+    logger.fatal(error, 'Uncaught Exception');
   });
 
   process.on('unhandledRejection', (reason, promise) => {
-    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+    logger.error({ reason }, 'Unhandled Rejection');
   });
 }
 

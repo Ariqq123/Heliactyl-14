@@ -1,12 +1,12 @@
 <%- include("../layouts/head") %>
 <%
   const coinText = Number(coins || 0).toFixed(2);
-  const heroCoinAction = `<div class="inline-flex items-center rounded-2xl bg-amber-50 border border-amber-200/60 px-4 py-2 text-amber-800 shadow-sm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-2 text-amber-500"><path d="M10 8c3.866 0 7-1.343 7-3s-3.134-3-7-3-7 1.343-7 3 3.134 3 7 3Z" /><path d="M3 8.236V10c0 1.657 3.134 3 7 3s7-1.343 7-3V8.236C15.54 9.313 12.97 10 10 10s-5.54-.687-7-1.764Z" /><path d="M3 13.236V15c0 1.657 3.134 3 7 3s7-1.343 7-3v-1.764C15.54 14.313 12.97 15 10 15s-5.54-.687-7-1.764Z" /></svg><span class="text-sm font-semibold">${coinText} coins available</span></div>`;
+  const heroCoinAction = `<div class="inline-flex items-center rounded-2xl bg-amber-50 dark:bg-amber-950 border border-amber-200/60 dark:border-amber-800/60 px-4 py-2 text-amber-800 dark:text-amber-200 shadow-sm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-2 text-amber-500 dark:text-amber-400"><path d="M10 8c3.866 0 7-1.343 7-3s-3.134-3-7-3-7 1.343-7 3 3.134 3 7 3Z" /><path d="M3 8.236V10c0 1.657 3.134 3 7 3s7-1.343 7-3V8.236C15.54 9.313 12.97 10 10 10s-5.54-.687-7-1.764Z" /><path d="M3 13.236V15c0 1.657 3.134 3 7 3s7-1.343 7-3v-1.764C15.54 14.313 12.97 15 10 15s-5.54-.687-7-1.764Z" /></svg><span class="text-sm font-semibold">${coinText} coins available</span></div>`;
 %>
 
 <%- include("../components/page-hero", {
   icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" /></svg>',
-  iconClass: 'bg-amber-50 border border-amber-100/50 text-amber-500',
+  iconClass: 'bg-amber-50 dark:bg-amber-950 border border-amber-100/50 dark:border-amber-800/50 text-amber-500 dark:text-amber-400',
   gradient: 'from-amber-50 to-orange-100',
   title: 'Transfer Coins',
   subtitle: 'Send coins to another Discord user instantly.',
@@ -40,6 +40,9 @@
           <% } %>
           <% } %>
 
+          <!-- Alert target for htmx responses -->
+          <div id="transfer-alerts"></div>
+
           <!-- Transfer form -->
           <div class="bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 rounded-3xl p-8 shadow-sm max-w-2xl">
             <div class="mb-6">
@@ -61,19 +64,11 @@
             </div>
 
             <div class="mt-8 flex flex-wrap gap-3">
-              <button onclick="submitForm()" class="inline-flex items-center rounded-xl bg-amber-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-amber-700 transition-colors">Send Coins</button>
+              <button hx-get="/transfercoins" hx-vals="js:{id: document.getElementById('dc').value, coins: document.getElementById('amount').value}" hx-target="#transfer-alerts" hx-swap="innerHTML" class="inline-flex items-center rounded-xl bg-amber-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-amber-700 transition-colors">Send Coins</button>
               <a href="../dashboard" class="inline-flex items-center rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-6 py-3 text-sm font-medium text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors">Cancel</a>
             </div>
           </div>
 
-          <script>
-            const __csrf = "<%= csrfToken %>";
-            function submitForm(){
-              let id = encodeURIComponent(document.getElementById('dc').value);
-              let coins = encodeURIComponent(document.getElementById('amount').value);
-              document.location.href = `/transfercoins?id=${id}&coins=${coins}&token=${__csrf}`;
-            }
-          </script>
         </div>
       </div>
     </main>

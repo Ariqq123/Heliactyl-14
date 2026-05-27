@@ -15,6 +15,8 @@ const Queue = require("../managers/Queue");
 const log = require("../misc/log");
 const csrf = require("../misc/csrf");
 const { getSsoUrl } = require("../misc/sso");
+const { isHtmx, sendAlert } = require("../misc/htmx");
+const logger = require("../misc/logger").child({ module: "extras" });
 
 module.exports.load = async function (app, db) {
   app.get("/panel", async (req, res) => {
@@ -36,7 +38,7 @@ module.exports.load = async function (app, db) {
         newsettings
       );
     } catch (err) {
-      console.error("SSO URL generation failed:", err);
+      logger.error(err, "SSO URL generation failed");
     }
 
     if (ssoUrl) {
@@ -206,11 +208,15 @@ module.exports.load = async function (app, db) {
           req.cid
         );
         cb();
+        if (isHtmx(req)) return sendAlert(res, "success", "Transfer complete", `Sent ${coins} coins to user ${targetId}.`);
         return res.redirect("/transfer?err=none");
       } catch (e) {
-        console.error("transfercoins error", e);
+        logger.error(e, "transfercoins error");
         cb();
-        if (!res.headersSent) res.redirect("/transfer?err=INTERNAL");
+        if (!res.headersSent) {
+          if (isHtmx(req)) return sendAlert(res, "error", "Transfer failed", "An internal error occurred.");
+          res.redirect("/transfer?err=INTERNAL");
+        }
       }
     });
   });

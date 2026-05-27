@@ -112,9 +112,10 @@
 <div id="spinner" class="spinner mt-2 mr-2"></div>
 
 <!-- Mobile Topbar -->
+<div x-data="{ sidebarOpen: false }" x-on:keydown.escape.window="sidebarOpen = false">
 <header class="md:hidden fixed top-0 left-0 right-0 z-30 bg-white/90 dark:bg-slate-900/90 backdrop-blur border-b border-gray-200 dark:border-slate-700 px-4 py-3 flex items-center justify-between <% if (settings.testing == true) { %>mt-12<% } %>">
   <div class="flex items-center gap-3">
-    <button id="sidebarToggle" type="button" class="inline-flex items-center justify-center w-10 h-10 rounded-xl text-gray-600 dark:text-slate-400 hover:bg-gray-100 dark:hover:bg-slate-700 dark:bg-slate-800 transition">
+    <button x-on:click="sidebarOpen = !sidebarOpen" type="button" class="inline-flex items-center justify-center w-10 h-10 rounded-xl text-gray-600 dark:text-slate-400 hover:bg-gray-100 dark:hover:bg-slate-700 dark:bg-slate-800 transition">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
       </svg>
@@ -123,10 +124,10 @@
   </div>
 </header>
 <!-- Mobile Sidebar Backdrop -->
-<div id="sidebarBackdrop" class="md:hidden fixed inset-0 bg-gray-900/40 backdrop-blur-sm z-30 hidden transition-opacity opacity-0"></div>
+<div x-show="sidebarOpen" x-on:click="sidebarOpen = false" x-transition:enter="transition-opacity ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="md:hidden fixed inset-0 bg-gray-900/40 backdrop-blur-sm z-30" style="display: none;"></div>
 
 <!-- Static sidebar for desktop -->
-<aside id="sidebar" class="<% if (settings.testing == true) { %>md:mt-12 <% } %> fixed md:relative inset-y-0 left-0 -translate-x-full md:translate-x-0 flex-shrink-0 w-64 bg-gray-100 dark:bg-slate-800 border-r border-gray-200 dark:border-slate-700 flex flex-col h-screen z-40 transition-transform duration-300 ease-out">
+<aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'" class="<% if (settings.testing == true) { %>md:mt-12 <% } %> fixed md:relative inset-y-0 left-0 flex-shrink-0 w-64 bg-gray-100 dark:bg-slate-800 border-r border-gray-200 dark:border-slate-700 flex flex-col h-screen z-40 transition-transform duration-300 ease-out">
   <!-- This is so that the testing alert isn't in the way of the sidebar -->
   <!-- Sidebar component, swap this element with another sidebar if you like -->
   <div class="flex-1 flex flex-col min-h-0">
@@ -294,11 +295,16 @@
         <% } %>
       </nav>
 
-      <button id="themeToggle" type="button" aria-label="Toggle dark mode" class="transition text-gray-600 dark:text-slate-400 hover:bg-gray-200 dark:hover:bg-slate-700 hover:text-gray-800 dark:hover:text-slate-200 group flex items-center px-4 py-2 text-sm font-medium rounded-xl w-full mt-4">
-        <svg id="themeIconLight" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-2 text-gray-500 dark:text-slate-400 hidden dark:block">
+      <button x-data x-on:click="
+        let isDark = document.documentElement.classList.toggle('dark');
+        let t = isDark ? 'dark' : 'light';
+        localStorage.setItem('theme', t);
+        fetch('/settheme?theme=' + t + '&amp;token=' + document.querySelector('meta[name=csrf-token]').content + '&amp;redirect=', { method: 'GET' }).catch(function(){});
+      " type="button" aria-label="Toggle dark mode" class="transition text-gray-600 dark:text-slate-400 hover:bg-gray-200 dark:hover:bg-slate-700 hover:text-gray-800 dark:hover:text-slate-200 group flex items-center px-4 py-2 text-sm font-medium rounded-xl w-full mt-4">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-2 text-gray-500 dark:text-slate-400 hidden dark:block">
           <path d="M10 2a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 10 2ZM10 15a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 10 15ZM10 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6ZM15.657 5.404a.75.75 0 1 0-1.06-1.06l-1.061 1.06a.75.75 0 0 0 1.06 1.06l1.06-1.06ZM6.464 14.596a.75.75 0 1 0-1.06-1.06l-1.06 1.06a.75.75 0 0 0 1.06 1.06l1.06-1.06ZM18 10a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1 0-1.5h1.5A.75.75 0 0 1 18 10ZM5 10a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1 0-1.5h1.5A.75.75 0 0 1 5 10ZM14.596 15.657a.75.75 0 0 0 1.06-1.06l-1.06-1.061a.75.75 0 1 0-1.06 1.06l1.06 1.06ZM5.404 6.464a.75.75 0 0 0 1.06-1.06l-1.06-1.06a.75.75 0 1 0-1.06 1.06l1.06 1.06Z"/>
         </svg>
-        <svg id="themeIconDark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-2 text-gray-500 dark:text-slate-400 block dark:hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-2 text-gray-500 dark:text-slate-400 block dark:hidden">
           <path fill-rule="evenodd" d="M7.455 2.004a.75.75 0 0 1 .26.77 7 7 0 0 0 9.958 7.967.75.75 0 0 1 1.067.853A8.5 8.5 0 1 1 6.647 1.921a.75.75 0 0 1 .808.083Z" clip-rule="evenodd"/>
         </svg>
         <span class="dark:hidden">Dark mode</span>
@@ -329,37 +335,10 @@
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     var currentPageUrl = window.location.href;
-
-    // Get all navigation links
-    var navLinks = document.querySelectorAll('.nav-link');
-
-    // Loop through each navigation link
-    navLinks.forEach(function(link) {
-      // Get the href attribute of the link
+    document.querySelectorAll('.nav-link').forEach(function(link) {
       var linkUrl = link.getAttribute('href');
-
-      // Check if the current page URL contains the link URL
       if (currentPageUrl.includes(linkUrl.replace('../', '/'))) {
-      // Remove all existing classes
-        link.className = 'nav-link';
-
-        // Add the specified classes
-        link.classList.add(
-          'transition',
-          'text-gray-900',
-          'dark:text-slate-100',
-          'bg-gray-200',
-          'dark:bg-slate-700',
-          'backdrop-blur',
-          'group',
-          'flex',
-          'items-center',
-          'px-4',
-          'py-2',
-          'text-sm',
-          'font-semibold',
-          'rounded-xl'
-        );
+        link.className = 'nav-link transition text-gray-900 dark:text-slate-100 bg-gray-200 dark:bg-slate-700 backdrop-blur group flex items-center px-4 py-2 text-sm font-semibold rounded-xl';
       }
     });
   });
@@ -504,36 +483,5 @@
   .dark .modal-content, .dark .newAccountContent { background-color: #1e293b; }
 </style>
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const sidebar = document.getElementById('sidebar');
-    const toggle = document.getElementById('sidebarToggle');
-    const backdrop = document.getElementById('sidebarBackdrop');
-    
-    if(toggle && sidebar && backdrop) {
-      toggle.addEventListener('click', () => {
-        sidebar.classList.toggle('-translate-x-full');
-        backdrop.classList.toggle('hidden');
-        setTimeout(() => backdrop.classList.toggle('opacity-0'), 10);
-      });
-      
-      backdrop.addEventListener('click', () => {
-        sidebar.classList.add('-translate-x-full');
-        backdrop.classList.add('opacity-0');
-        setTimeout(() => backdrop.classList.add('hidden'), 300);
-      });
-    }
-  });
-
-  document.addEventListener('DOMContentLoaded', function() {
-    var toggle = document.getElementById('themeToggle');
-    if (toggle) {
-      toggle.addEventListener('click', function() {
-        var isDark = document.documentElement.classList.toggle('dark');
-        var newTheme = isDark ? 'dark' : 'light';
-        localStorage.setItem('theme', newTheme);
-        fetch('/settheme?theme=' + newTheme + '&token=<%= csrfToken %>&redirect=', { method: 'GET' }).catch(function(){});
-      });
-    }
-  });
-</script>
+<!-- Close Alpine x-data wrapper -->
+</div>

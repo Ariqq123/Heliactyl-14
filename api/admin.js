@@ -8,6 +8,7 @@
  */
 
 const settings = require("../settings.json");
+const logger = require("../misc/logger").child({ module: "admin" });
 
 if (settings.pterodactyl)
   if (settings.pterodactyl.domain) {
@@ -23,6 +24,7 @@ const ejs = require("ejs");
 const log = require("../misc/log");
 const Queue = require("../managers/Queue.js");
 const csrf = require("../misc/csrf");
+const { isHtmx, sendAlert } = require("../misc/htmx");
 
 const adminQueue = new Queue();
 
@@ -57,9 +59,10 @@ module.exports.load = async function (app, db) {
       currentObj[keys[keys.length - 1]] = value;
 
       fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2));
+      if (isHtmx(req)) return sendAlert(res, "success", "Settings updated", "You may need to reboot Heliactyl to apply changes.");
       res.send("Settings updated successfully");
     } catch (err) {
-      console.error(err);
+      logger.error(err);
       res.status(500).send("Internal Server Error");
     }
   });
@@ -131,7 +134,7 @@ module.exports.load = async function (app, db) {
         cb();
         res.redirect(successredirect + "?err=none");
       } catch (e) {
-        console.error("setcoins error", e);
+        logger.error("setcoins error", e);
         cb();
         if (!res.headersSent) res.redirect(failredirect + "?err=INTERNAL");
       }
@@ -208,11 +211,15 @@ module.exports.load = async function (app, db) {
           `[cid:${req.cid || "-"}] ${req.session.userinfo.username}#${req.session.userinfo.discriminator} added \`${req.query.coins}\` coins to the user with the ID \`${id}\`'s account.`
         );
         cb();
+        if (isHtmx(req)) return sendAlert(res, "success", "Coins added", `Added ${req.query.coins} coins to user ${id}. New balance: ${total}`);
         res.redirect(successredirect + "?err=none");
       } catch (e) {
-        console.error("addcoins error", e);
+        logger.error("addcoins error", e);
         cb();
-        if (!res.headersSent) res.redirect(failredirect + "?err=INTERNAL");
+        if (!res.headersSent) {
+          if (isHtmx(req)) return sendAlert(res, "error", "Failed", "An internal error occurred.");
+          res.redirect(failredirect + "?err=INTERNAL");
+        }
       }
     });
   });
@@ -330,10 +337,10 @@ module.exports.load = async function (app, db) {
           );
           
           cb();
-          adminjs.suspend(req.query.id).catch(err => console.error(err));
+          adminjs.suspend(req.query.id).catch(err => logger.error(err));
           return res.redirect(successredirect + "?err=none");
         } catch (e) {
-          console.error("setresources error", e);
+          logger.error("setresources error", e);
           cb();
           if (!res.headersSent) res.redirect(failredirect + "?err=INTERNAL");
         }
@@ -455,12 +462,16 @@ module.exports.load = async function (app, db) {
 
           cb();
           // Call suspend outside queue to not block other admin tasks for long
-          adminjs.suspend(req.query.id).catch(err => console.error(err));
+          adminjs.suspend(req.query.id).catch(err => logger.error(err));
+          if (isHtmx(req)) return sendAlert(res, "success", "Resources added", `Resources updated for user ${req.query.id}.`);
           return res.redirect(successredirect + "?err=none");
         } catch (e) {
-          console.error("addresources error", e);
+          logger.error("addresources error", e);
           cb();
-          if (!res.headersSent) res.redirect(failredirect + "?err=INTERNAL");
+          if (!res.headersSent) {
+            if (isHtmx(req)) return sendAlert(res, "error", "Failed", "An internal error occurred.");
+            res.redirect(failredirect + "?err=INTERNAL");
+          }
         }
       });
     } else {
@@ -509,7 +520,7 @@ module.exports.load = async function (app, db) {
       try {
         if (!req.query.package) {
           await db.delete("package-" + req.query.id);
-          adminjs.suspend(req.query.id).catch(err => console.error(err));
+          adminjs.suspend(req.query.id).catch(err => logger.error(err));
 
           log(
             `set plan`,
@@ -527,7 +538,7 @@ module.exports.load = async function (app, db) {
           return res.redirect(`${failredirect}?err=INVALIDPACKAGE`);
         }
         await db.set("package-" + req.query.id, req.query.package);
-        adminjs.suspend(req.query.id).catch(err => console.error(err));
+        adminjs.suspend(req.query.id).catch(err => logger.error(err));
 
         log(
           `set plan`,
@@ -536,7 +547,7 @@ module.exports.load = async function (app, db) {
         cb();
         return res.redirect(successredirect + "?err=none");
       } catch (e) {
-        console.error("setplan error", e);
+        logger.error("setplan error", e);
         cb();
         if (!res.headersSent) res.redirect(failredirect + "?err=INTERNAL");
       }
@@ -810,6 +821,7 @@ module.exports.load = async function (app, db) {
       `remove account`,
       `${req.session.userinfo.username}#${req.session.userinfo.discriminator} removed the account with the ID \`${discordid}\`.`
     );
+    if (isHtmx(req)) return sendAlert(res, "success", "Account removed", `Account ${discordid} has been permanently deleted.`);
     res.redirect(
       theme.settings.redirect.removeaccountsuccess + "?success=REMOVEACCOUNT"
     );
@@ -935,11 +947,7 @@ module.exports.load = async function (app, db) {
       }
     );
     if ((await userinforeq.statusText) == "Not Found") {
-      console.log(
-        "App ― An error has occured while attempting to get a user's information"
-      );
-      console.log("- Discord ID: " + req.query.id);
-      console.log("- Pterodactyl Panel ID: " + pterodactylid);
+      logger.error({ discordId: req.query.id, pteroId: pterodactylid }, "Failed to get user information");
       return res.send({ status: "could not find user on panel" });
     }
     let userinfo = await userinforeq.json();
@@ -973,10 +981,7 @@ module.exports.load = async function (app, db) {
       function (err, str) {
         delete req.session.newaccount;
         if (err) {
-          console.log(
-            `App ― An error has occured on path ${req._parsedUrl.pathname}:`
-          );
-          console.log(err);
+          logger.error(err, `Render error on ${req._parsedUrl.pathname}`);
           return res.send("Internal Server Error");
         }
         res.status(404);
@@ -1013,11 +1018,7 @@ module.exports.load = async function (app, db) {
       }
     );
     if ((await userinforeq.statusText) == "Not Found") {
-      console.log(
-        "App ― An error has occured while attempting to check if a user's server should be suspended."
-      );
-      console.log("- Discord ID: " + discordid);
-      console.log("- Pterodactyl Panel ID: " + pterodactylid);
+      logger.error({ discordId: discordid, pteroId: pterodactylid }, "Failed to check user suspension status");
       return;
     }
     let userinfo = JSON.parse(await userinforeq.text());
