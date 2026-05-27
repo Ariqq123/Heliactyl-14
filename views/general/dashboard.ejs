@@ -39,16 +39,21 @@
 
             <!-- Welcome Banner -->
             <div class="bg-indigo-600 rounded-3xl px-8 py-8 shadow-md relative overflow-hidden mb-8">
-              <div class="absolute inset-0 bg-white opacity-[0.03]"></div>
+              <div class="absolute inset-0 bg-white dark:bg-slate-900 opacity-[0.03]"></div>
               <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between">
                 <div>
                   <h3 class="text-2xl font-bold text-white tracking-tight">Welcome back, <%= userinfo.global_name %></h3>
                   <p class="mt-2 text-indigo-100 flex items-center text-sm flex-wrap gap-2">
                     <span class="bg-indigo-700/50 border border-indigo-500/50 text-white px-3 py-1.5 rounded-xl font-medium inline-flex items-center shadow-sm">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-1.5 text-amber-300">
-                        <path d="M8 12.5c1.84 0 3.579-.37 4.914-1.037.366-.183.74-.41 1.086-.684V12c0 1.657-2.686 3-6 3s-6-1.343-6-3v-1.22c.346.273.72.5 1.087.683C4.42 12.131 6.16 12.5 8 12.5Z" />
+                        <path d="M10 8c3.866 0 7-1.343 7-3s-3.134-3-7-3-7 1.343-7 3 3.134 3 7 3Z" />
+                        <path d="M3 8.236V10c0 1.657 3.134 3 7 3s7-1.343 7-3V8.236C15.54 9.313 12.97 10 10 10s-5.54-.687-7-1.764Z" />
+                        <path d="M3 13.236V15c0 1.657 3.134 3 7 3s7-1.343 7-3v-1.764C15.54 14.313 12.97 15 10 15s-5.54-.687-7-1.764Z" />
                       </svg>
                       <%= (coins || 0).toFixed(2) %> coins
+                    </span>
+                    <span class="bg-white dark:bg-slate-900/10 border border-white/20 text-white px-3 py-1.5 rounded-xl font-medium inline-flex items-center shadow-sm">
+                      <%= (packages && packages.displayName ? packages.displayName : packagename) %> tier
                     </span>
                     <span class="hidden md:inline-block opacity-60">•</span>
                     <span><%= servers %> active <%= servers === 1 ? 'server' : 'servers' %> running.</span>
@@ -59,54 +64,54 @@
 
             <!-- Resource Stats -->
             <div class="mb-8">
-              <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4 px-1">Resource Availability</h3>
+              <h3 class="text-sm font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-4 px-1">Resource Availability</h3>
               <dl class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                <div class="bg-white border border-gray-100 shadow-sm rounded-2xl p-6 transition-all duration-200 hover:shadow-md hover:border-gray-200">
-                  <dt class="text-sm font-medium text-gray-500 flex items-center"><div class="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>CPU Cores</dt>
-                  <dd class="mt-3 text-3xl font-bold tracking-tight text-gray-900"><%= packages.cpu/100 + extraresources.cpu/100 - cpu/100 %></dd>
+                <div class="bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 rounded-2xl p-6 shadow-sm transition-all duration-200 hover:shadow-md">
+                  <dt class="text-sm font-medium text-gray-500 dark:text-slate-400 flex items-center"><div class="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>CPU Cores</dt>
+                  <dd class="mt-3 text-3xl font-bold tracking-tight text-gray-900 dark:text-slate-100"><%= packages.cpu/100 + extraresources.cpu/100 - cpu/100 %></dd>
                 </div>
-                <div class="bg-white border border-gray-100 shadow-sm rounded-2xl p-6 transition-all duration-200 hover:shadow-md hover:border-gray-200">
-                  <dt class="text-sm font-medium text-gray-500 flex items-center"><div class="w-2 h-2 rounded-full bg-indigo-500 mr-2"></div>Memory</dt>
-                  <dd class="mt-3 text-3xl font-bold tracking-tight text-gray-900"><%= packages.ram/1024 + extraresources.ram/1024 - ram/1024 %><span class="text-lg font-medium text-gray-400 ml-1">GiB</span></dd>
+                <div class="bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 rounded-2xl p-6 shadow-sm transition-all duration-200 hover:shadow-md">
+                  <dt class="text-sm font-medium text-gray-500 dark:text-slate-400 flex items-center"><div class="w-2 h-2 rounded-full bg-indigo-500 mr-2"></div>Memory</dt>
+                  <dd class="mt-3 text-3xl font-bold tracking-tight text-gray-900 dark:text-slate-100"><%= packages.ram/1024 + extraresources.ram/1024 - ram/1024 %><span class="text-lg font-medium text-gray-400 dark:text-slate-500 ml-1">GiB</span></dd>
                 </div>
-                <div class="bg-white border border-gray-100 shadow-sm rounded-2xl p-6 transition-all duration-200 hover:shadow-md hover:border-gray-200">
-                  <dt class="text-sm font-medium text-gray-500 flex items-center"><div class="w-2 h-2 rounded-full bg-emerald-500 mr-2"></div>Storage</dt>
-                  <dd class="mt-3 text-3xl font-bold tracking-tight text-gray-900"><%= packages.disk/1024 + extraresources.disk/1024 - disk/1024 %><span class="text-lg font-medium text-gray-400 ml-1">GiB</span></dd>
+                <div class="bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 rounded-2xl p-6 shadow-sm transition-all duration-200 hover:shadow-md">
+                  <dt class="text-sm font-medium text-gray-500 dark:text-slate-400 flex items-center"><div class="w-2 h-2 rounded-full bg-emerald-500 mr-2"></div>Storage</dt>
+                  <dd class="mt-3 text-3xl font-bold tracking-tight text-gray-900 dark:text-slate-100"><%= packages.disk/1024 + extraresources.disk/1024 - disk/1024 %><span class="text-lg font-medium text-gray-400 dark:text-slate-500 ml-1">GiB</span></dd>
                 </div>
-                <div class="bg-white border border-gray-100 shadow-sm rounded-2xl p-6 transition-all duration-200 hover:shadow-md hover:border-gray-200">
-                  <dt class="text-sm font-medium text-gray-500 flex items-center"><div class="w-2 h-2 rounded-full bg-amber-500 mr-2"></div>Servers</dt>
-                  <dd class="mt-3 text-3xl font-bold tracking-tight text-gray-900"><%= packages.servers + extraresources.servers - servers %><span class="text-lg font-medium text-gray-400 ml-1">Slots</span></dd>
+                <div class="bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 rounded-2xl p-6 shadow-sm transition-all duration-200 hover:shadow-md">
+                  <dt class="text-sm font-medium text-gray-500 dark:text-slate-400 flex items-center"><div class="w-2 h-2 rounded-full bg-amber-500 mr-2"></div>Servers</dt>
+                  <dd class="mt-3 text-3xl font-bold tracking-tight text-gray-900 dark:text-slate-100"><%= packages.servers + extraresources.servers - servers %><span class="text-lg font-medium text-gray-400 dark:text-slate-500 ml-1">Slots</span></dd>
                 </div>
               </dl>
             </div>
 
             <!-- Quick Actions -->
             <div class="mb-4">
-              <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4 px-1">Quick Actions</h3>
+              <h3 class="text-sm font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-4 px-1">Quick Actions</h3>
               <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                <a href="../servers/new" class="group relative flex items-center p-5 rounded-2xl bg-white border border-gray-100 shadow-sm transition-all hover:border-indigo-500/30 hover:shadow-md hover:ring-1 hover:ring-indigo-500/30">
-                  <div class="flex-shrink-0 bg-indigo-50 text-indigo-600 rounded-xl p-3 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                <a href="../servers/new" class="group relative flex items-center p-5 rounded-2xl bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-700 shadow-sm transition-all hover:border-indigo-500/30 hover:shadow-md hover:ring-1 hover:ring-indigo-500/30">
+                  <div class="flex-shrink-0 bg-indigo-50 dark:bg-indigo-950 text-indigo-600 rounded-xl p-3 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
                   </div>
-                  <div class="ml-4 min-w-0 flex-1"><p class="text-sm font-semibold text-gray-900">New Server</p><p class="text-xs text-gray-500 truncate">Deploy instance</p></div>
+                  <div class="ml-4 min-w-0 flex-1"><p class="text-sm font-semibold text-gray-900 dark:text-slate-100">New Server</p><p class="text-xs text-gray-500 dark:text-slate-400 truncate">Deploy instance</p></div>
                 </a>
-                <a href="../security" class="group relative flex items-center p-5 rounded-2xl bg-white border border-gray-100 shadow-sm transition-all hover:border-rose-500/30 hover:shadow-md hover:ring-1 hover:ring-rose-500/30">
+                <a href="../security" class="group relative flex items-center p-5 rounded-2xl bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-700 shadow-sm transition-all hover:border-rose-500/30 hover:shadow-md hover:ring-1 hover:ring-rose-500/30">
                   <div class="flex-shrink-0 bg-rose-50 text-rose-600 rounded-xl p-3 group-hover:bg-rose-600 group-hover:text-white transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" /></svg>
                   </div>
-                  <div class="ml-4 min-w-0 flex-1"><p class="text-sm font-semibold text-gray-900">Security</p><p class="text-xs text-gray-500 truncate">Account safety</p></div>
+                  <div class="ml-4 min-w-0 flex-1"><p class="text-sm font-semibold text-gray-900 dark:text-slate-100">Security</p><p class="text-xs text-gray-500 dark:text-slate-400 truncate">Account safety</p></div>
                 </a>
-                <a href="../store" class="group relative flex items-center p-5 rounded-2xl bg-white border border-gray-100 shadow-sm transition-all hover:border-emerald-500/30 hover:shadow-md hover:ring-1 hover:ring-emerald-500/30">
+                <a href="../store" class="group relative flex items-center p-5 rounded-2xl bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-700 shadow-sm transition-all hover:border-emerald-500/30 hover:shadow-md hover:ring-1 hover:ring-emerald-500/30">
                   <div class="flex-shrink-0 bg-emerald-50 text-emerald-600 rounded-xl p-3 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" /></svg>
                   </div>
-                  <div class="ml-4 min-w-0 flex-1"><p class="text-sm font-semibold text-gray-900">Store</p><p class="text-xs text-gray-500 truncate">Buy resources</p></div>
+                  <div class="ml-4 min-w-0 flex-1"><p class="text-sm font-semibold text-gray-900 dark:text-slate-100">Store</p><p class="text-xs text-gray-500 dark:text-slate-400 truncate">Buy resources</p></div>
                 </a>
-                <a href="../transfer" class="group relative flex items-center p-5 rounded-2xl bg-white border border-gray-100 shadow-sm transition-all hover:border-amber-500/30 hover:shadow-md hover:ring-1 hover:ring-amber-500/30">
+                <a href="../transfer" class="group relative flex items-center p-5 rounded-2xl bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-700 shadow-sm transition-all hover:border-amber-500/30 hover:shadow-md hover:ring-1 hover:ring-amber-500/30">
                   <div class="flex-shrink-0 bg-amber-50 text-amber-600 rounded-xl p-3 group-hover:bg-amber-600 group-hover:text-white transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" /></svg>
                   </div>
-                  <div class="ml-4 min-w-0 flex-1"><p class="text-sm font-semibold text-gray-900">Transfer</p><p class="text-xs text-gray-500 truncate">Send coins</p></div>
+                  <div class="ml-4 min-w-0 flex-1"><p class="text-sm font-semibold text-gray-900 dark:text-slate-100">Transfer</p><p class="text-xs text-gray-500 dark:text-slate-400 truncate">Send coins</p></div>
                 </a>
               </div>
             </div>

@@ -1,21 +1,4 @@
-<head>
-  <title><%= settings.name %></title>
-  <link rel="icon" type="image/x-icon" href="../assets/favicon.png">
-  <link rel="stylesheet" href="../assets/tailwind.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
-
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-</head>
-
-<body class="bg-gray-100 flex h-screen overflow-x-hidden" style="font-family: 'Inter', sans-serif;">
-  <%- include('../components/navigation') %>
-  <div class="flex-1 min-w-0 flex flex-col h-screen overflow-y-auto">
-      <main class="flex-1 pb-32">
-        <div class="py-6">
-          <%- include('../components/skeleton') %>
-          <div class="hidden max-w-7xl pt-8 mx-auto px-4 sm:px-6 md:px-8" id="content">
+<%- include("../layouts/head") %>
             <%
               let ram = 0;
               let disk = 0;
@@ -28,7 +11,7 @@
               }
             %>
 
-            <div class="relative overflow-hidden bg-white border border-gray-200/60 rounded-3xl mb-8 p-8 shadow-sm">
+            <div class="bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 rounded-3xl p-8 shadow-sm">
               <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-gradient-to-br from-amber-50 to-orange-100 opacity-50 blur-3xl"></div>
               <div class="relative lg:flex lg:items-center lg:justify-between">
                 <div class="flex items-center">
@@ -38,8 +21,8 @@
                     </svg>
                   </div>
                   <div class="ml-5">
-                    <h2 class="text-2xl font-bold text-gray-800 tracking-tight">Server Settings</h2>
-                    <p class="mt-1 text-sm text-gray-500">Adjust resource limits or remove this server.</p>
+                    <h2 class="text-2xl font-bold text-gray-800 dark:text-slate-200 tracking-tight">Server Settings</h2>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-slate-400">Adjust resource limits or remove this server.</p>
                   </div>
                 </div>
                 <a href="../delete?id=<%= req.query.id %>&token=<%= csrfToken %>" class="mt-6 lg:mt-0 inline-flex items-center rounded-xl bg-rose-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-rose-700 transition-colors">Delete Server</a>
@@ -58,48 +41,48 @@
                 let egginfo = attemptegg ? attemptegg.display : "Unknown software";
             %>
             <div class="grid grid-cols-1 gap-6 xl:grid-cols-3">
-              <div class="xl:col-span-2 bg-white border border-gray-200/60 rounded-3xl p-8 shadow-sm">
-                <div class="mb-6 border-b border-gray-100 pb-6">
-                  <h3 class="text-lg font-semibold text-gray-900"><%= serverinfo.attributes.name %></h3>
-                  <p class="mt-1 text-sm text-gray-500">ID <span class="font-mono text-xs"><%= req.query.id %></span> · <%= egginfo %></p>
+              <div class="bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 rounded-3xl p-8 shadow-sm">
+                <div class="mb-6 border-b border-gray-100 dark:border-slate-700 pb-6">
+                  <h3 class="text-lg font-semibold text-gray-900 dark:text-slate-100"><%= serverinfo.attributes.name %></h3>
+                  <p class="mt-1 text-sm text-gray-500 dark:text-slate-400">ID <span class="font-mono text-xs"><%= req.query.id %></span> · <%= egginfo %></p>
                 </div>
 
                 <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
                   <div>
-                    <label for="ram" class="text-sm font-medium text-gray-700">Memory (GiB)</label>
-                    <input type="text" id="ram" value="<%= serverinfo.attributes.limits.memory/1024 %>" class="mt-2 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm focus:border-amber-400 focus:ring-amber-500">
+                    <label for="ram" class="text-sm font-medium text-gray-700 dark:text-slate-300">Memory (GiB)</label>
+                    <input type="text" id="ram" value="<%= serverinfo.attributes.limits.memory/1024 %>" class="mt-2 w-full rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3 text-sm text-gray-700 dark:text-slate-300 shadow-sm focus:border-amber-400 focus:ring-amber-500">
                   </div>
                   <div>
-                    <label for="cpu" class="text-sm font-medium text-gray-700">CPU Cores</label>
-                    <input type="text" id="cpu" value="<%= serverinfo.attributes.limits.cpu/100 %>" class="mt-2 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm focus:border-amber-400 focus:ring-amber-500">
+                    <label for="cpu" class="text-sm font-medium text-gray-700 dark:text-slate-300">CPU Cores</label>
+                    <input type="text" id="cpu" value="<%= serverinfo.attributes.limits.cpu/100 %>" class="mt-2 w-full rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3 text-sm text-gray-700 dark:text-slate-300 shadow-sm focus:border-amber-400 focus:ring-amber-500">
                   </div>
                   <div class="md:col-span-2">
-                    <label for="disk" class="text-sm font-medium text-gray-700">Storage (GiB)</label>
-                    <input type="text" id="disk" value="<%= serverinfo.attributes.limits.disk/1024 %>" class="mt-2 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm focus:border-amber-400 focus:ring-amber-500">
+                    <label for="disk" class="text-sm font-medium text-gray-700 dark:text-slate-300">Storage (GiB)</label>
+                    <input type="text" id="disk" value="<%= serverinfo.attributes.limits.disk/1024 %>" class="mt-2 w-full rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3 text-sm text-gray-700 dark:text-slate-300 shadow-sm focus:border-amber-400 focus:ring-amber-500">
                   </div>
                 </div>
 
                 <div class="mt-8 flex flex-wrap gap-3">
                   <button onclick="submitForm()" class="inline-flex items-center rounded-xl bg-amber-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-amber-700 transition-colors">Apply Changes</button>
-                  <a href="../servers" class="inline-flex items-center rounded-xl border border-gray-200 bg-white px-6 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">Cancel</a>
+                  <a href="../servers" class="inline-flex items-center rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-6 py-3 text-sm font-medium text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors">Cancel</a>
                 </div>
               </div>
 
-              <div class="bg-white border border-gray-200/60 rounded-3xl p-8 shadow-sm h-fit">
-                <h3 class="text-lg font-semibold text-gray-900">Current limits</h3>
-                <p class="mt-1 text-sm text-gray-500">Review the server allocation before saving.</p>
+              <div class="bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 rounded-3xl p-8 shadow-sm">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-slate-100">Current limits</h3>
+                <p class="mt-1 text-sm text-gray-500 dark:text-slate-400">Review the server allocation before saving.</p>
                 <dl class="mt-6 space-y-4">
-                  <div class="flex items-center justify-between rounded-2xl bg-gray-50 px-4 py-3">
-                    <dt class="text-sm text-gray-500">Memory</dt>
-                    <dd class="text-sm font-semibold text-gray-900"><%= serverinfo.attributes.limits.memory/1024 %> GiB</dd>
+                  <div class="flex items-center justify-between rounded-2xl bg-gray-50 dark:bg-slate-800 px-4 py-3">
+                    <dt class="text-sm text-gray-500 dark:text-slate-400">Memory</dt>
+                    <dd class="text-sm font-semibold text-gray-900 dark:text-slate-100"><%= serverinfo.attributes.limits.memory/1024 %> GiB</dd>
                   </div>
-                  <div class="flex items-center justify-between rounded-2xl bg-gray-50 px-4 py-3">
-                    <dt class="text-sm text-gray-500">CPU</dt>
-                    <dd class="text-sm font-semibold text-gray-900"><%= serverinfo.attributes.limits.cpu/100 %> Cores</dd>
+                  <div class="flex items-center justify-between rounded-2xl bg-gray-50 dark:bg-slate-800 px-4 py-3">
+                    <dt class="text-sm text-gray-500 dark:text-slate-400">CPU</dt>
+                    <dd class="text-sm font-semibold text-gray-900 dark:text-slate-100"><%= serverinfo.attributes.limits.cpu/100 %> Cores</dd>
                   </div>
-                  <div class="flex items-center justify-between rounded-2xl bg-gray-50 px-4 py-3">
-                    <dt class="text-sm text-gray-500">Storage</dt>
-                    <dd class="text-sm font-semibold text-gray-900"><%= serverinfo.attributes.limits.disk/1024 %> GiB</dd>
+                  <div class="flex items-center justify-between rounded-2xl bg-gray-50 dark:bg-slate-800 px-4 py-3">
+                    <dt class="text-sm text-gray-500 dark:text-slate-400">Storage</dt>
+                    <dd class="text-sm font-semibold text-gray-900 dark:text-slate-100"><%= serverinfo.attributes.limits.disk/1024 %> GiB</dd>
                   </div>
                 </dl>
               </div>
@@ -113,20 +96,15 @@
               }
             </script>
             <% } else { %>
-            <div class="text-center bg-white border border-gray-200/60 rounded-3xl py-24 px-6 shadow-sm">
-              <h3 class="text-lg font-bold tracking-tight text-gray-900">Server not found</h3>
-              <p class="mt-2 text-sm text-gray-500">Could not find a server with the provided ID.</p>
+            <div class="bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 rounded-3xl shadow-sm text-center py-24 px-6">
+              <h3 class="text-lg font-bold tracking-tight text-gray-900 dark:text-slate-100">Server not found</h3>
+              <p class="mt-2 text-sm text-gray-500 dark:text-slate-400">Could not find a server with the provided ID.</p>
             </div>
             <% } %>
             <% } else { %>
-            <div class="text-center bg-white border border-gray-200/60 rounded-3xl py-24 px-6 shadow-sm">
-              <h3 class="text-lg font-bold tracking-tight text-gray-900">Missing server ID</h3>
-              <p class="mt-2 text-sm text-gray-500">No server ID was provided for this request.</p>
+            <div class="bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 rounded-3xl shadow-sm text-center py-24 px-6">
+              <h3 class="text-lg font-bold tracking-tight text-gray-900 dark:text-slate-100">Missing server ID</h3>
+              <p class="mt-2 text-sm text-gray-500 dark:text-slate-400">No server ID was provided for this request.</p>
             </div>
             <% } %>
-          </div>
-        </div>
-      </main>
-      <%- include('../components/footer') %>
-  </div>
-</body>
+<%- include("../layouts/tail") %>

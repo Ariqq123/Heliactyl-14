@@ -1,22 +1,22 @@
 <%- include("../layouts/head") %>
 <% const safeUsers = (typeof usersList !== 'undefined' && Array.isArray(usersList)) ? usersList : []; %>
 
-          <div class="relative overflow-hidden bg-white border border-gray-200/60 rounded-3xl mb-8 p-8 shadow-sm">
+          <div class="relative overflow-hidden bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700/60 dark:border-slate-700 rounded-3xl mb-8 p-8 shadow-sm">
             <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-gradient-to-br from-indigo-50 to-blue-100 opacity-50 blur-3xl"></div>
             <div class="relative lg:flex lg:items-center lg:justify-between">
               <div class="flex items-center">
-                <div class="bg-indigo-50 border border-indigo-100/50 rounded-2xl h-14 w-14 flex items-center justify-center text-indigo-500 shadow-sm">
+                <div class="bg-indigo-50 dark:bg-indigo-950 border border-indigo-100/50 rounded-2xl h-14 w-14 flex items-center justify-center text-indigo-500 dark:text-indigo-400 shadow-sm">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                     <path d="M4.5 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM14.25 8.625a3.375 3.375 0 1 1 6.75 0 3.375 3.375 0 0 1-6.75 0ZM1.5 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM17.25 19.128l-.001.144a2.25 2.25 0 0 1-.233.96 10.088 10.088 0 0 0 5.06-1.01.75.75 0 0 0 .42-.643 4.875 4.875 0 0 0-6.957-4.611 8.586 8.586 0 0 1 1.71 5.157v.003Z" />
                   </svg>
                 </div>
                 <div class="ml-5">
-                  <h2 class="text-2xl font-bold text-gray-800 tracking-tight">Registered Users</h2>
-                  <p class="mt-1 text-sm text-gray-500">All Heliactyl users linked to Pterodactyl accounts.</p>
+                  <h2 class="text-2xl font-bold text-gray-800 dark:text-slate-200 tracking-tight">Registered Users</h2>
+                  <p class="mt-1 text-sm text-gray-500 dark:text-slate-400">All Heliactyl users linked to Pterodactyl accounts.</p>
                 </div>
               </div>
               <div class="mt-6 lg:mt-0 flex gap-3">
-                <button onclick="filterUsers()" class="inline-flex items-center rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+                <button onclick="filterUsers()" class="inline-flex items-center rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2 text-sm font-medium text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-800 dark:bg-slate-800 transition-colors">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" /></svg>
                   Filter
                 </button>
@@ -28,47 +28,47 @@
             </div>
           </div>
 
-          <div class="bg-white border border-gray-200/60 rounded-3xl p-4 shadow-sm mb-6 hidden" id="filterPane">
-            <input type="text" id="filterQuery" placeholder="Search username, email, Discord ID, package..." class="w-full rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm text-gray-700 shadow-sm focus:border-indigo-400 focus:ring-indigo-500 placeholder:text-gray-400" oninput="applyFilter()">
+          <div class="bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 rounded-3xl p-4 mb-6 hidden" id="filterPane">
+            <input type="text" id="filterQuery" placeholder="Search username, email, Discord ID, package..." class="w-full rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2 text-sm text-gray-700 dark:text-slate-300 shadow-sm focus:border-indigo-400 focus:ring-indigo-500 placeholder:text-gray-400 dark:text-slate-500" oninput="applyFilter()">
           </div>
 
           <% if (!safeUsers || safeUsers.length === 0) { %>
-          <div class="text-center bg-white border border-gray-200/60 rounded-3xl py-24 px-6 shadow-sm">
-            <div class="mx-auto h-16 w-16 bg-gray-50 rounded-2xl flex items-center justify-center border border-gray-100 mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-8 w-8 text-gray-400"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /></svg>
+          <div class="text-center bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700/60 dark:border-slate-700 rounded-3xl py-24 px-6 shadow-sm">
+            <div class="mx-auto h-16 w-16 bg-gray-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center border border-gray-100 dark:border-slate-700 mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-8 w-8 text-gray-400 dark:text-slate-500"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /></svg>
             </div>
-            <h3 class="text-lg font-bold tracking-tight text-gray-900">No users found</h3>
-            <p class="mt-2 text-sm text-gray-500">Registered users will appear here after logging in.</p>
+            <h3 class="text-lg font-bold tracking-tight text-gray-900 dark:text-slate-100">No users found</h3>
+            <p class="mt-2 text-sm text-gray-500 dark:text-slate-400">Registered users will appear here after logging in.</p>
           </div>
           <% } else { %>
-          <div class="bg-white border border-gray-200/60 rounded-3xl overflow-hidden shadow-sm">
+          <div class="bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 rounded-3xl shadow-sm overflow-hidden">
             <div class="overflow-x-auto">
               <table class="min-w-full divide-y divide-gray-200" id="usersTable">
-                <thead class="bg-gray-50">
+                <thead class="bg-gray-50 dark:bg-slate-800">
                   <tr>
-                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">User</th>
-                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Discord ID</th>
-                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Ptero ID</th>
-                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Package</th>
-                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Coins</th>
-                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Servers</th>
-                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Extra Resources</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider">User</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider">Discord ID</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider">Ptero ID</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider">Package</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider">Coins</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider">Servers</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider">Extra Resources</th>
                   </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-100" id="usersBody">
+                <tbody class="bg-white dark:bg-slate-900 divide-y divide-gray-100" id="usersBody">
                   <% for (let i = 0; i < safeUsers.length; i++) { const user = safeUsers[i]; %>
-                  <tr class="hover:bg-gray-50 transition-colors user-row" data-search="<%= `${user.username || ''} ${user.email || ''} ${user.discordId || ''} ${user.pteroId || ''} ${user.package || ''}`.toLowerCase() %>">
+                  <tr class="hover:bg-gray-50 dark:hover:bg-slate-800 dark:bg-slate-800 transition-colors user-row" data-search="<%= `${user.username || ''} ${user.email || ''} ${user.discordId || ''} ${user.pteroId || ''} ${user.package || ''}`.toLowerCase() %>">
                     <td class="px-4 py-3">
-                      <div class="text-sm font-semibold text-gray-900"><%= user.username || 'Unknown' %></div>
-                      <div class="text-xs text-gray-500"><%= user.email || 'No email' %></div>
+                      <div class="text-sm font-semibold text-gray-900 dark:text-slate-100"><%= user.username || 'Unknown' %></div>
+                      <div class="text-xs text-gray-500 dark:text-slate-400"><%= user.email || 'No email' %></div>
                       <% if (user.admin) { %><span class="mt-1 inline-flex rounded-full bg-amber-50 text-amber-700 px-2.5 py-1 text-xs font-medium">Admin</span><% } %>
                     </td>
-                    <td class="px-4 py-3 text-xs text-gray-500 font-mono"><%= user.discordId || '—' %></td>
-                    <td class="px-4 py-3 text-xs text-gray-500 font-mono"><%= user.pteroId || '—' %></td>
-                    <td class="px-4 py-3 text-sm text-gray-700"><span class="inline-flex rounded-full bg-indigo-50 text-indigo-700 px-2.5 py-1 text-xs font-medium"><%= user.package %></span></td>
-                    <td class="px-4 py-3 text-sm text-gray-700"><%= user.coins %></td>
-                    <td class="px-4 py-3 text-sm text-gray-700"><%= user.servers %></td>
-                    <td class="px-4 py-3 text-xs text-gray-500">
+                    <td class="px-4 py-3 text-xs text-gray-500 dark:text-slate-400 font-mono"><%= user.discordId || '—' %></td>
+                    <td class="px-4 py-3 text-xs text-gray-500 dark:text-slate-400 font-mono"><%= user.pteroId || '—' %></td>
+                    <td class="px-4 py-3 text-sm text-gray-700 dark:text-slate-300"><span class="inline-flex rounded-full bg-indigo-50 dark:bg-indigo-950 text-indigo-700 px-2.5 py-1 text-xs font-medium"><%= user.package %></span></td>
+                    <td class="px-4 py-3 text-sm text-gray-700 dark:text-slate-300"><%= user.coins %></td>
+                    <td class="px-4 py-3 text-sm text-gray-700 dark:text-slate-300"><%= user.servers %></td>
+                    <td class="px-4 py-3 text-xs text-gray-500 dark:text-slate-400">
                       RAM: <%= user.extra.ram %> MB<br>
                       Disk: <%= user.extra.disk %> MB<br>
                       CPU: <%= user.extra.cpu %>%<br>
@@ -79,7 +79,7 @@
                 </tbody>
               </table>
             </div>
-            <div class="bg-gray-50 px-4 py-3 border-t border-gray-200 text-xs text-gray-500 flex items-center justify-between">
+            <div class="bg-gray-50 dark:bg-slate-800 px-4 py-3 border-t border-gray-200 dark:border-slate-700 text-xs text-gray-500 dark:text-slate-400 flex items-center justify-between">
               <span>Showing <span id="visibleCount"><%= safeUsers.length %></span> / <%= safeUsers.length %> users</span>
               <span class="font-mono">PID <%= process.pid %></span>
             </div>

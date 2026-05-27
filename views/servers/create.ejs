@@ -1,56 +1,13 @@
-<head>
-  <title><%= settings.name %></title>
-  <link rel="icon" type="image/x-icon" href="../assets/favicon.png">
-  <link rel="stylesheet" href="../assets/tailwind.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+<%- include("../layouts/head") %>
 
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-</head>
-
-<body class="bg-gray-100 flex h-screen overflow-x-hidden" style="font-family: 'Inter', sans-serif;">
-  <%
-     let ram = 0;
-     let disk = 0;
-     let cpu = 0;
-     let servers = pterodactyl.relationships.servers.data.length;
-     for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) {
-         ram = ram + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.memory == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.memory : 0);
-         disk = disk + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.disk == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.disk : 0);
-         cpu = cpu + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.cpu == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.cpu : 0);
-     }
-     let availableRam = (packages ? packages.ram : 0)/1024 + extraresources.ram/1024 - ram/1024;
-     let availableDisk = (packages ? packages.disk : 0)/1024 + extraresources.disk/1024 - disk/1024;
-     let availableCpu = (packages ? packages.cpu : 0)/100 + extraresources.cpu/100 - cpu/100;
-     let availableServers = (packages ? packages.servers : 0) + extraresources.servers - servers;
-  %>
-  <%- include('../components/navigation') %>
-  <div class="flex-1 min-w-0 flex flex-col h-screen overflow-y-auto">
-    <main class="flex-1 pb-32">
-      <div class="py-6">
-        <%- include('../components/skeleton') %>
-        <div class="hidden max-w-7xl pt-8 mx-auto px-4 sm:px-6 md:px-8" id="content">
-
-          <div class="relative overflow-hidden bg-white border border-gray-200/60 rounded-3xl mb-8 p-8 shadow-sm">
-            <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-gradient-to-br from-indigo-50 to-blue-100 opacity-50 blur-3xl"></div>
-            <div class="relative lg:flex lg:items-center lg:justify-between">
-              <div class="flex items-center">
-                <div class="bg-indigo-50 border border-indigo-100/50 rounded-2xl h-14 w-14 flex items-center justify-center text-indigo-500 shadow-sm">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                    <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
-                  </svg>
-                </div>
-                <div class="ml-5">
-                  <h2 class="text-2xl font-bold text-gray-800 tracking-tight">Deploy Server</h2>
-                  <p class="mt-1 text-sm text-gray-500">Create a new server with your available resources.</p>
-                </div>
-              </div>
-              <a href="../servers" class="mt-6 lg:mt-0 inline-flex items-center rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
-                Back to Servers
-              </a>
-            </div>
-          </div>
+<%- include("../components/page-hero", {
+  icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" /></svg>',
+  iconClass: 'bg-indigo-50 dark:bg-indigo-950 border border-indigo-100/50 text-indigo-500 dark:text-indigo-400',
+  gradient: 'from-indigo-50 to-blue-100',
+  title: 'Deploy Server',
+  subtitle: 'Create a new server with your available resources.',
+  action: '<a href="../servers" class="inline-flex items-center rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2 text-sm font-medium text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-800 dark:bg-slate-800 transition-colors">Back to Servers</a>'
+}) %>
 
           <% if (req.query.err) { %>
           <div class="rounded-2xl bg-rose-50 border border-rose-200 p-6 mb-6">
@@ -73,44 +30,44 @@
 
           <% if (availableRam > 0) { %>
           <div class="grid grid-cols-1 gap-6 xl:grid-cols-3">
-            <div class="xl:col-span-2 bg-white border border-gray-200/60 rounded-3xl p-8 shadow-sm">
+            <div class="bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 rounded-3xl p-8 shadow-sm">
               <div class="mb-6">
-                <h3 class="text-lg font-semibold text-gray-900">Server configuration</h3>
-                <p class="mt-1 text-sm text-gray-500">Choose a name, location, software, and resource limits.</p>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-slate-100">Server configuration</h3>
+                <p class="mt-1 text-sm text-gray-500 dark:text-slate-400">Choose a name, location, software, and resource limits.</p>
               </div>
 
               <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
                 <div class="md:col-span-2">
-                  <label for="name" class="text-sm font-medium text-gray-700">Server name</label>
-                  <input type="text" id="name" placeholder="My server" class="mt-2 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm placeholder:text-gray-400 focus:border-indigo-400 focus:ring-indigo-500">
+                  <label for="name" class="text-sm font-medium text-gray-700 dark:text-slate-300">Server name</label>
+                  <input type="text" id="name" placeholder="My server" class="mt-2 w-full rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3 text-sm text-gray-700 dark:text-slate-300 shadow-sm focus:border-indigo-400 focus:ring-indigo-500">
                 </div>
                 <div>
-                  <label for="location" class="text-sm font-medium text-gray-700">Location</label>
-                  <select id="location" class="mt-2 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm focus:border-indigo-400 focus:ring-indigo-500">
+                  <label for="location" class="text-sm font-medium text-gray-700 dark:text-slate-300">Location</label>
+                  <select id="location" class="mt-2 w-full rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3 text-sm text-gray-700 dark:text-slate-300 shadow-sm focus:border-indigo-400 focus:ring-indigo-500">
                     <% for (let [name, value] of Object.entries(settings.api.client.locations)) { %>
                     <option value="<%= name %>"><%= value.name %></option>
                     <% } %>
                   </select>
                 </div>
                 <div>
-                  <label for="egg" class="text-sm font-medium text-gray-700">Software</label>
-                  <select id="egg" class="mt-2 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm focus:border-indigo-400 focus:ring-indigo-500">
+                  <label for="egg" class="text-sm font-medium text-gray-700 dark:text-slate-300">Software</label>
+                  <select id="egg" class="mt-2 w-full rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3 text-sm text-gray-700 dark:text-slate-300 shadow-sm focus:border-indigo-400 focus:ring-indigo-500">
                     <% for (let [name, value] of Object.entries(settings.api.client.eggs)) { %>
                     <option value="<%= name %>"><%= value.display %></option>
                     <% } %>
                   </select>
                 </div>
                 <div>
-                  <label for="ram" class="text-sm font-medium text-gray-700">Memory (GiB)</label>
-                  <input type="text" id="ram" value="<%= availableRam %>" class="mt-2 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm focus:border-indigo-400 focus:ring-indigo-500">
+                  <label for="ram" class="text-sm font-medium text-gray-700 dark:text-slate-300">Memory (GiB)</label>
+                  <input type="text" id="ram" value="<%= availableRam %>" class="mt-2 w-full rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3 text-sm text-gray-700 dark:text-slate-300 shadow-sm focus:border-indigo-400 focus:ring-indigo-500">
                 </div>
                 <div>
-                  <label for="disk" class="text-sm font-medium text-gray-700">Storage (GiB)</label>
-                  <input type="text" id="disk" value="<%= availableDisk %>" class="mt-2 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm focus:border-indigo-400 focus:ring-indigo-500">
+                  <label for="disk" class="text-sm font-medium text-gray-700 dark:text-slate-300">Storage (GiB)</label>
+                  <input type="text" id="disk" value="<%= availableDisk %>" class="mt-2 w-full rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3 text-sm text-gray-700 dark:text-slate-300 shadow-sm focus:border-indigo-400 focus:ring-indigo-500">
                 </div>
                 <div>
-                  <label for="cpu" class="text-sm font-medium text-gray-700">CPU Cores</label>
-                  <input type="text" id="cpu" value="<%= availableCpu %>" class="mt-2 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm focus:border-indigo-400 focus:ring-indigo-500">
+                  <label for="cpu" class="text-sm font-medium text-gray-700 dark:text-slate-300">CPU Cores</label>
+                  <input type="text" id="cpu" value="<%= availableCpu %>" class="mt-2 w-full rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3 text-sm text-gray-700 dark:text-slate-300 shadow-sm focus:border-indigo-400 focus:ring-indigo-500">
                 </div>
               </div>
 
@@ -124,29 +81,29 @@
                     </svg>
                   </span>
                 </button>
-                <a href="../servers" class="inline-flex items-center rounded-xl border border-gray-200 bg-white px-6 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">Cancel</a>
+                <a href="../servers" class="inline-flex items-center rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-6 py-3 text-sm font-medium text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors">Cancel</a>
               </div>
             </div>
 
-            <div class="bg-white border border-gray-200/60 rounded-3xl p-8 shadow-sm h-fit">
-              <h3 class="text-lg font-semibold text-gray-900">Available resources</h3>
-              <p class="mt-1 text-sm text-gray-500">Current capacity you can still allocate.</p>
+            <div class="bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 rounded-3xl p-8 shadow-sm">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-slate-100">Available resources</h3>
+              <p class="mt-1 text-sm text-gray-500 dark:text-slate-400">Current capacity you can still allocate.</p>
               <dl class="mt-6 space-y-4">
-                <div class="flex items-center justify-between rounded-2xl bg-gray-50 px-4 py-3">
-                  <dt class="text-sm text-gray-500">Memory</dt>
-                  <dd class="text-sm font-semibold text-gray-900"><%= availableRam %> GiB</dd>
+                <div class="flex items-center justify-between rounded-2xl bg-gray-50 dark:bg-slate-800 px-4 py-3">
+                  <dt class="text-sm text-gray-500 dark:text-slate-400">Memory</dt>
+                  <dd class="text-sm font-semibold text-gray-900 dark:text-slate-100"><%= availableRam %> GiB</dd>
                 </div>
-                <div class="flex items-center justify-between rounded-2xl bg-gray-50 px-4 py-3">
-                  <dt class="text-sm text-gray-500">Storage</dt>
-                  <dd class="text-sm font-semibold text-gray-900"><%= availableDisk %> GiB</dd>
+                <div class="flex items-center justify-between rounded-2xl bg-gray-50 dark:bg-slate-800 px-4 py-3">
+                  <dt class="text-sm text-gray-500 dark:text-slate-400">Storage</dt>
+                  <dd class="text-sm font-semibold text-gray-900 dark:text-slate-100"><%= availableDisk %> GiB</dd>
                 </div>
-                <div class="flex items-center justify-between rounded-2xl bg-gray-50 px-4 py-3">
-                  <dt class="text-sm text-gray-500">CPU</dt>
-                  <dd class="text-sm font-semibold text-gray-900"><%= availableCpu %> Cores</dd>
+                <div class="flex items-center justify-between rounded-2xl bg-gray-50 dark:bg-slate-800 px-4 py-3">
+                  <dt class="text-sm text-gray-500 dark:text-slate-400">CPU</dt>
+                  <dd class="text-sm font-semibold text-gray-900 dark:text-slate-100"><%= availableCpu %> Cores</dd>
                 </div>
-                <div class="flex items-center justify-between rounded-2xl bg-gray-50 px-4 py-3">
-                  <dt class="text-sm text-gray-500">Server slots</dt>
-                  <dd class="text-sm font-semibold text-gray-900"><%= availableServers %></dd>
+                <div class="flex items-center justify-between rounded-2xl bg-gray-50 dark:bg-slate-800 px-4 py-3">
+                  <dt class="text-sm text-gray-500 dark:text-slate-400">Server slots</dt>
+                  <dd class="text-sm font-semibold text-gray-900 dark:text-slate-100"><%= availableServers %></dd>
                 </div>
               </dl>
             </div>
@@ -166,22 +123,17 @@
             }
           </script>
           <% } else { %>
-          <div class="text-center bg-white border border-gray-200/60 rounded-3xl py-24 px-6 shadow-sm">
+          <div class="text-center bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700/60 dark:border-slate-700 rounded-3xl py-24 px-6 shadow-sm">
             <div class="mx-auto h-16 w-16 bg-amber-50 rounded-2xl flex items-center justify-center border border-amber-100 mb-4">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-8 w-8 text-amber-500">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
               </svg>
             </div>
-            <h3 class="text-lg font-bold tracking-tight text-gray-900">Insufficient resources</h3>
-            <p class="mt-2 text-sm text-gray-500 max-w-sm mx-auto">You need at least 1 GiB of free memory before you can deploy a new server.</p>
+            <h3 class="text-lg font-bold tracking-tight text-gray-900 dark:text-slate-100">Insufficient resources</h3>
+            <p class="mt-2 text-sm text-gray-500 dark:text-slate-400 max-w-sm mx-auto">You need at least 1 GiB of free memory before you can deploy a new server.</p>
             <div class="mt-8">
-              <a href="../servers" class="inline-flex items-center rounded-xl bg-white border border-gray-200 px-6 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">Back to Servers</a>
+              <a href="../servers" class="inline-flex items-center rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-6 py-2.5 text-sm font-medium text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors">Back to Servers</a>
             </div>
           </div>
           <% } %>
-        </div>
-      </div>
-    </main>
-    <%- include('../components/footer') %>
-  </div>
-</body>
+<%- include("../layouts/tail") %>

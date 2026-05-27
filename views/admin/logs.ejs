@@ -1,24 +1,8 @@
-<% const safeLogs = (typeof logs !== 'undefined' && logs) ? logs : []; %>
-<head>
-  <title>Logs · <%= settings.name %></title>
-  <link rel="icon" type="image/x-icon" href="../assets/favicon.png">
-  <link rel="stylesheet" href="../assets/tailwind.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-</head>
-
-<body class="bg-gray-100 flex h-screen overflow-x-hidden" style="font-family: 'Inter', sans-serif;">
-  <%- include('../components/navigation') %>
-  <div class="flex-1 min-w-0 flex flex-col h-screen overflow-y-auto">
-    <main class="flex-1 pb-32">
-      <div class="py-6">
-        <%- include('../components/skeleton') %>
-        <div class="hidden max-w-7xl pt-8 mx-auto px-4 sm:px-6 md:px-8" id="content">
+<%- include("../layouts/head") %>
+<% const safeLogs = (typeof logs !== 'undefined' && Array.isArray(logs)) ? logs : []; %>
 
           <!-- Hero -->
-          <div class="relative overflow-hidden bg-white border border-gray-200/60 rounded-3xl mb-8 p-8 shadow-sm">
+          <div class="relative overflow-hidden bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700/60 dark:border-slate-700 rounded-3xl mb-8 p-8 shadow-sm">
             <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-gradient-to-br from-violet-50 to-blue-100 opacity-50 blur-3xl"></div>
             <div class="relative lg:flex lg:items-center lg:justify-between">
               <div class="flex items-center">
@@ -28,12 +12,12 @@
                   </svg>
                 </div>
                 <div class="ml-5">
-                  <h2 class="text-2xl font-bold text-gray-800 tracking-tight">Activity Logs</h2>
-                  <p class="mt-1 text-sm text-gray-500">In-memory log buffer (last <%= safeLogs.length %> events) from this worker.</p>
+                  <h2 class="text-2xl font-bold text-gray-800 dark:text-slate-200 tracking-tight">Activity Logs</h2>
+                  <p class="mt-1 text-sm text-gray-500 dark:text-slate-400">In-memory log buffer (last <%= safeLogs.length %> events) from this worker.</p>
                 </div>
               </div>
               <div class="mt-6 lg:mt-0 flex gap-3">
-                <button onclick="filterLogs()" class="inline-flex items-center rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+                <button onclick="filterLogs()" class="inline-flex items-center rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2 text-sm font-medium text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-800 dark:bg-slate-800 transition-colors">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" /></svg>
                   Filter
                 </button>
@@ -46,37 +30,37 @@
           </div>
 
           <!-- Filter input -->
-          <div class="bg-white border border-gray-200/60 rounded-3xl p-4 shadow-sm mb-6 hidden" id="filterPane">
+          <div class="bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 rounded-3xl p-4 mb-6 hidden" id="filterPane">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <input type="text" id="filterQuery" placeholder="Search action or message..." class="w-full rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm text-gray-700 shadow-sm focus:border-violet-400 focus:ring-violet-500 placeholder:text-gray-400" oninput="applyFilter()">
-              <input type="text" id="filterCid" placeholder="Filter by correlation ID..." class="w-full rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm text-gray-700 shadow-sm focus:border-violet-400 focus:ring-violet-500 placeholder:text-gray-400" oninput="applyFilter()">
+              <input type="text" id="filterQuery" placeholder="Search action or message..." class="w-full rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2 text-sm text-gray-700 dark:text-slate-300 shadow-sm focus:border-violet-400 focus:ring-violet-500 placeholder:text-gray-400 dark:text-slate-500" oninput="applyFilter()">
+              <input type="text" id="filterCid" placeholder="Filter by correlation ID..." class="w-full rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2 text-sm text-gray-700 dark:text-slate-300 shadow-sm focus:border-violet-400 focus:ring-violet-500 placeholder:text-gray-400 dark:text-slate-500" oninput="applyFilter()">
             </div>
           </div>
 
           <% if (!safeLogs || safeLogs.length === 0) { %>
-          <div class="text-center bg-white border border-gray-200/60 rounded-3xl py-24 px-6 shadow-sm">
-            <div class="mx-auto h-16 w-16 bg-gray-50 rounded-2xl flex items-center justify-center border border-gray-100 mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-8 w-8 text-gray-400"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" /></svg>
+          <div class="text-center bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700/60 dark:border-slate-700 rounded-3xl py-24 px-6 shadow-sm">
+            <div class="mx-auto h-16 w-16 bg-gray-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center border border-gray-100 dark:border-slate-700 mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-8 w-8 text-gray-400 dark:text-slate-500"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" /></svg>
             </div>
-            <h3 class="text-lg font-bold tracking-tight text-gray-900">No logs yet</h3>
-            <p class="mt-2 text-sm text-gray-500">Logs will appear here as soon as actions happen.</p>
+            <h3 class="text-lg font-bold tracking-tight text-gray-900 dark:text-slate-100">No logs yet</h3>
+            <p class="mt-2 text-sm text-gray-500 dark:text-slate-400">Logs will appear here as soon as actions happen.</p>
           </div>
           <% } else { %>
-          <div class="bg-white border border-gray-200/60 rounded-3xl overflow-hidden shadow-sm">
+          <div class="bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 rounded-3xl shadow-sm overflow-hidden">
             <div class="overflow-x-auto">
               <table class="min-w-full divide-y divide-gray-200" id="logsTable">
-                <thead class="bg-gray-50">
+                <thead class="bg-gray-50 dark:bg-slate-800">
                   <tr>
-                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Time</th>
-                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">CID</th>
-                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Action</th>
-                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Message</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider">Time</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider">CID</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider">Action</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider">Message</th>
                   </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-100" id="logsBody">
+                <tbody class="bg-white dark:bg-slate-900 divide-y divide-gray-100" id="logsBody">
                   <% for (let i = 0; i < safeLogs.length; i++) { let entry = safeLogs[i]; %>
-                  <tr class="hover:bg-gray-50 transition-colors log-row" data-action="<%= entry.action.toLowerCase() %>" data-message="<%= entry.message.toLowerCase() %>" data-cid="<%= entry.correlationId || '' %>">
-                    <td class="px-4 py-3 text-xs text-gray-500" style="font-family: 'JetBrains Mono', monospace;"><%= entry.timestamp %></td>
+                  <tr class="hover:bg-gray-50 dark:hover:bg-slate-800 dark:bg-slate-800 transition-colors log-row" data-action="<%= entry.action.toLowerCase() %>" data-message="<%= entry.message.toLowerCase() %>" data-cid="<%= entry.correlationId || '' %>">
+                    <td class="px-4 py-3 text-xs text-gray-500 dark:text-slate-400" style="font-family: 'JetBrains Mono', monospace;"><%= entry.timestamp %></td>
                     <td class="px-4 py-3 text-xs">
                       <% if (entry.correlationId) { %>
                       <span class="inline-flex rounded-full bg-violet-100 text-violet-700 px-2.5 py-1 font-mono"><%= entry.correlationId %></span>
@@ -84,14 +68,14 @@
                       <span class="text-gray-300">—</span>
                       <% } %>
                     </td>
-                    <td class="px-4 py-3 text-sm font-medium text-gray-900"><span class="inline-flex rounded-full bg-emerald-50 text-emerald-700 px-2.5 py-1 text-xs"><%= entry.action %></span></td>
-                    <td class="px-4 py-3 text-sm text-gray-600 break-all"><%= entry.message %></td>
+                    <td class="px-4 py-3 text-sm font-medium text-gray-900 dark:text-slate-100"><span class="inline-flex rounded-full bg-emerald-50 text-emerald-700 px-2.5 py-1 text-xs"><%= entry.action %></span></td>
+                    <td class="px-4 py-3 text-sm text-gray-600 dark:text-slate-400 break-all"><%= entry.message %></td>
                   </tr>
                   <% } %>
                 </tbody>
               </table>
             </div>
-            <div class="bg-gray-50 px-4 py-3 border-t border-gray-200 text-xs text-gray-500 flex items-center justify-between">
+            <div class="bg-gray-50 dark:bg-slate-800 px-4 py-3 border-t border-gray-200 dark:border-slate-700 text-xs text-gray-500 dark:text-slate-400 flex items-center justify-between">
               <span>Showing <span id="visibleCount"><%= safeLogs.length %></span> / <%= safeLogs.length %> entries</span>
               <span class="font-mono">PID <%= process.pid %></span>
             </div>
@@ -120,10 +104,4 @@
               document.getElementById('visibleCount').textContent = visible;
             }
           </script>
-
-        </div>
-      </div>
-    </main>
-    <%- include('../components/footer') %>
-  </div>
-</body>
+<%- include("../layouts/tail") %>

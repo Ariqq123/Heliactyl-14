@@ -1,0 +1,25 @@
+<html lang="en" class="<%= typeof themePreference !== 'undefined' && themePreference === 'dark' ? 'dark' : '' %>">
+<head>
+  <title><%= typeof settings !== 'undefined' ? settings.name : 'Heliactyl' %></title>
+  <link rel="icon" type="image/x-icon" href="/assets/favicon.png">
+  <link rel="stylesheet" href="/assets/tailwind.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    (function(){
+      var serverTheme = '<%= typeof themePreference !== "undefined" ? themePreference : "light" %>';
+      var t = localStorage.getItem('theme') || serverTheme;
+      if (t === 'dark') document.documentElement.classList.add('dark');
+      else document.documentElement.classList.remove('dark');
+    })();
+  </script>
+  <style>
+    .dark .alertify-notifier .ajs-message.ajs-success { background: #1e293b; color: #cbd5e1; }
+    .dark .spinner { border-color: #475569; border-top-color: #94a3b8; }
+    .dark .loadingbar .bar { background: #94a3b8; }
+    .dark .modal-content, .dark .newAccountContent { background-color: #1e293b; }
+  </style>
+</head>

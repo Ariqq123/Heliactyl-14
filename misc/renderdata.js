@@ -12,6 +12,22 @@ const actionLog = require("./log");
 const csrf = require("./csrf");
 const indexjs = require("../app");
 
+function normalizePackage(packageObj, packagename) {
+  if (!packageObj) return null;
+  return {
+    ram: packageObj.ram || 0,
+    disk: packageObj.disk || 0,
+    cpu: packageObj.cpu || 0,
+    servers: packageObj.servers || 0,
+    displayName: packageObj.displayName || (packagename.charAt(0).toUpperCase() + packagename.slice(1)),
+    description: packageObj.description || null,
+    price: packageObj.price !== undefined ? packageObj.price : null,
+    featured: packageObj.featured || false,
+    badge: packageObj.badge || null,
+    _key: packagename,
+  };
+}
+
 function obfuscatedAfkScript(newsettings) {
   return JavaScriptObfuscator.obfuscate(`
      let everywhat = ${newsettings.api.afk.every};
@@ -31,6 +47,7 @@ async function buildRenderData(req, db, theme) {
   let extraresources = null;
   let packages = null;
   let coins = null;
+  let themePreference = "light";
 
   if (userinfo) {
     packagename =
@@ -39,10 +56,11 @@ async function buildRenderData(req, db, theme) {
     extraresources =
       (await db.get("extra-" + userinfo.id)) ||
       { ram: 0, disk: 0, cpu: 0, servers: 0 };
-    packages = newsettings.api.client.packages.list[packagename] || null;
+    packages = normalizePackage(newsettings.api.client.packages.list[packagename], packagename);
     if (newsettings.api.client.coins.enabled === true) {
       coins = (await db.get("coins-" + userinfo.id)) || 0;
     }
+    themePreference = (await db.get("theme-" + userinfo.id)) || "light";
   } else if (newsettings.api.client.coins.enabled === true) {
     coins = null;
   }
@@ -60,6 +78,7 @@ async function buildRenderData(req, db, theme) {
     pterodactyl: req.session.pterodactyl,
     extra: theme && theme.settings ? theme.settings.variables : {},
     csrfToken: csrf.getToken(req),
+    themePreference,
     db,
   };
 
@@ -107,7 +126,8 @@ async function buildRenderData(req, db, theme) {
         const pteroUser = (await res.json()).attributes;
         const discordId = pteroUser.username;
         const userCoins = (await db.get("coins-" + discordId)) || 0;
-        const userPackage = (await db.get("package-" + discordId)) || newsettings.api.client.packages.default;
+        const userPackageId = (await db.get("package-" + discordId)) || newsettings.api.client.packages.default;
+        const userPackage = normalizePackage(newsettings.api.client.packages.list[userPackageId], userPackageId);
         const userExtra = (await db.get("extra-" + discordId)) || { ram: 0, disk: 0, cpu: 0, servers: 0 };
         usersList.push({
           pteroId,
@@ -116,7 +136,7 @@ async function buildRenderData(req, db, theme) {
           email: pteroUser.email,
           servers: pteroUser.relationships.servers.data.length,
           coins: userCoins,
-          package: userPackage,
+          package: userPackage ? userPackage.displayName : userPackageId,
           extra: userExtra,
           admin: pteroUser.root_admin,
         });

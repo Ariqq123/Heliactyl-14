@@ -92,6 +92,83 @@ apt install -y certbot python3-certbot-nginx
 certbot --nginx -d your-domain.com
 ```
 
+## Hosting in Pterodactyl Server
+
+You can run Heliactyl as an application inside your own Pterodactyl Panel using a Node.js egg.
+
+### Prerequisites
+- Node.js 18+ egg available in your Pterodactyl Panel
+- Allocated port for the application
+- Reverse proxy (Nginx/Traefik) configured on the host
+- SSL certificate (HTTPS required for secure cookies)
+
+### Setup Steps
+
+1. **Create a new server** in your Pterodactyl Panel using a Node.js egg.
+
+2. **Upload Heliactyl files** to the server root directory.
+
+3. **Configure settings.json**:
+   ```json
+   {
+     "pterodactyl": {
+       "domain": "https://your-panel-domain.com",
+       "key": "your-application-api-key",
+       "sso": {
+         "enabled": true,
+         "sharedSecret": "your-shared-secret-matching-blueprint-extension",
+         "issuer": "heliactyl",
+         "audience": "pterodactyl-panel",
+         "maxAgeSeconds": 60
+       }
+     },
+     "website": {
+       "port": 3000,
+       "secret": "generate-a-strong-random-string"
+     },
+     "api": {
+       "client": {
+         "oauth2": {
+           "link": "https://your-heliactyl-domain.com"
+         }
+       }
+     }
+   }
+   ```
+
+4. **Startup Command** (in egg configuration):
+   ```bash
+   npm ci --omit=dev && node app.js
+   ```
+
+5. **Important Notes**:
+   - Heliactyl requires `cookie.secure: true`, so HTTPS is mandatory.
+   - Configure your reverse proxy to pass `X-Forwarded-Proto: https` headers.
+   - The app listens on the port specified in `settings.json` (`website.port`).
+   - Allocate at least 512 MB RAM for stable operation.
+   - Use a persistent volume for `database.sqlite` if you want data to survive restarts.
+
+6. **Reverse Proxy** (on Pterodactyl host):
+   ```nginx
+   server {
+       listen 443 ssl http2;
+       server_name your-heliactyl-domain.com;
+       ssl_certificate /path/to/cert.pem;
+       ssl_certificate_key /path/to/key.pem;
+
+       location / {
+           proxy_pass http://127.0.0.1:ALLOCATED_PORT;
+           proxy_http_version 1.1;
+           proxy_set_header Host $host;
+           proxy_set_header X-Real-IP $remote_addr;
+           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+           proxy_set_header X-Forwarded-Proto https;
+           proxy_set_header Upgrade $http_upgrade;
+           proxy_set_header Connection "upgrade";
+       }
+   }
+   ```
+
 ## Development
 
 Run the app locally with hot-reloading (requires `nodemon`):

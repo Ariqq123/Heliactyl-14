@@ -1,7 +1,7 @@
 <%- include("../layouts/head") %>
 <%
   const coinText = Number(coins || 0).toFixed(2);
-  const heroCoinAction = `<div class="inline-flex items-center rounded-2xl bg-amber-50 border border-amber-200/60 px-4 py-2 text-amber-800 shadow-sm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-2 text-amber-500"><path d="M8 12.5c1.84 0 3.579-.37 4.914-1.037.366-.183.74-.41 1.086-.684V12c0 1.657-2.686 3-6 3s-6-1.343-6-3v-1.22c.346.273.72.5 1.087.683C4.42 12.131 6.16 12.5 8 12.5Z" /></svg><span class="text-sm font-semibold">${coinText} coins available</span></div>`;
+  const heroCoinAction = `<div class="inline-flex items-center rounded-2xl bg-amber-50 border border-amber-200/60 px-4 py-2 text-amber-800 shadow-sm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-2 text-amber-500"><path d="M10 8c3.866 0 7-1.343 7-3s-3.134-3-7-3-7 1.343-7 3 3.134 3 7 3Z" /><path d="M3 8.236V10c0 1.657 3.134 3 7 3s7-1.343 7-3V8.236C15.54 9.313 12.97 10 10 10s-5.54-.687-7-1.764Z" /><path d="M3 13.236V15c0 1.657 3.134 3 7 3s7-1.343 7-3v-1.764C15.54 14.313 12.97 15 10 15s-5.54-.687-7-1.764Z" /></svg><span class="text-sm font-semibold">${coinText} coins available</span></div>`;
 %>
 
 <%- include("../components/page-hero", {
@@ -41,28 +41,28 @@
           <% } %>
 
           <!-- Transfer form -->
-          <div class="bg-white border border-gray-200/60 rounded-3xl p-8 shadow-sm max-w-2xl">
+          <div class="bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 rounded-3xl p-8 shadow-sm max-w-2xl">
             <div class="mb-6">
-              <h3 class="text-lg font-semibold text-gray-900">Send to another user</h3>
-              <p class="mt-1 text-sm text-gray-500">Enter their Discord ID and the amount of coins to transfer.</p>
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-slate-100">Send to another user</h3>
+              <p class="mt-1 text-sm text-gray-500 dark:text-slate-400">Enter their Discord ID and the amount of coins to transfer.</p>
             </div>
 
             <div class="space-y-5">
               <div>
-                <label for="dc" class="text-sm font-medium text-gray-700">Discord User ID</label>
-                <input type="text" id="dc" placeholder="000000000000000000" class="mt-2 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm focus:border-amber-400 focus:ring-amber-500 placeholder:text-gray-400">
-                <p class="mt-1.5 text-xs text-gray-400">Enable Developer Mode in Discord to copy a user ID.</p>
+                <label for="dc" class="text-sm font-medium text-gray-700 dark:text-slate-300">Discord User ID</label>
+                <input type="text" id="dc" placeholder="000000000000000000" class="mt-2 w-full rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3 text-sm text-gray-700 dark:text-slate-300 shadow-sm focus:border-amber-400 focus:ring-amber-500 placeholder:text-gray-400 dark:placeholder:text-slate-500">
+                <p class="mt-1.5 text-xs text-gray-400 dark:text-slate-500">Enable Developer Mode in Discord to copy a user ID.</p>
               </div>
               <div>
-                <label for="amount" class="text-sm font-medium text-gray-700">Amount</label>
-                <input type="text" id="amount" placeholder="<%= (coins || 0).toFixed(2) %>" class="mt-2 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm focus:border-amber-400 focus:ring-amber-500 placeholder:text-gray-400">
-                <p class="mt-1.5 text-xs text-gray-400">You currently have <%= (coins || 0).toFixed(2) %> coins.</p>
+                <label for="amount" class="text-sm font-medium text-gray-700 dark:text-slate-300">Amount</label>
+                <input type="text" id="amount" placeholder="<%= (coins || 0).toFixed(2) %>" class="mt-2 w-full rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3 text-sm text-gray-700 dark:text-slate-300 shadow-sm focus:border-amber-400 focus:ring-amber-500 placeholder:text-gray-400 dark:placeholder:text-slate-500">
+                <p class="mt-1.5 text-xs text-gray-400 dark:text-slate-500">You currently have <%= (coins || 0).toFixed(2) %> coins.</p>
               </div>
             </div>
 
             <div class="mt-8 flex flex-wrap gap-3">
               <button onclick="submitForm()" class="inline-flex items-center rounded-xl bg-amber-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-amber-700 transition-colors">Send Coins</button>
-              <a href="../dashboard" class="inline-flex items-center rounded-xl border border-gray-200 bg-white px-6 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">Cancel</a>
+              <a href="../dashboard" class="inline-flex items-center rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-6 py-3 text-sm font-medium text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors">Cancel</a>
             </div>
           </div>
 
@@ -81,3 +81,4 @@
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.js" integrity="sha512-eOUPKZXJTfgptSYQqVilRmxUNYm0XVHwcRHD4mdtCLWf/fC9XWe98IT8H1xzBkLL4Mo9GL0xWMSJtgS5te9rQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
+</html>

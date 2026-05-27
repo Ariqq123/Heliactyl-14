@@ -46,6 +46,17 @@ module.exports.load = async function (app, db) {
     res.redirect(newsettings.pterodactyl.domain);
   });
 
+  app.get("/settheme", async (req, res) => {
+    if (!req.session.pterodactyl) return res.redirect("/login");
+    if (!csrf.verify(req)) return res.redirect("/security?err=CSRF");
+
+    const theme = req.query.theme;
+    if (!["light", "dark"].includes(theme)) return res.redirect("/security?err=INVALIDTHEME");
+
+    await db.set("theme-" + req.session.userinfo.id, theme);
+    res.redirect(req.query.redirect || "/dashboard");
+  });
+
   app.get("/regen", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect("/login");
     if (!csrf.verify(req)) return res.redirect("/security?err=CSRF");

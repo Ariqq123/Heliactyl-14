@@ -1,0 +1,26 @@
+<div class="relative overflow-hidden bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700/60 dark:border-slate-700 rounded-3xl mb-6 sm:mb-8 p-5 sm:p-8 shadow-sm">
+  <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-gradient-to-br <%= typeof gradient !== 'undefined' ? gradient : 'from-indigo-50 to-blue-100' %> opacity-50 blur-3xl"></div>
+  <% if (typeof showBottomGlow === 'undefined' || showBottomGlow) { %>
+  <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-48 h-48 rounded-full bg-gradient-to-tr from-gray-100 dark:from-slate-800 to-indigo-50 dark:to-slate-800 opacity-50 blur-2xl"></div>
+  <% } %>
+  <div class="relative lg:flex lg:items-center lg:justify-between">
+    <div class="min-w-0 flex-1">
+      <div class="flex items-center">
+        <div class="relative">
+          <div class="<%= typeof iconClass !== 'undefined' ? iconClass : 'bg-indigo-50 dark:bg-indigo-950 border border-indigo-100/50 text-indigo-500 dark:text-indigo-400' %> rounded-2xl h-14 w-14 flex items-center justify-center shadow-sm">
+            <%- icon %>
+          </div>
+        </div>
+        <div class="ml-5 min-w-0">
+          <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-slate-200 tracking-tight sm:truncate"><%= title %></h2>
+          <p class="mt-1 text-sm text-gray-500 dark:text-slate-400"><%= subtitle %></p>
+        </div>
+      </div>
+    </div>
+    <% if (typeof action !== 'undefined' && action) { %>
+    <div class="mt-6 flex lg:ml-4 lg:mt-0 relative z-10">
+      <%- action %>
+    </div>
+    <% } %>
+  </div>
+</div>

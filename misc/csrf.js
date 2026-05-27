@@ -16,7 +16,10 @@ function safeEqual(a, b) {
 
 function verify(req) {
   const expected = req.session && req.session.csrfToken;
-  const provided = req.query && req.query.token;
+  const provided =
+    (req.body && (req.body._csrf || req.body.token)) ||
+    (req.headers && req.headers["x-csrf-token"]) ||
+    (req.query && req.query.token);
   if (!expected || !provided) return false;
   return safeEqual(expected, String(provided));
 }

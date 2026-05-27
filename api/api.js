@@ -64,10 +64,9 @@ module.exports.load = async function (app, db) {
       );
 
     let packagename = await db.get("package-" + req.query.id);
+    const packageKey = packagename ? packagename : newsettings.api.client.packages.default;
     let package =
-      newsettings.api.client.packages.list[
-        packagename ? packagename : newsettings.api.client.packages.default
-      ];
+      newsettings.api.client.packages.list[packageKey];
     if (!package)
       package = {
         ram: 0,
@@ -75,7 +74,11 @@ module.exports.load = async function (app, db) {
         cpu: 0,
         servers: 0,
       };
-    package["name"] = packagename;
+    package = {
+      ...package,
+      name: packageKey,
+      displayName: package.displayName || (packageKey.charAt(0).toUpperCase() + packageKey.slice(1)),
+    };
 
     let pterodactylid = await db.get("users-" + req.query.id);
     let userinforeq = await fetch(

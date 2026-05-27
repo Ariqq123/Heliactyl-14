@@ -1,3 +1,4 @@
 node_modules/
 database.sqlite
 settings.json
+eggs.json
