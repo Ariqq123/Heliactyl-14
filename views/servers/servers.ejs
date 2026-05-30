@@ -1,0 +1,194 @@
+<head>
+  <title><%= settings.name %></title>
+  <link rel="icon" type="image/x-icon" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../assets/tailwind.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 flex h-screen overflow-x-hidden" style="font-family: 'Inter', sans-serif;">
+  <%- include('../components/navigation') %>
+  <div class="flex-1 min-w-0 flex flex-col h-screen overflow-y-auto">
+    <main class="flex-1 pb-32">
+      <div class="py-6">
+        <% /* Skeleton loader, lasts about 0.3s to let the page content load */ %>
+        <%- include('../components/skeleton') %>
+        <div class="hidden max-w-7xl pt-8 mx-auto px-4 sm:px-6 md:px-8" id="content">
+          
+          <!-- Header -->
+          <div class="relative overflow-hidden bg-white border border-gray-200/60 rounded-3xl mb-8 p-8 shadow-sm">
+            <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-gradient-to-br from-emerald-50 to-teal-100 opacity-50 blur-3xl"></div>
+            <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-48 h-48 rounded-full bg-gradient-to-tr from-gray-100 to-emerald-50 opacity-50 blur-2xl"></div>
+            <div class="relative lg:flex lg:items-center lg:justify-between">
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center">
+                  <div class="relative">
+                    <div class="bg-emerald-50 border border-emerald-100/50 rounded-2xl h-14 w-14 flex items-center justify-center text-emerald-500 shadow-sm">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                        <path d="M4.08 5.227A3 3 0 0 1 6.979 3H17.02a3 3 0 0 1 2.9 2.227l2.113 7.926A5.228 5.228 0 0 0 18.75 12H5.25a5.228 5.228 0 0 0-3.284 1.153L4.08 5.227Z" />
+                        <path fill-rule="evenodd" d="M5.25 13.5a3.75 3.75 0 1 0 0 7.5h13.5a3.75 3.75 0 1 0 0-7.5H5.25Zm10.5 4.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm3.75-.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" clip-rule="evenodd" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="ml-5">
+                    <h2 class="text-2xl font-bold text-gray-800 tracking-tight sm:truncate">Servers</h2>
+                    <p class="mt-1 text-sm text-gray-500">Manage, configure, or deploy new servers on your account.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-6 flex lg:ml-4 lg:mt-0 relative z-10">
+                <span class="sm:ml-3">
+                  <a href="../servers/new" class="inline-flex items-center px-4 py-2 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2 -ml-1">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                    Deploy Server
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Alerts -->
+          <% if (req.query.err && req.query.err == "CREATED") { %>
+          <div class="rounded-2xl bg-emerald-50 border border-emerald-200 p-6 mb-6">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <svg class="h-6 w-6 text-emerald-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div class="ml-3">
+                <h3 class="text-sm font-medium text-emerald-800">Server deployed successfully</h3>
+                <div class="mt-2 text-sm text-emerald-700">
+                  <p>Please allow a few minutes for the installation to finish. You can manage your server via the Panel.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% } %>
+
+          <% if (req.query.err && req.query.err == "MODIFIED") { %>
+          <div class="rounded-2xl bg-blue-50 border border-blue-200 p-6 mb-6">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <svg class="h-6 w-6 text-blue-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div class="ml-3">
+                <h3 class="text-sm font-medium text-blue-800">Server resources updated</h3>
+                <div class="mt-2 text-sm text-blue-700">
+                  <p>Please restart your server to ensure it applies the new resource limits.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% } %>
+
+          <% if (req.query.err && req.query.err == "DELETED") { %>
+          <div class="rounded-2xl bg-rose-50 border border-rose-200 p-6 mb-6">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <svg class="h-6 w-6 text-rose-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-11.25a.75.75 0 00-1.5 0v2.5h-2.5a.75.75 0 000 1.5h2.5v2.5a.75.75 0 001.5 0v-2.5h2.5a.75.75 0 000-1.5h-2.5v-2.5z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div class="ml-3">
+                <h3 class="text-sm font-medium text-rose-800">Server deleted</h3>
+                <div class="mt-2 text-sm text-rose-700">
+                  <p>The server was successfully deleted from the Panel. All resources have been refunded.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% } %>
+
+          <!-- Server List -->
+          <% if (pterodactyl.relationships.servers.data.length == 0) { %>
+          <div class="text-center bg-white border border-gray-200/60 rounded-3xl py-24 px-6 mt-8 shadow-sm">
+            <div class="mx-auto h-16 w-16 bg-gray-50 rounded-2xl flex items-center justify-center border border-gray-100 mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-8 w-8 text-gray-400">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 17.25v-.228a4.5 4.5 0 0 0-.12-1.03l-2.268-9.64a3.375 3.375 0 0 0-3.285-2.602H7.923a3.375 3.375 0 0 0-3.285 2.602l-2.268 9.64a4.5 4.5 0 0 0-.12 1.03v.228m19.5 0a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3m19.5 0a3 3 0 0 0-3-3H5.25a3 3 0 0 0-3 3m16.5 0h.008v.008h-.008v-.008Zm-3 0h.008v.008h-.008v-.008Z" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold tracking-tight text-gray-900">No servers deployed</h3>
+            <p class="mt-2 text-sm text-gray-500 max-w-sm mx-auto">Get started by deploying your first server. It only takes a few seconds.</p>
+            <div class="mt-8">
+              <a href="../servers/new" class="inline-flex items-center rounded-xl bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="-ml-1 mr-2 h-4 w-4">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+                Deploy Now
+              </a>
+            </div>
+          </div>
+          <% } else { %>
+          <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+            <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>
+            <div class="bg-white border border-gray-200/60 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+              <div class="px-6 py-6 sm:px-8">
+                <div class="flex items-center justify-between">
+                  <div class="min-w-0 flex-1 flex items-center">
+                    <div class="bg-indigo-50 text-indigo-600 rounded-xl p-3 mr-4">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 01-3-3m3 3a3 3 0 100 6h13.5a3 3 0 100-6m-16.5-3a3 3 0 013-3h13.5a3 3 0 013 3m-19.5 0a4.5 4.5 0 01.9-2.7L5.737 5.1a3.375 3.375 0 012.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 01.9 2.7m0 0a3 3 0 01-3 3m0 3h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008zm-3 6h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h2 class="text-lg font-bold text-gray-900 tracking-tight truncate max-w-[200px] sm:max-w-[300px]" title="<%= pterodactyl.relationships.servers.data[i].attributes.name %>"><%= pterodactyl.relationships.servers.data[i].attributes.name %></h2>
+                      <p class="text-xs font-mono text-gray-400 mt-1"><%= pterodactyl.relationships.servers.data[i].attributes.identifier %></p>
+                    </div>
+                  </div>
+                  <div class="ml-4 flex-shrink-0">
+                    <a href="../edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>" class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-gray-50 text-gray-500 hover:bg-gray-100 hover:text-gray-900 border border-gray-200 transition-colors" title="Settings">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+                
+                <div class="mt-6 border-t border-gray-100 pt-6">
+                  <div class="grid grid-cols-3 gap-4 text-center">
+                    <div>
+                      <p class="text-xs font-medium text-gray-500 mb-1">CPU Cores</p>
+                      <p class="text-xl font-semibold text-gray-900"><%= pterodactyl.relationships.servers.data[i].attributes.limits.cpu/100 %></p>
+                    </div>
+                    <div>
+                      <p class="text-xs font-medium text-gray-500 mb-1">Memory</p>
+                      <p class="text-xl font-semibold text-gray-900"><%= pterodactyl.relationships.servers.data[i].attributes.limits.memory/1024 %><span class="text-xs text-gray-400 ml-1">GiB</span></p>
+                    </div>
+                    <div>
+                      <p class="text-xs font-medium text-gray-500 mb-1">Storage</p>
+                      <p class="text-xl font-semibold text-gray-900"><%= pterodactyl.relationships.servers.data[i].attributes.limits.disk/1024 %><span class="text-xs text-gray-400 ml-1">GiB</span></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% } %>
+
+            <!-- Add New Server Card Placeholder -->
+            <a href="../servers/new" class="group relative flex flex-col items-center justify-center bg-gray-50/50 border-2 border-dashed border-gray-200 rounded-3xl p-8 hover:bg-indigo-50/50 hover:border-indigo-300 transition-colors min-h-[220px]">
+              <div class="h-14 w-14 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center text-gray-400 group-hover:text-indigo-600 group-hover:border-indigo-200 group-hover:bg-indigo-50 transition-colors mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6 w-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+              </div>
+              <h3 class="text-sm font-semibold text-gray-700 group-hover:text-indigo-700">Deploy New Server</h3>
+              <p class="text-xs text-gray-500 mt-1 text-center max-w-[200px]">Add another instance to your account</p>
+            </a>
+          </div>
+          <% } %>
+
+        </div>
+      </div>
+    </main>
+    <%- include('../components/footer') %>
+  </div>
+</body>

@@ -1,0 +1,83 @@
+<%- include("../layouts/head") %>
+<%
+  const coinText = Number(coins || 0).toFixed(2);
+  const heroCoinAction = `<div class="inline-flex items-center rounded-2xl bg-amber-50 border border-amber-200/60 px-4 py-2 text-amber-800 shadow-sm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-2 text-amber-500"><path d="M8 12.5c1.84 0 3.579-.37 4.914-1.037.366-.183.74-.41 1.086-.684V12c0 1.657-2.686 3-6 3s-6-1.343-6-3v-1.22c.346.273.72.5 1.087.683C4.42 12.131 6.16 12.5 8 12.5Z" /></svg><span class="text-sm font-semibold">${coinText} coins available</span></div>`;
+%>
+
+<%- include("../components/page-hero", {
+  icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" /></svg>',
+  iconClass: 'bg-amber-50 border border-amber-100/50 text-amber-500',
+  gradient: 'from-amber-50 to-orange-100',
+  title: 'Transfer Coins',
+  subtitle: 'Send coins to another Discord user instantly.',
+  action: heroCoinAction
+}) %>
+
+          <!-- Alerts -->
+          <% if (req.query.err) { %>
+          <% if (req.query.err == "none") { %>
+          <div class="rounded-2xl bg-emerald-50 border border-emerald-200 p-6 mb-6">
+            <div class="flex">
+              <svg class="h-6 w-6 text-emerald-500 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" /></svg>
+              <div class="ml-3">
+                <h3 class="text-sm font-medium text-emerald-800">Transfer complete</h3>
+                <p class="mt-1 text-sm text-emerald-700">The recipient has received the coins.</p>
+              </div>
+            </div>
+          </div>
+          <% } else { %>
+          <div class="rounded-2xl bg-rose-50 border border-rose-200 p-6 mb-6">
+            <div class="flex">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-rose-500 flex-shrink-0">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <div class="ml-3">
+                <h3 class="text-sm font-medium text-rose-800">Transfer failed</h3>
+                <p class="mt-1 text-sm text-rose-700">Error code: <code><%= req.query.err %></code></p>
+              </div>
+            </div>
+          </div>
+          <% } %>
+          <% } %>
+
+          <!-- Transfer form -->
+          <div class="bg-white border border-gray-200/60 rounded-3xl p-8 shadow-sm max-w-2xl">
+            <div class="mb-6">
+              <h3 class="text-lg font-semibold text-gray-900">Send to another user</h3>
+              <p class="mt-1 text-sm text-gray-500">Enter their Discord ID and the amount of coins to transfer.</p>
+            </div>
+
+            <div class="space-y-5">
+              <div>
+                <label for="dc" class="text-sm font-medium text-gray-700">Discord User ID</label>
+                <input type="text" id="dc" placeholder="000000000000000000" class="mt-2 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm focus:border-amber-400 focus:ring-amber-500 placeholder:text-gray-400">
+                <p class="mt-1.5 text-xs text-gray-400">Enable Developer Mode in Discord to copy a user ID.</p>
+              </div>
+              <div>
+                <label for="amount" class="text-sm font-medium text-gray-700">Amount</label>
+                <input type="text" id="amount" placeholder="<%= (coins || 0).toFixed(2) %>" class="mt-2 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm focus:border-amber-400 focus:ring-amber-500 placeholder:text-gray-400">
+                <p class="mt-1.5 text-xs text-gray-400">You currently have <%= (coins || 0).toFixed(2) %> coins.</p>
+              </div>
+            </div>
+
+            <div class="mt-8 flex flex-wrap gap-3">
+              <button onclick="submitForm()" class="inline-flex items-center rounded-xl bg-amber-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-amber-700 transition-colors">Send Coins</button>
+              <a href="../dashboard" class="inline-flex items-center rounded-xl border border-gray-200 bg-white px-6 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">Cancel</a>
+            </div>
+          </div>
+
+          <script>
+            const __csrf = "<%= csrfToken %>";
+            function submitForm(){
+              let id = encodeURIComponent(document.getElementById('dc').value);
+              let coins = encodeURIComponent(document.getElementById('amount').value);
+              document.location.href = `/transfercoins?id=${id}&coins=${coins}&token=${__csrf}`;
+            }
+          </script>
+        </div>
+      </div>
+    </main>
+    <%- include('../components/footer') %>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.js" integrity="sha512-eOUPKZXJTfgptSYQqVilRmxUNYm0XVHwcRHD4mdtCLWf/fC9XWe98IT8H1xzBkLL4Mo9GL0xWMSJtgS5te9rQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>

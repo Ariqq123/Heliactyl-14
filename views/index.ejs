@@ -1,0 +1,122 @@
+<html class="h-full">
+
+<head>
+  <title><%= settings.name %></title>
+  <link rel="icon" type="image/x-icon" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../assets/tailwind.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .bg-grid-pattern {
+      background-image: radial-gradient(circle at 1px 1px, rgb(203 213 225 / 0.4) 1px, transparent 0);
+      background-size: 24px 24px;
+    }
+    .discord-btn:hover .discord-logo { transform: scale(1.1); }
+    .discord-logo { transition: transform 0.2s ease; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+    .float-badge { animation: float 4s ease-in-out infinite; }
+    .float-badge:nth-child(2) { animation-delay: 1.5s; }
+  </style>
+</head>
+
+<body class="h-full bg-slate-50 antialiased">
+  <div class="flex min-h-full">
+
+    <!-- Left: Login Panel -->
+    <div class="flex flex-1 flex-col justify-center px-6 py-12 lg:flex-none lg:w-[480px] xl:w-[520px] bg-white border-r border-slate-100 relative overflow-hidden">
+      <!-- Subtle grid background -->
+      <div class="absolute inset-0 bg-grid-pattern pointer-events-none"></div>
+      <!-- Gradient blur blobs -->
+      <div class="absolute -top-24 -left-24 w-72 h-72 bg-indigo-100 rounded-full blur-3xl opacity-40 pointer-events-none"></div>
+      <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-violet-100 rounded-full blur-3xl opacity-30 pointer-events-none"></div>
+
+      <div class="relative mx-auto w-full max-w-sm">
+        <!-- Logo / Wordmark -->
+        <div class="flex items-center gap-3 mb-12">
+          <div class="bg-indigo-600 rounded-xl w-9 h-9 flex items-center justify-center shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white" class="w-5 h-5">
+              <path d="m3.196 12.87-.825.483a.75.75 0 0 0 0 1.294l7.25 4.25a.75.75 0 0 0 .758 0l7.25-4.25a.75.75 0 0 0 0-1.294l-.825-.484-5.666 3.322a2.25 2.25 0 0 1-2.276 0L3.196 12.87Z" />
+              <path d="m3.196 8.87-.825.483a.75.75 0 0 0 0 1.294l7.25 4.25a.75.75 0 0 0 .758 0l7.25-4.25a.75.75 0 0 0 0-1.294l-.825-.484-5.666 3.322a2.25 2.25 0 0 1-2.276 0L3.196 8.87Z" />
+              <path d="M10.38 1.103a.75.75 0 0 0-.76 0l-7.25 4.25a.75.75 0 0 0 0 1.294l7.25 4.25a.75.75 0 0 0 .76 0l7.25-4.25a.75.75 0 0 0 0-1.294l-7.25-4.25Z" />
+            </svg>
+          </div>
+          <span class="text-slate-800 text-xl font-bold tracking-tight"><%= settings.name %></span>
+        </div>
+
+        <!-- Heading -->
+        <div class="mb-10">
+          <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">Welcome back.</h1>
+          <p class="mt-2 text-base text-slate-500">Sign in to manage your servers, resources, and coins.</p>
+        </div>
+
+        <!-- Discord OAuth button -->
+        <a href="../login" class="discord-btn group relative flex items-center justify-center gap-3 w-full rounded-2xl px-6 py-4 text-white font-semibold text-sm shadow-lg shadow-indigo-200/70 transition-all duration-200 bg-[#5865F2] hover:bg-[#4752c4] hover:shadow-indigo-300/80 hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#5865F2]">
+          <!-- Discord logo SVG -->
+          <svg class="discord-logo w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20.317 4.492c-1.53-.69-3.17-1.2-4.885-1.49a.075.075 0 0 0-.079.036c-.21.369-.444.85-.608 1.23a18.566 18.566 0 0 0-5.487 0 12.36 12.36 0 0 0-.617-1.23A.077.077 0 0 0 8.562 3c-1.714.29-3.354.8-4.885 1.491a.07.07 0 0 0-.032.027C.533 9.093-.32 13.555.099 17.961a.08.08 0 0 0 .031.055 20.03 20.03 0 0 0 5.993 2.98.078.078 0 0 0 .084-.026c.462-.62.874-1.275 1.226-1.963.021-.04.001-.088-.041-.104a13.201 13.201 0 0 1-1.872-.878.075.075 0 0 1-.008-.125c.126-.093.252-.19.372-.287a.075.075 0 0 1 .078-.01c3.927 1.764 8.18 1.764 12.061 0a.075.075 0 0 1 .079.009c.12.098.245.195.372.288a.075.075 0 0 1-.006.125c-.598.344-1.22.635-1.873.877a.075.075 0 0 0-.041.105c.36.687.772 1.341 1.225 1.962a.077.077 0 0 0 .084.028 19.963 19.963 0 0 0 6.002-2.981.076.076 0 0 0 .032-.054c.5-5.094-.838-9.52-3.549-13.442a.06.06 0 0 0-.031-.028zM8.02 15.278c-1.182 0-2.157-1.069-2.157-2.38 0-1.312.956-2.38 2.157-2.38 1.21 0 2.176 1.077 2.157 2.38 0 1.312-.956 2.38-2.157 2.38zm7.975 0c-1.183 0-2.157-1.069-2.157-2.38 0-1.312.955-2.38 2.157-2.38 1.21 0 2.176 1.077 2.157 2.38 0 1.312-.946 2.38-2.157 2.38z"/>
+          </svg>
+          Continue with Discord
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="white" class="w-4 h-4 ml-auto opacity-60 group-hover:translate-x-0.5 transition-transform">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+          </svg>
+        </a>
+
+        <!-- Privacy note -->
+        <p class="mt-6 text-center text-xs text-slate-400">
+          By signing in, you agree to our
+          <a href="#" class="underline underline-offset-2 hover:text-slate-600 transition">Terms of Service</a>
+          and
+          <a href="#" class="underline underline-offset-2 hover:text-slate-600 transition">Privacy Policy</a>.
+        </p>
+
+        <!-- Footer -->
+        <div class="mt-16 pt-6 border-t border-slate-100 text-center">
+          <p class="text-xs text-slate-400">Powered by <a href="https://github.com/heliactyloss/heliactyl" class="hover:text-slate-600 transition underline underline-offset-2">Heliactyl</a> &mdash; v<%= settings.version %></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Visual Panel -->
+    <div class="relative hidden lg:flex flex-1 items-end overflow-hidden bg-slate-900">
+      <!-- Background image -->
+      <img class="absolute inset-0 h-full w-full object-cover opacity-40" src="../assets/loginBackground.png" alt="">
+      <!-- Gradient overlay -->
+      <div class="absolute inset-0 bg-gradient-to-br from-indigo-900/80 via-slate-900/60 to-slate-900/90"></div>
+      <!-- Noise texture -->
+      <div class="absolute inset-0 opacity-[0.03]" style="background-image:url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E');background-size:200px 200px"></div>
+
+      <!-- Content over image -->
+      <div class="relative z-10 p-12 pb-16 w-full">
+        <!-- Floating stat badges -->
+        <div class="flex gap-3 mb-10">
+          <div class="float-badge bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-3 text-white">
+            <p class="text-xs text-white/60 font-medium">Servers</p>
+            <p class="text-xl font-bold tracking-tight mt-0.5">Always on</p>
+          </div>
+          <div class="float-badge bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-3 text-white">
+            <p class="text-xs text-white/60 font-medium">Resources</p>
+            <p class="text-xl font-bold tracking-tight mt-0.5">One click</p>
+          </div>
+        </div>
+
+        <!-- Main copy -->
+        <h2 class="text-4xl font-extrabold text-white tracking-tight leading-snug mb-4">
+          Your game servers,<br>
+          <span class="text-indigo-300">fully under control.</span>
+        </h2>
+        <p class="text-slate-300 text-base max-w-md leading-relaxed">
+          Manage CPU, RAM, storage, and deploy new servers in seconds &mdash; all from one sleek dashboard.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
