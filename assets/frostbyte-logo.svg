@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+  <defs>
+    <style>
+      :root {
+        --ice-blue: #3bb7e8;
+        --silver-gray: #9aa7b2;
+      }
+
+      .snow {
+        stroke: var(--ice-blue);
+        stroke-width: 20;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        fill: none;
+      }
+
+      .branch {
+        stroke-width: 14;
+      }
+
+      .pixel {
+        fill: var(--silver-gray);
+      }
+
+      .wordmark {
+        fill: var(--silver-gray);
+        font-family: Inter, "Segoe UI", Arial, Helvetica, sans-serif;
+        font-size: 132px;
+        font-weight: 700;
+        letter-spacing: 10px;
+      }
+    </style>
+  </defs>
+
+  <rect width="1600" height="900" fill="#ffffff"/>
+
+  <g transform="translate(430 450)">
+    <line class="snow" x1="-110" y1="0" x2="110" y2="0"/>
+    <line class="snow" x1="-55" y1="-95.26" x2="55" y2="95.26"/>
+    <line class="snow" x1="-55" y1="95.26" x2="55" y2="-95.26"/>
+
+    <line class="snow branch" x1="-78" y1="0" x2="-52" y2="-36"/>
+    <line class="snow branch" x1="-78" y1="0" x2="-52" y2="36"/>
+    <line class="snow branch" x1="78" y1="0" x2="52" y2="-36"/>
+    <line class="snow branch" x1="78" y1="0" x2="52" y2="36"/>
+
+    <line class="snow branch" x1="-39" y1="-67.55" x2="5" y2="-63"/>
+    <line class="snow branch" x1="-39" y1="-67.55" x2="-17" y2="-28"/>
+    <line class="snow branch" x1="39" y1="67.55" x2="-5" y2="63"/>
+    <line class="snow branch" x1="39" y1="67.55" x2="17" y2="28"/>
+
+    <line class="snow branch" x1="-39" y1="67.55" x2="5" y2="63"/>
+    <line class="snow branch" x1="-39" y1="67.55" x2="-17" y2="28"/>
+    <line class="snow branch" x1="39" y1="-67.55" x2="-5" y2="-63"/>
+    <line class="snow branch" x1="39" y1="-67.55" x2="17" y2="-28"/>
+
+    <circle cx="0" cy="0" r="16" fill="#3bb7e8"/>
+  </g>
+
+  <g aria-hidden="true">
+    <rect class="pixel" x="230" y="400" width="26" height="26"/>
+    <rect class="pixel" x="268" y="438" width="20" height="20"/>
+    <rect class="pixel" x="292" y="370" width="16" height="16"/>
+    <rect class="pixel" x="188" y="450" width="18" height="18"/>
+  </g>
+
+  <text class="wordmark" x="605" y="498">FROSTBYTE</text>
+</svg>

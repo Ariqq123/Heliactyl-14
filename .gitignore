@@ -2,3 +2,10 @@ node_modules/
 database.sqlite
 settings.json
 eggs.json
+database.sqlite-shm
+database.sqlite-wal
+database.sqlite.bak
+.claude/
+.graphify/
+CLAUDE.md
+c.txt

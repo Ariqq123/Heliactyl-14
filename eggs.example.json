@@ -1,0 +1,183 @@
+{
+  "bungeecord": {
+    "display": "Bungeecord",
+    "minimum": { "ram": 512, "disk": 512, "cpu": 75 },
+    "maximum": { "ram": null, "disk": null, "cpu": null },
+    "info": {
+      "egg": 1,
+      "docker_image": "ghcr.io/pterodactyl/yolks:java_21",
+      "startup": "java -Xms128M -XX:MaxRAMPercentage=95.0 -jar {{SERVER_JARFILE}}",
+      "environment": {
+        "BUNGEE_VERSION": "latest",
+        "SERVER_JARFILE": "bungeecord.jar"
+      },
+      "feature_limits": { "databases": 4, "backups": 4 }
+    }
+  },
+  "sponge": {
+    "display": "Sponge (SpongeVanilla)",
+    "minimum": { "ram": 512, "disk": 512, "cpu": 75 },
+    "maximum": { "ram": null, "disk": null, "cpu": null },
+    "info": {
+      "egg": 2,
+      "docker_image": "ghcr.io/pterodactyl/yolks:java_21",
+      "startup": "java -Xms128M -XX:MaxRAMPercentage=95.0 -jar {{SERVER_JARFILE}}",
+      "environment": {
+        "SPONGE_VERSION": "1.12.2-7.3.0",
+        "SERVER_JARFILE": "server.jar"
+      },
+      "feature_limits": { "databases": 4, "backups": 4 }
+    }
+  },
+  "paper": {
+    "display": "Paper",
+    "minimum": { "ram": 1024, "disk": 1024, "cpu": 100 },
+    "maximum": { "ram": null, "disk": null, "cpu": null },
+    "info": {
+      "egg": 3,
+      "docker_image": "ghcr.io/ptero-eggs/yolks:java_25",
+      "startup": "java -Xms128M -XX:MaxRAMPercentage=95.0 -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JARFILE}}",
+      "environment": {
+        "MINECRAFT_VERSION": "latest",
+        "SERVER_JARFILE": "server.jar",
+        "DL_PATH": "",
+        "BUILD_NUMBER": "latest"
+      },
+      "feature_limits": { "databases": 4, "backups": 4 }
+    }
+  },
+  "vanilla": {
+    "display": "Vanilla Minecraft",
+    "minimum": { "ram": 512, "disk": 512, "cpu": 75 },
+    "maximum": { "ram": null, "disk": null, "cpu": null },
+    "info": {
+      "egg": 4,
+      "docker_image": "ghcr.io/pterodactyl/yolks:java_21",
+      "startup": "java -Xms128M -XX:MaxRAMPercentage=95.0 -jar {{SERVER_JARFILE}}",
+      "environment": {
+        "SERVER_JARFILE": "server.jar",
+        "VANILLA_VERSION": "latest"
+      },
+      "feature_limits": { "databases": 4, "backups": 4 }
+    }
+  },
+  "forge": {
+    "display": "Forge Minecraft",
+    "minimum": { "ram": 1024, "disk": 1024, "cpu": 100 },
+    "maximum": { "ram": null, "disk": null, "cpu": null },
+    "info": {
+      "egg": 5,
+      "docker_image": "ghcr.io/pterodactyl/yolks:java_21",
+      "startup": "java -Xms128M -XX:MaxRAMPercentage=95.0 -Dterminal.jline=false -Dterminal.ansi=true $( [[  ! -f unix_args.txt ]] && printf %s \"-jar {{SERVER_JARFILE}}\" || printf %s \"@unix_args.txt\" )",
+      "environment": {
+        "SERVER_JARFILE": "server.jar",
+        "MC_VERSION": "latest",
+        "BUILD_TYPE": "recommended",
+        "FORGE_VERSION": ""
+      },
+      "feature_limits": { "databases": 4, "backups": 4 }
+    }
+  },
+  "nanolimbo": {
+    "display": "NanoLimbo",
+    "minimum": { "ram": 256, "disk": 256, "cpu": 50 },
+    "maximum": { "ram": null, "disk": null, "cpu": null },
+    "info": {
+      "egg": 15,
+      "docker_image": "ghcr.io/ptero-eggs/yolks:java_8",
+      "startup": "java -Xms128M -Xmx{{SERVER_MEMORY}}M -jar {{SERVER_JARFILE}}",
+      "environment": {
+        "SERVER_JARFILE": "server.jar",
+        "DOWNLOAD_URL": "",
+        "VERSION": "latest"
+      },
+      "feature_limits": { "databases": 4, "backups": 4 }
+    }
+  },
+  "folia": {
+    "display": "Folia",
+    "minimum": { "ram": 1024, "disk": 1024, "cpu": 100 },
+    "maximum": { "ram": null, "disk": null, "cpu": null },
+    "info": {
+      "egg": 16,
+      "docker_image": "ghcr.io/ptero-eggs/yolks:java_25",
+      "startup": "java -Xms128M -XX:MaxRAMPercentage=95.0 -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JARFILE}}",
+      "environment": {
+        "MINECRAFT_VERSION": "latest",
+        "SERVER_JARFILE": "server.jar",
+        "DL_PATH": "",
+        "BUILD_NUMBER": "latest"
+      },
+      "feature_limits": { "databases": 4, "backups": 4 }
+    }
+  },
+  "redis7": {
+    "display": "Redis-7",
+    "minimum": { "ram": 256, "disk": 256, "cpu": 25 },
+    "maximum": { "ram": null, "disk": null, "cpu": null },
+    "info": {
+      "egg": 17,
+      "docker_image": "ghcr.io/ptero-eggs/yolks:redis_7",
+      "startup": "/usr/local/bin/redis-server /home/container/redis.conf --save 60 1 --dir /home/container/ --bind 0.0.0.0 --port {{SERVER_PORT}} --requirepass {{SERVER_PASSWORD}} --maxmemory {{SERVER_MEMORY}}mb --daemonize yes && redis-cli -p {{SERVER_PORT}}; redis-cli -p {{SERVER_PORT}} -a {{SERVER_PASSWORD}} shutdown save",
+      "environment": {
+        "SERVER_PASSWORD": "P@55w0rd"
+      },
+      "feature_limits": { "databases": 4, "backups": 4 }
+    }
+  },
+  "forge_enhanced": {
+    "display": "Forge Enhanced",
+    "minimum": { "ram": 1024, "disk": 1024, "cpu": 100 },
+    "maximum": { "ram": null, "disk": null, "cpu": null },
+    "info": {
+      "egg": 18,
+      "docker_image": "ghcr.io/ptero-eggs/yolks:java_8",
+      "startup": "java -Xms128M -Xmx{{SERVER_MEMORY}}M -Dterminal.jline=false -Dterminal.ansi=true $( [[  ! -f unix_args.txt ]] && printf %s \"-jar {{SERVER_JARFILE}}\" || printf %s \"@unix_args.txt\" )",
+      "environment": {
+        "SERVER_JARFILE": "server.jar",
+        "MC_VERSION": "latest",
+        "BUILD_TYPE": "recommended",
+        "FORGE_VERSION": ""
+      },
+      "feature_limits": { "databases": 4, "backups": 4 }
+    }
+  },
+  "velocity": {
+    "display": "Velocity",
+    "minimum": { "ram": 512, "disk": 512, "cpu": 75 },
+    "maximum": { "ram": null, "disk": null, "cpu": null },
+    "info": {
+      "egg": 19,
+      "docker_image": "ghcr.io/ptero-eggs/yolks:java_22",
+      "startup": "java -Xms128M -Xmx{{SERVER_MEMORY}}M -XX:+UseG1GC -XX:G1HeapRegionSize=4M -XX:+UnlockExperimentalVMOptions -XX:+ParallelRefProcEnabled -XX:+AlwaysPreTouch -XX:MaxInlineLevel=15 -jar {{SERVER_JARFILE}}",
+      "environment": {
+        "VELOCITY_VERSION": "latest",
+        "SERVER_JARFILE": "velocity.jar",
+        "DL_PATH": "",
+        "BUILD_NUMBER": "latest"
+      },
+      "feature_limits": { "databases": 4, "backups": 4 }
+    }
+  },
+  "modrinth_mrpack": {
+    "display": "Modrinth MRPack",
+    "minimum": { "ram": 1024, "disk": 1024, "cpu": 100 },
+    "maximum": { "ram": null, "disk": null, "cpu": null },
+    "info": {
+      "egg": 20,
+      "docker_image": "ghcr.io/parkervcp/yolks:java_21",
+      "startup": "set -e; LAUNCH_SCRIPT=\"\"; for candidate in run.sh start.sh serverstart.sh launch.sh; do if [ -f \"$candidate\" ]; then LAUNCH_SCRIPT=\"$candidate\"; break; fi; done; if [ -n \"$LAUNCH_SCRIPT\" ]; then chmod +x \"$LAUNCH_SCRIPT\" && echo \"Using launch script: $LAUNCH_SCRIPT\" && bash \"$LAUNCH_SCRIPT\"; elif [ -f user_jvm_args.txt ]; then UNIX_ARGS=$(find libraries -type f -name unix_args.txt | sort | head -n 1); if [ -n \"$UNIX_ARGS\" ]; then echo \"Using argfiles: user_jvm_args.txt + $UNIX_ARGS\"; java @user_jvm_args.txt @\"$UNIX_ARGS\"; else echo \"Found user_jvm_args.txt but no unix_args.txt under libraries/\"; exit 1; fi; elif [ -n \"{{SERVER_JARFILE}}\" ] && [ -f \"{{SERVER_JARFILE}}\" ]; then echo \"Using configured jar: {{SERVER_JARFILE}}\"; java -Xms128M -Xmx{{SERVER_MEMORY}}M -jar \"{{SERVER_JARFILE}}\"; else JAR=$(find . -maxdepth 1 -type f \\( -name \"server.jar\" -o -name \"neoforge-*.jar\" -o -name \"forge-*.jar\" -o -name \"fabric-server-*.jar\" -o -name \"quilt-server-*.jar\" -o -name \"*.jar\" \\) ! -name \"*installer*\" | sort | head -n 1); if [ -n \"$JAR\" ]; then echo \"Auto-detected server jar: $JAR\"; java -Xms128M -Xmx{{SERVER_MEMORY}}M -jar \"$JAR\"; else echo \"No startup target found\"; exit 1; fi; fi",
+      "environment": {
+        "SERVER_JARFILE": "server.jar",
+        "MRPACK_URL": "",
+        "MRPACK_FILE": "",
+        "MINECRAFT_VERSION": "latest",
+        "MOD_LOADER": "",
+        "LOADER_VERSION": "",
+        "INCLUDE_CLIENT_OVERRIDES": "0",
+        "JAVA_VERSION": ""
+      },
+      "feature_limits": { "databases": 4, "backups": 4 }
+    }
+  }
+}

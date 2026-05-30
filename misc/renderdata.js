@@ -73,7 +73,18 @@ async function buildRenderData(req, db, theme) {
     extraresources,
     packages,
     coins,
-    logs: (pathname === "/logs" || pathname === "/dashboard") ? await actionLog.getRecent(pathname === "/logs" ? 500 : 10) : [],
+    logs: (pathname === "/logs" || pathname === "/dashboard") ? await (async () => {
+      const allLogs = await actionLog.getRecent(pathname === "/logs" ? 500 : 50);
+      if (pathname === "/logs") return allLogs; // Admin logs page shows everything
+      if (!userinfo) return [];
+      // Admins see all activity, regular users only see their own
+      if (req.session.pterodactyl && req.session.pterodactyl.root_admin) return allLogs.slice(0, 10);
+      const userId = userinfo.id;
+      const username = userinfo.username;
+      return allLogs.filter(entry =>
+        entry.message.includes(userId) || entry.message.includes(username)
+      ).slice(0, 5);
+    })() : [],
     x: "aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1wVGZKZm5pUUZTOA==",
     pterodactyl: req.session.pterodactyl,
     extra: theme && theme.settings ? theme.settings.variables : {},

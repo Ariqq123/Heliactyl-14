@@ -1,6 +1,26 @@
 <%- include("../layouts/head") %>
 <% const safeUsers = (typeof usersList !== 'undefined' && Array.isArray(usersList)) ? usersList : []; %>
 
+          <div x-data="{
+            open: false,
+            query: '',
+            _timeout: null,
+            filter() {
+              clearTimeout(this._timeout);
+              this._timeout = setTimeout(() => {
+                let q = this.query.toLowerCase().trim();
+                let rows = document.querySelectorAll('.user-row');
+                let visible = 0;
+                rows.forEach(function(row) {
+                  let search = row.dataset.search || '';
+                  if (!q || search.includes(q)) { row.classList.remove('hidden'); visible++; }
+                  else { row.classList.add('hidden'); }
+                });
+                if (document.getElementById('visibleCount')) document.getElementById('visibleCount').textContent = visible;
+              }, 200);
+            }
+          }">
+
           <div class="relative overflow-hidden bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700/60 dark:border-slate-700 rounded-3xl mb-8 p-8 shadow-sm">
             <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-gradient-to-br from-indigo-50 to-blue-100 dark:from-slate-800 dark:to-slate-700 opacity-50 blur-3xl"></div>
             <div class="relative lg:flex lg:items-center lg:justify-between">
@@ -15,9 +35,8 @@
                   <p class="mt-1 text-sm text-gray-500 dark:text-slate-400">All Heliactyl users linked to Pterodactyl accounts.</p>
                 </div>
               </div>
-              <div x-data="{ open: false, query: '' }">
-          <div class="mt-6 lg:mt-0 flex gap-3">
-                <button x-on:click="open = !open" class="inline-flex items-center rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2 text-sm font-medium text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-800 dark:bg-slate-800 transition-colors">
+              <div class="mt-6 lg:mt-0 flex gap-3">
+                <button x-on:click="open = !open" class="inline-flex items-center rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2 text-sm font-medium text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" /></svg>
                   Filter
                 </button>
@@ -29,18 +48,8 @@
             </div>
           </div>
 
-          <div x-show="open" x-transition class="bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 rounded-3xl p-4 mb-6">
-            <input type="text" x-model="query" x-on:input="
-              var q = query.toLowerCase().trim();
-              var rows = document.querySelectorAll('.user-row');
-              var visible = 0;
-              rows.forEach(function(row) {
-                var search = row.dataset.search || '';
-                if (!q || search.includes(q)) { row.classList.remove('hidden'); visible++; }
-                else { row.classList.add('hidden'); }
-              });
-              document.getElementById('visibleCount').textContent = visible;
-            " placeholder="Search username, email, Discord ID, package..." class="w-full rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2 text-sm text-gray-700 dark:text-slate-300 shadow-sm focus:border-indigo-400 focus:ring-indigo-500 placeholder:text-gray-400 dark:placeholder:text-slate-500">
+          <div x-show="open" x-transition class="bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 rounded-3xl p-4 mb-6" style="display: none;">
+            <input type="text" x-model="query" x-on:input="filter()" placeholder="Search username, email, Discord ID, package..." class="w-full rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2 text-sm text-gray-700 dark:text-slate-300 shadow-sm focus:border-indigo-400 focus:ring-indigo-500 placeholder:text-gray-400 dark:placeholder:text-slate-500">
           </div>
 
           <% if (!safeUsers || safeUsers.length === 0) { %>
@@ -97,4 +106,5 @@
           </div>
           <% } %>
 
+          </div>
 <%- include("../layouts/tail") %>

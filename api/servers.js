@@ -136,7 +136,9 @@ module.exports.load = async function (app, db) {
                 .limits.cpu;
           }
 
-          if (servers2 >= package.servers + extra.servers) {
+          let isAdmin = req.session.pterodactyl.root_admin === true;
+
+          if (!isAdmin && servers2 >= package.servers + extra.servers) {
             cb();
             return res.redirect(`${redirectlink}?err=TOOMUCHSERVERS`);
           }
@@ -192,7 +194,7 @@ module.exports.load = async function (app, db) {
               cb();
               return res.redirect(`${redirectlink}?err=ZERORESOURCES`);
             }
-            if (ram2 + ram > package.ram + extra.ram) {
+            if (!isAdmin && ram2 + ram > package.ram + extra.ram) {
               cb();
               return res.redirect(
                 `${redirectlink}?err=EXCEEDRAM&num=${
@@ -200,7 +202,7 @@ module.exports.load = async function (app, db) {
                 }`
               );
             }
-            if (disk2 + disk > package.disk + extra.disk) {
+            if (!isAdmin && disk2 + disk > package.disk + extra.disk) {
               cb();
               return res.redirect(
                 `${redirectlink}?err=EXCEEDDISK&num=${
@@ -208,7 +210,7 @@ module.exports.load = async function (app, db) {
                 }`
               );
             }
-            if (cpu2 + cpu > package.cpu + extra.cpu) {
+            if (!isAdmin && cpu2 + cpu > package.cpu + extra.cpu) {
               cb();
               return res.redirect(
                 `${redirectlink}?err=EXCEEDCPU&num=${
@@ -330,6 +332,34 @@ module.exports.load = async function (app, db) {
             let newpterodactylinfo = req.session.pterodactyl;
             newpterodactylinfo.relationships.servers.data.push(serverinfotext);
             req.session.pterodactyl = newpterodactylinfo;
+
+            // Re-set Docker image via startup endpoint to unlock user-side changes on the panel
+            if (serverinfotext.attributes && serverinfotext.attributes.id) {
+              const srvId = serverinfotext.attributes.id;
+              const dockerImage = serverinfotext.attributes.container ? serverinfotext.attributes.container.image : null;
+              if (dockerImage) {
+                setTimeout(() => {
+                  fetch(
+                    newsettings.pterodactyl.domain + "/api/application/servers/" + srvId + "/startup",
+                    {
+                      method: "PATCH",
+                      headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${newsettings.pterodactyl.key}`,
+                        "Accept": "application/json",
+                      },
+                      body: JSON.stringify({
+                        startup: serverinfotext.attributes.container.startup_command,
+                        egg: serverinfotext.attributes.egg,
+                        image: dockerImage,
+                        skip_scripts: false,
+                        environment: serverinfotext.attributes.container.environment || {},
+                      }),
+                    }
+                  ).catch(() => {});
+                }, 3000);
+              }
+            }
 
             cb();
             log(

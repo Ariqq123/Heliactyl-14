@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <style>
+      :root {
+        --navy: #0F172A;
+        --gold: #D4AF37;
+        --white: #F8FAFC;
+        --platinum: #E5E7EB;
+      }
+
+      .plane-dark {
+        fill: var(--navy);
+      }
+
+      .plane-white {
+        fill: var(--white);
+      }
+
+      .plane-gold {
+        fill: var(--gold);
+      }
+
+      .edge {
+        fill: none;
+        stroke: var(--platinum);
+        stroke-width: 1.35;
+        stroke-linecap: square;
+        stroke-linejoin: miter;
+      }
+
+      .accent {
+        fill: none;
+        stroke: var(--gold);
+        stroke-width: 1.6;
+        stroke-linecap: square;
+        stroke-linejoin: miter;
+      }
+    </style>
+  </defs>
+
+  <path class="plane-dark" d="M32 6 40 18 32 24 24 18z"/>
+  <path class="plane-white" d="M32 6 32 24 24 18z" opacity=".92"/>
+  <path class="plane-gold" d="M32 6 40 18 32 24z" opacity=".9"/>
+
+  <path class="plane-dark" d="M32 58 24 46 32 40 40 46z"/>
+  <path class="plane-white" d="M32 58 24 46 32 40z" opacity=".9"/>
+  <path class="plane-gold" d="M32 58 32 40 40 46z" opacity=".78"/>
+
+  <path class="plane-dark" d="M8 20 22 21 24 31 14 33z"/>
+  <path class="plane-white" d="M8 20 24 31 14 33z" opacity=".88"/>
+  <path class="plane-gold" d="M8 20 22 21 24 31z" opacity=".72"/>
+
+  <path class="plane-dark" d="M56 44 42 43 40 33 50 31z"/>
+  <path class="plane-white" d="M56 44 40 33 50 31z" opacity=".86"/>
+  <path class="plane-gold" d="M56 44 42 43 40 33z" opacity=".72"/>
+
+  <path class="plane-dark" d="M56 20 42 21 40 31 50 33z"/>
+  <path class="plane-white" d="M56 20 40 31 50 33z" opacity=".88"/>
+  <path class="plane-gold" d="M56 20 42 21 40 31z" opacity=".74"/>
+
+  <path class="plane-dark" d="M8 44 22 43 24 33 14 31z"/>
+  <path class="plane-white" d="M8 44 24 33 14 31z" opacity=".86"/>
+  <path class="plane-gold" d="M8 44 22 43 24 33z" opacity=".7"/>
+
+  <path class="plane-dark" d="M32 22 41 27 41 37 32 42 23 37 23 27z"/>
+  <path class="plane-white" d="M32 22 41 27 32 32 23 27z" opacity=".9"/>
+  <path class="plane-gold" d="M41 27 41 37 32 42 32 32z" opacity=".78"/>
+  <path class="plane-white" d="M23 27 32 32 32 42 23 37z" opacity=".78"/>
+
+  <path class="edge" d="M32 6 40 18 32 24 24 18z"/>
+  <path class="edge" d="M32 58 24 46 32 40 40 46z"/>
+  <path class="edge" d="M8 20 22 21 24 31 14 33z"/>
+  <path class="edge" d="M56 44 42 43 40 33 50 31z"/>
+  <path class="edge" d="M56 20 42 21 40 31 50 33z"/>
+  <path class="edge" d="M8 44 22 43 24 33 14 31z"/>
+  <path class="edge" d="M32 22 41 27 41 37 32 42 23 37 23 27z"/>
+
+  <path class="accent" d="M32 10v10"/>
+  <path class="accent" d="M32 54V44"/>
+  <path class="accent" d="M13 22l9 5"/>
+  <path class="accent" d="M51 42l-9-5"/>
+  <path class="accent" d="M51 22l-9 5"/>
+  <path class="accent" d="M13 42l9-5"/>
+</svg>
