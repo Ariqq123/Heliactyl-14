@@ -188,6 +188,10 @@ module.exports.load = async function (app, db) {
           let disk = parseFloat(req.query.disk);
           let cpu = parseFloat(req.query.cpu);
           if (!isNaN(ram) && !isNaN(disk) && !isNaN(cpu)) {
+            if (ram <= 0 || disk <= 0 || cpu <= 0) {
+              cb();
+              return res.redirect(`${redirectlink}?err=ZERORESOURCES`);
+            }
             if (ram2 + ram > package.ram + extra.ram) {
               cb();
               return res.redirect(

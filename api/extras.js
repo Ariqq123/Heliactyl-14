@@ -25,8 +25,8 @@ module.exports.load = async function (app, db) {
     }
 
     const newsettings = JSON.parse(fs.readFileSync("./settings.json"));
-    const pteroid = await db.get("users-" + req.session.userinfo.id);
-    if (!pteroid || pteroid !== req.session.pterodactyl.id) {
+    const pteroid = db.get("users-" + req.session.userinfo.id);
+    if (!pteroid || String(pteroid) !== String(req.session.pterodactyl.id)) {
       return res.redirect("/login?prompt=none");
     }
 
