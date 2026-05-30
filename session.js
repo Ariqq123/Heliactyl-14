@@ -1,42 +1,38 @@
-const Keyv = require('keyv');
 const { Store } = require('express-session');
+const db = require('./misc/database');
 
-class KeyvStore extends Store {
+class SqliteStore extends Store {
   constructor(options) {
-    super();
-    this.keyv = new Keyv(options.uri, options);
-    this.keyv.on('error', err => console.error('Keyv connection error:', err));
+    super(options);
   }
 
-  async get(sid, callback) {
+  get(sid, callback) {
     try {
-      const data = await this.keyv.get(sid);
-      callback(null, data);
+      const data = db.get(`sess-${sid}`);
+      callback(null, data || null);
     } catch (err) {
-      console.error(`Error getting session: ${sid}`, err);
       callback(err);
     }
   }
 
-  async set(sid, session, callback) {
+  set(sid, session, callback) {
     try {
-      await this.keyv.set(sid, session);
+      const maxAge = session.cookie && session.cookie.maxAge ? session.cookie.maxAge : 1000 * 60 * 60 * 24 * 7;
+      db.set(`sess-${sid}`, session, maxAge);
       callback(null);
     } catch (err) {
-      console.error(`Error setting session: ${sid}`, err);
       callback(err);
     }
   }
 
-  async destroy(sid, callback) {
+  destroy(sid, callback) {
     try {
-      await this.keyv.delete(sid);
+      db.delete(`sess-${sid}`);
       callback(null);
     } catch (err) {
-      console.error(`Error destroying session: ${sid}`, err);
       callback(err);
     }
   }
 }
 
-module.exports = KeyvStore;
+module.exports = SqliteStore;

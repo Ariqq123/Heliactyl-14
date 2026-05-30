@@ -139,10 +139,18 @@ if (cluster.isMaster) {
   const session = require("express-session");
   const KeyvStore = require("./session");
   const indexjs = require("./app.js");
+  const helmet = require("helmet");
+  const rateLimit = require("express-rate-limit");
 
   // Load the website.
   module.exports.app = app;
   const { buildRenderData } = require("./misc/renderdata");
+
+  // Security headers
+  app.use(helmet({
+    contentSecurityPolicy: false, // EJS templates use inline scripts
+    crossOriginEmbedderPolicy: false,
+  }));
 
   app.use((req, res, next) => {
     res.setHeader("X-Powered-By", "14th Gen Heliactyl (Cascade Ridge)");
@@ -151,11 +159,49 @@ if (cluster.isMaster) {
     next();
   });
 
+  // Rate limiting on sensitive endpoints
+  const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 10, // 10 attempts per window
+    message: "Too many login attempts. Please try again in 15 minutes.",
+    standardHeaders: true,
+    legacyHeaders: false,
+  });
+
+  const actionLimiter = rateLimit({
+    windowMs: 60 * 1000, // 1 minute
+    max: 15, // 15 actions per minute
+    message: "Too many requests. Please slow down.",
+    standardHeaders: true,
+    legacyHeaders: false,
+  });
+
+  app.use("/submitlogin", authLimiter);
+  app.use("/callback", authLimiter);
+  app.use("/transfercoins", actionLimiter);
+  app.use("/addcoins", actionLimiter);
+  app.use("/addresources", actionLimiter);
+  app.use("/remove_account", actionLimiter);
+  app.use("/buy", actionLimiter);
+
+  // Block disabled feature pages
+  app.use((req, res, next) => {
+    const s = indexjs.getSettings();
+    const path = req._parsedUrl.pathname;
+    if (!s.api.client.coins.enabled && ["/store", "/transfer"].includes(path)) {
+      return res.redirect("/dashboard");
+    }
+    if (!s.api.afk.enabled && path === "/afk") {
+      return res.redirect("/dashboard");
+    }
+    next();
+  });
+
   app.set('trust proxy', 1); // Trust X-Forwarded-* headers from Nginx
 
   app.use(
     session({
-      store: new KeyvStore({ uri: settings.database }),
+      store: new KeyvStore(),
       secret: settings.website.secret,
       resave: false,
       saveUninitialized: false,
@@ -296,7 +342,13 @@ if (cluster.isMaster) {
             }
             return res.send(str);
           }
-          let cacheaccountinfo = JSON.parse(await cacheaccount.text());
+          let cacheaccountinfo;
+          try {
+            cacheaccountinfo = JSON.parse(await cacheaccount.text());
+          } catch (e) {
+            logger.error(e, "Failed to parse Pterodactyl API response");
+            return res.render("500.ejs", { err: e });
+          }
   
           req.session.pterodactyl = cacheaccountinfo.attributes;
           if (cacheaccountinfo.attributes.root_admin !== true) {
@@ -375,7 +427,7 @@ if (cluster.isMaster) {
   });
 
   process.on('unhandledRejection', (reason, promise) => {
-    logger.error({ reason }, 'Unhandled Rejection');
+    logger.error(reason instanceof Error ? reason : { reason }, 'Unhandled Rejection');
   });
 }
 

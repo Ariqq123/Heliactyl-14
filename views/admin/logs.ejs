@@ -16,7 +16,25 @@
                   <p class="mt-1 text-sm text-gray-500 dark:text-slate-400">In-memory log buffer (last <%= safeLogs.length %> events) from this worker.</p>
                 </div>
               </div>
-              <div x-data="{ open: false, query: '', cidFilter: '' }">
+              <div x-data="{
+                open: false,
+                query: '',
+                cidFilter: '',
+                filter() {
+                  let q = this.query.toLowerCase().trim();
+                  let cid = this.cidFilter.toLowerCase().trim();
+                  let rows = document.querySelectorAll('.log-row');
+                  let visible = 0;
+                  rows.forEach(function(r) {
+                    let a = r.dataset.action || '';
+                    let m = r.dataset.message || '';
+                    let c = (r.dataset.cid || '').toLowerCase();
+                    if ((!q || a.includes(q) || m.includes(q)) && (!cid || c.includes(cid))) { r.classList.remove('hidden'); visible++; }
+                    else { r.classList.add('hidden'); }
+                  });
+                  if (document.getElementById('visibleCount')) document.getElementById('visibleCount').textContent = visible;
+                }
+              }">
           <div class="mt-6 lg:mt-0 flex gap-3">
                 <button x-on:click="open = !open" class="inline-flex items-center rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2 text-sm font-medium text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-800 dark:bg-slate-800 transition-colors">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" /></svg>
@@ -28,34 +46,15 @@
                 </button>
               </div>
             </div>
-          </div>
 
           <!-- Filter input -->
           <div x-show="open" x-transition class="bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 rounded-3xl p-4 mb-6">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <input type="text" x-model="query" x-on:input="$dispatch('filter-logs')" placeholder="Search action or message..." class="w-full rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2 text-sm text-gray-700 dark:text-slate-300 shadow-sm focus:border-violet-400 focus:ring-violet-500 placeholder:text-gray-400 dark:placeholder:text-slate-500">
-              <input type="text" x-model="cidFilter" x-on:input="$dispatch('filter-logs')" placeholder="Filter by correlation ID..." class="w-full rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2 text-sm text-gray-700 dark:text-slate-300 shadow-sm focus:border-violet-400 focus:ring-violet-500 placeholder:text-gray-400 dark:placeholder:text-slate-500">
+              <input type="text" x-model="query" x-on:input="filter()" placeholder="Search action or message..." class="w-full rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2 text-sm text-gray-700 dark:text-slate-300 shadow-sm focus:border-violet-400 focus:ring-violet-500 placeholder:text-gray-400 dark:placeholder:text-slate-500">
+              <input type="text" x-model="cidFilter" x-on:input="filter()" placeholder="Filter by correlation ID..." class="w-full rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2 text-sm text-gray-700 dark:text-slate-300 shadow-sm focus:border-violet-400 focus:ring-violet-500 placeholder:text-gray-400 dark:placeholder:text-slate-500">
             </div>
           </div>
-
-          <script>
-            document.addEventListener('filter-logs', function() {
-              let q = (document.querySelector('[x-model=query]') || {}).value || '';
-              let cid = (document.querySelector('[x-model=cidFilter]') || {}).value || '';
-              q = q.toLowerCase().trim();
-              cid = cid.toLowerCase().trim();
-              let rows = document.querySelectorAll('.log-row');
-              let visible = 0;
-              rows.forEach(function(r) {
-                let a = r.dataset.action || '';
-                let m = r.dataset.message || '';
-                let c = (r.dataset.cid || '').toLowerCase();
-                if ((!q || a.includes(q) || m.includes(q)) && (!cid || c.includes(cid))) { r.classList.remove('hidden'); visible++; }
-                else { r.classList.add('hidden'); }
-              });
-              document.getElementById('visibleCount').textContent = visible;
-            });
-          </script>
+          </div>
 
           <% if (!safeLogs || safeLogs.length === 0) { %>
           <div class="text-center bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700/60 dark:border-slate-700 rounded-3xl py-24 px-6 shadow-sm">

@@ -8,6 +8,7 @@
     </div>
   </div>
 </div>
+<script>window.dispatchEvent(new CustomEvent('toast', { detail: { type: 'success', title: '<%= title %>', message: '<%= typeof message !== "undefined" ? message : "" %>' } }));</script>
 <% } else { %>
 <div class="rounded-2xl bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-800 p-6 mb-6">
   <div class="flex">
@@ -18,4 +19,5 @@
     </div>
   </div>
 </div>
+<script>window.dispatchEvent(new CustomEvent('toast', { detail: { type: 'error', title: '<%= title %>', message: '<%= typeof message !== "undefined" ? message : "" %>' } }));</script>
 <% } %>

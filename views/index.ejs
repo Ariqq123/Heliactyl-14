@@ -5,6 +5,9 @@
     background-image: radial-gradient(circle at 1px 1px, rgb(203 213 225 / 0.4) 1px, transparent 0);
     background-size: 24px 24px;
   }
+  .dark .bg-grid-pattern {
+    background-image: radial-gradient(circle at 1px 1px, rgb(51 65 85 / 0.4) 1px, transparent 0);
+  }
   .discord-btn:hover .discord-logo { transform: scale(1.1); }
   .discord-logo { transition: transform 0.2s ease; }
   @keyframes float {
@@ -19,12 +22,12 @@
   <div class="flex min-h-full">
 
     <!-- Left: Login Panel -->
-    <div class="flex flex-1 flex-col justify-center px-6 py-12 lg:flex-none lg:w-[480px] xl:w-[520px] bg-white dark:bg-slate-900 border-r border-slate-100 relative overflow-hidden">
+    <div class="flex flex-1 flex-col justify-center px-6 py-12 lg:flex-none lg:w-[480px] xl:w-[520px] bg-white dark:bg-slate-900 border-r border-slate-100 dark:border-slate-800 relative overflow-hidden">
       <!-- Subtle grid background -->
       <div class="absolute inset-0 bg-grid-pattern pointer-events-none"></div>
       <!-- Gradient blur blobs -->
-      <div class="absolute -top-24 -left-24 w-72 h-72 bg-indigo-100 rounded-full blur-3xl opacity-40 pointer-events-none"></div>
-      <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-violet-100 rounded-full blur-3xl opacity-30 pointer-events-none"></div>
+      <div class="absolute -top-24 -left-24 w-72 h-72 bg-indigo-100 dark:bg-indigo-950 rounded-full blur-3xl opacity-40 pointer-events-none"></div>
+      <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-violet-100 dark:bg-violet-950 rounded-full blur-3xl opacity-30 pointer-events-none"></div>
 
       <div class="relative mx-auto w-full max-w-sm">
         <!-- Logo / Wordmark -->
@@ -36,38 +39,43 @@
               <path d="M10.38 1.103a.75.75 0 0 0-.76 0l-7.25 4.25a.75.75 0 0 0 0 1.294l7.25 4.25a.75.75 0 0 0 .76 0l7.25-4.25a.75.75 0 0 0 0-1.294l-7.25-4.25Z" />
             </svg>
           </div>
-          <span class="text-slate-800 text-xl font-bold tracking-tight"><%= settings.name %></span>
+          <span class="text-slate-800 dark:text-slate-200 text-xl font-bold tracking-tight"><%= settings.name %></span>
         </div>
 
         <!-- Heading -->
         <div class="mb-10">
-          <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">Welcome back.</h1>
-          <p class="mt-2 text-base text-slate-500">Sign in to manage your servers, resources, and coins.</p>
+          <h1 class="text-3xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight leading-tight">Welcome back.</h1>
+          <p class="mt-2 text-base text-slate-500 dark:text-slate-400">Sign in to manage your servers, resources, and coins.</p>
         </div>
 
         <!-- Discord OAuth button -->
-        <a href="../login" class="discord-btn group relative flex items-center justify-center gap-3 w-full rounded-2xl px-6 py-4 text-white font-semibold text-sm shadow-lg shadow-indigo-200/70 transition-all duration-200 bg-[#5865F2] hover:bg-[#4752c4] hover:shadow-indigo-300/80 hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#5865F2]">
+        <a href="../login" x-data="{ loading: false }" x-on:click="loading = true" :class="loading ? 'pointer-events-none opacity-80' : ''" class="discord-btn group relative flex items-center justify-center gap-3 w-full rounded-2xl px-6 py-4 text-white font-semibold text-sm shadow-lg shadow-indigo-200/70 dark:shadow-indigo-900/30 transition-all duration-200 bg-[#5865F2] hover:bg-[#4752c4] hover:shadow-indigo-300/80 dark:hover:shadow-indigo-900/50 hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#5865F2]">
           <!-- Discord logo SVG -->
-          <svg class="discord-logo w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <svg x-show="!loading" class="discord-logo w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
             <path d="M20.317 4.492c-1.53-.69-3.17-1.2-4.885-1.49a.075.075 0 0 0-.079.036c-.21.369-.444.85-.608 1.23a18.566 18.566 0 0 0-5.487 0 12.36 12.36 0 0 0-.617-1.23A.077.077 0 0 0 8.562 3c-1.714.29-3.354.8-4.885 1.491a.07.07 0 0 0-.032.027C.533 9.093-.32 13.555.099 17.961a.08.08 0 0 0 .031.055 20.03 20.03 0 0 0 5.993 2.98.078.078 0 0 0 .084-.026c.462-.62.874-1.275 1.226-1.963.021-.04.001-.088-.041-.104a13.201 13.201 0 0 1-1.872-.878.075.075 0 0 1-.008-.125c.126-.093.252-.19.372-.287a.075.075 0 0 1 .078-.01c3.927 1.764 8.18 1.764 12.061 0a.075.075 0 0 1 .079.009c.12.098.245.195.372.288a.075.075 0 0 1-.006.125c-.598.344-1.22.635-1.873.877a.075.075 0 0 0-.041.105c.36.687.772 1.341 1.225 1.962a.077.077 0 0 0 .084.028 19.963 19.963 0 0 0 6.002-2.981.076.076 0 0 0 .032-.054c.5-5.094-.838-9.52-3.549-13.442a.06.06 0 0 0-.031-.028zM8.02 15.278c-1.182 0-2.157-1.069-2.157-2.38 0-1.312.956-2.38 2.157-2.38 1.21 0 2.176 1.077 2.157 2.38 0 1.312-.956 2.38-2.157 2.38zm7.975 0c-1.183 0-2.157-1.069-2.157-2.38 0-1.312.955-2.38 2.157-2.38 1.21 0 2.176 1.077 2.157 2.38 0 1.312-.946 2.38-2.157 2.38z"/>
           </svg>
-          Continue with Discord
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="white" class="w-4 h-4 ml-auto opacity-60 group-hover:translate-x-0.5 transition-transform">
+          <svg x-show="loading" class="animate-spin w-5 h-5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" style="display: none;">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="white" stroke-width="4"></circle>
+            <path class="opacity-75" fill="white" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <span x-show="!loading">Continue with Discord</span>
+          <span x-show="loading" style="display: none;">Redirecting...</span>
+          <svg x-show="!loading" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="white" class="w-4 h-4 ml-auto opacity-60 group-hover:translate-x-0.5 transition-transform">
             <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
           </svg>
         </a>
 
         <!-- Privacy note -->
-        <p class="mt-6 text-center text-xs text-slate-400">
+        <p class="mt-6 text-center text-xs text-slate-400 dark:text-slate-500">
           By signing in, you agree to our
-          <a href="#" class="underline underline-offset-2 hover:text-slate-600 transition">Terms of Service</a>
+          <a href="#" class="underline underline-offset-2 hover:text-slate-600 dark:hover:text-slate-300 transition">Terms of Service</a>
           and
-          <a href="#" class="underline underline-offset-2 hover:text-slate-600 transition">Privacy Policy</a>.
+          <a href="#" class="underline underline-offset-2 hover:text-slate-600 dark:hover:text-slate-300 transition">Privacy Policy</a>.
         </p>
 
         <!-- Footer -->
-        <div class="mt-16 pt-6 border-t border-slate-100 text-center">
-          <p class="text-xs text-slate-400">Powered by <a href="https://github.com/heliactyloss/heliactyl" class="hover:text-slate-600 transition underline underline-offset-2">Heliactyl</a> &mdash; v<%= settings.version %></p>
+        <div class="mt-16 pt-6 border-t border-slate-100 dark:border-slate-800 text-center">
+          <p class="text-xs text-slate-400 dark:text-slate-500">Powered by <a href="https://github.com/heliactyloss/heliactyl" class="hover:text-slate-600 dark:hover:text-slate-300 transition underline underline-offset-2">Heliactyl</a> &mdash; v<%= settings.version %></p>
         </div>
       </div>
     </div>
@@ -85,11 +93,11 @@
       <div class="relative z-10 p-12 pb-16 w-full">
         <!-- Floating stat badges -->
         <div class="flex gap-3 mb-10">
-          <div class="float-badge bg-white dark:bg-slate-900/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-3 text-white">
+          <div class="float-badge bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-3 text-white">
             <p class="text-xs text-white/60 font-medium">Servers</p>
             <p class="text-xl font-bold tracking-tight mt-0.5">Always on</p>
           </div>
-          <div class="float-badge bg-white dark:bg-slate-900/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-3 text-white">
+          <div class="float-badge bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-3 text-white">
             <p class="text-xs text-white/60 font-medium">Resources</p>
             <p class="text-xl font-bold tracking-tight mt-0.5">One click</p>
           </div>
