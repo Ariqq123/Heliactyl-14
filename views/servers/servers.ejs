@@ -98,7 +98,12 @@
                     </div>
                     <div>
                       <h2 class="text-lg font-bold text-gray-900 dark:text-slate-100 tracking-tight truncate max-w-[200px] sm:max-w-[300px]" title="<%= pterodactyl.relationships.servers.data[i].attributes.name %>"><%= pterodactyl.relationships.servers.data[i].attributes.name %></h2>
-                      <p class="text-xs font-mono text-gray-400 dark:text-slate-500 mt-1"><%= pterodactyl.relationships.servers.data[i].attributes.identifier %></p>
+                      <div class="flex items-center gap-2 mt-1">
+                        <p class="text-xs font-mono text-gray-400 dark:text-slate-500"><%= pterodactyl.relationships.servers.data[i].attributes.identifier %></p>
+                        <span hx-get="/api/server-status/<%= pterodactyl.relationships.servers.data[i].attributes.identifier %>" hx-trigger="load, every 30s" hx-swap="innerHTML" class="inline-flex items-center text-xs font-medium">
+                          <span class="inline-flex items-center gap-1 rounded-full bg-gray-100 dark:bg-slate-700 px-2 py-0.5 text-gray-500 dark:text-slate-400"><span class="w-1.5 h-1.5 rounded-full bg-gray-400 animate-pulse"></span>...</span>
+                        </span>
+                      </div>
                     </div>
                   </div>
                   <div class="ml-4 flex-shrink-0 flex gap-2">

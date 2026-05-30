@@ -210,5 +210,16 @@
     "enabled": false,
     "siteKey": "Your Turnstile site key",
     "secretKey": "Your Turnstile secret key"
+  },
+  "email": {
+    "enabled": false,
+    "from": "\"Heliactyl\" <noreply@example.com>",
+    "smtp": {
+      "host": "smtp.example.com",
+      "port": 587,
+      "secure": false,
+      "user": "your-email@example.com",
+      "pass": "your-password"
+    }
   }
 }

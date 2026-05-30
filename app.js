@@ -225,6 +225,51 @@ if (cluster.isMaster) {
     })
   );
 
+  // Auto-generate client API key for existing users who don't have one
+  app.use(async (req, res, next) => {
+    if (req.path.startsWith("/assets/") || req.path.startsWith("/api")) return next();
+    if (!req.session.pterodactyl || !req.session.userinfo) return next();
+
+    const discordId = req.session.userinfo.id;
+    const existingKey = db.get("clientkey-" + discordId);
+    if (existingKey) return next();
+
+    // Flag to prevent repeated attempts within the same session
+    if (req.session._clientKeyAttempted) return next();
+    req.session._clientKeyAttempted = true;
+
+    try {
+      const { createClientKey } = require("./misc/clientKey");
+      const newsettings = indexjs.getSettings();
+
+      // Generate a new password for the user
+      const newpassword = require("crypto").randomBytes(16).toString("hex");
+      await fetch(
+        settings.pterodactyl.domain + "/api/application/users/" + req.session.pterodactyl.id,
+        {
+          method: "patch",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${settings.pterodactyl.key}`,
+          },
+          body: JSON.stringify({
+            username: req.session.pterodactyl.username,
+            email: req.session.pterodactyl.email,
+            first_name: req.session.pterodactyl.first_name,
+            last_name: req.session.pterodactyl.last_name,
+            password: newpassword,
+          }),
+        }
+      );
+
+      req.session.password = newpassword;
+      createClientKey(discordId, req.session.pterodactyl.email, newpassword, newsettings).catch(() => {});
+    } catch (e) {
+      // Silent fail — user can still use the dashboard without client key
+    }
+    next();
+  });
+
   // Per-request render data: build once after the session middleware, expose
   // on req for handlers and on res.locals so templates can read variables
   // without each route building its own data object. Static asset requests

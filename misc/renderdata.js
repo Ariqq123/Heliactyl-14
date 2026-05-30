@@ -73,7 +73,7 @@ async function buildRenderData(req, db, theme) {
     extraresources,
     packages,
     coins,
-    logs: pathname === "/logs" ? await actionLog.getRecent(500) : [],
+    logs: (pathname === "/logs" || pathname === "/dashboard") ? await actionLog.getRecent(pathname === "/logs" ? 500 : 10) : [],
     x: "aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1wVGZKZm5pUUZTOA==",
     pterodactyl: req.session.pterodactyl,
     extra: theme && theme.settings ? theme.settings.variables : {},
@@ -107,29 +107,24 @@ async function buildRenderData(req, db, theme) {
   }
 
   if (pathname === "/users") {
-    const fetch = require("node-fetch");
+    const { fetchPtero } = require("./pteroCache");
     const userIds = (await db.get("users")) || [];
-    const usersList = [];
-    for (const pteroId of userIds) {
-      try {
-        const res = await fetch(
+
+    const results = await Promise.allSettled(
+      userIds.map(async (pteroId) => {
+        const data = await fetchPtero(
           newsettings.pterodactyl.domain + "/api/application/users/" + pteroId + "?include=servers",
-          {
-            method: "get",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${newsettings.pterodactyl.key}`,
-            },
-          }
+          newsettings.pterodactyl.key,
+          { ttl: 60000 }
         );
-        if (!res.ok) continue;
-        const pteroUser = (await res.json()).attributes;
+        if (!data) return null;
+        const pteroUser = data.attributes;
         const discordId = pteroUser.username;
-        const userCoins = (await db.get("coins-" + discordId)) || 0;
-        const userPackageId = (await db.get("package-" + discordId)) || newsettings.api.client.packages.default;
+        const userCoins = db.get("coins-" + discordId) || 0;
+        const userPackageId = db.get("package-" + discordId) || newsettings.api.client.packages.default;
         const userPackage = normalizePackage(newsettings.api.client.packages.list[userPackageId], userPackageId);
-        const userExtra = (await db.get("extra-" + discordId)) || { ram: 0, disk: 0, cpu: 0, servers: 0 };
-        usersList.push({
+        const userExtra = db.get("extra-" + discordId) || { ram: 0, disk: 0, cpu: 0, servers: 0 };
+        return {
           pteroId,
           discordId,
           username: pteroUser.first_name,
@@ -139,12 +134,13 @@ async function buildRenderData(req, db, theme) {
           package: userPackage ? userPackage.displayName : userPackageId,
           extra: userExtra,
           admin: pteroUser.root_admin,
-        });
-      } catch (e) {
-        continue;
-      }
-    }
-    data.usersList = usersList;
+        };
+      })
+    );
+
+    data.usersList = results
+      .filter(r => r.status === "fulfilled" && r.value !== null)
+      .map(r => r.value);
   }
 
   return data;

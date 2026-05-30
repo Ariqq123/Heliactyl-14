@@ -28,6 +28,7 @@ const fetch = require("node-fetch");
 
 const indexjs = require("../app.js");
 const log = require("../misc/log");
+const { createClientKey } = require("../misc/clientKey");
 
 const fs = require("fs");
 const { renderFile } = require("ejs");
@@ -41,12 +42,14 @@ module.exports.load = async function (app, db) {
     }
     if (req.query.redirect) req.session.redirect = "/" + req.query.redirect;
     let newsettings = JSON.parse(fs.readFileSync("./settings.json"));
+    const protocol = req.headers["x-forwarded-proto"] || req.protocol;
+    const callbackBase = `${protocol}://${req.headers.host}`;
+    req.session.callbackBase = callbackBase;
     res.redirect(
       `https://discord.com/api/oauth2/authorize?client_id=${
         settings.api.client.oauth2.id
       }&redirect_uri=${encodeURIComponent(
-        settings.api.client.oauth2.link +
-          settings.api.client.oauth2.callbackpath
+        callbackBase + settings.api.client.oauth2.callbackpath
       )}&response_type=code&scope=identify%20email${
         newsettings.api.client.bot.joinguild.enabled == true
           ? "%20guilds.join"
@@ -130,6 +133,8 @@ module.exports.load = async function (app, db) {
       if (vpn) return;
     }
 
+    const protocol = req.headers["x-forwarded-proto"] || req.protocol;
+    const callbackBase = req.session.callbackBase || `${protocol}://${req.headers.host}`;
     let json = await fetch("https://discord.com/api/oauth2/token", {
       method: "post",
       body:
@@ -141,8 +146,7 @@ module.exports.load = async function (app, db) {
         encodeURIComponent(req.query.code) +
         "&redirect_uri=" +
         encodeURIComponent(
-          settings.api.client.oauth2.link +
-            settings.api.client.oauth2.callbackpath
+          callbackBase + settings.api.client.oauth2.callbackpath
         ),
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
     });
@@ -402,6 +406,8 @@ module.exports.load = async function (app, db) {
               await db.set("users-" + userinfo.id, accountinfo.attributes.id);
               req.session.newaccount = true;
               req.session.password = genpassword;
+              // Generate client API key for server status access
+              createClientKey(userinfo.id, userinfo.email, genpassword, newsettings).catch(() => {});
             } else {
               let accountlistjson = await fetch(
                 settings.pterodactyl.domain +

@@ -115,4 +115,44 @@
                 </a>
               </div>
             </div>
+
+            <!-- Activity Feed -->
+            <% if (typeof logs !== 'undefined' && logs.length > 0) { %>
+            <div class="mb-4">
+              <h3 class="text-sm font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-4 px-1">Recent Activity</h3>
+              <div class="bg-white dark:bg-slate-800 border border-gray-200/60 dark:border-slate-700 rounded-2xl shadow-sm overflow-hidden">
+                <ul class="divide-y divide-gray-100 dark:divide-slate-700">
+                  <% const recentLogs = logs.slice(0, 5); %>
+                  <% for (let i = 0; i < recentLogs.length; i++) { const entry = recentLogs[i]; %>
+                  <li class="px-5 py-3 flex items-center gap-3">
+                    <div class="flex-shrink-0">
+                      <% if (entry.action.includes('coin') || entry.action.includes('Coin') || entry.action.includes('Purchased')) { %>
+                      <div class="w-8 h-8 rounded-lg bg-amber-50 dark:bg-amber-950 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 text-amber-500"><path d="M10 8c3.866 0 7-1.343 7-3s-3.134-3-7-3-7 1.343-7 3 3.134 3 7 3Z" /><path d="M3 8.236V10c0 1.657 3.134 3 7 3s7-1.343 7-3V8.236C15.54 9.313 12.97 10 10 10s-5.54-.687-7-1.764Z" /></svg>
+                      </div>
+                      <% } else if (entry.action.includes('server') || entry.action.includes('Server')) { %>
+                      <div class="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 text-emerald-500"><path d="M4.632 3.533A2 2 0 0 1 6.577 2h6.846a2 2 0 0 1 1.945 1.533l1.976 8.234A3.489 3.489 0 0 0 16 11.5H4c-.476 0-.93.095-1.344.267l1.976-8.234Z" /><path fill-rule="evenodd" d="M4 13a2 2 0 1 0 0 4h12a2 2 0 1 0 0-4H4Zm11.24 2a.75.75 0 0 1 .75-.75H16a.75.75 0 0 1 0 1.5h-.01a.75.75 0 0 1-.75-.75Zm-2.25-.75a.75.75 0 0 0 0 1.5h.01a.75.75 0 0 0 0-1.5h-.01Z" clip-rule="evenodd" /></svg>
+                      </div>
+                      <% } else if (entry.action.includes('signup') || entry.action.includes('login') || entry.action.includes('Delete')) { %>
+                      <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 text-blue-500"><path d="M10 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3.465 14.493a1.23 1.23 0 0 0 .41 1.412A9.957 9.957 0 0 0 10 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 0 0-13.074.003Z" /></svg>
+                      </div>
+                      <% } else { %>
+                      <div class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 text-indigo-500"><path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-7-4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM9 9a.75.75 0 0 0 0 1.5h.253a.25.25 0 0 1 .244.304l-.459 2.066A1.75 1.75 0 0 0 10.747 15H11a.75.75 0 0 0 0-1.5h-.253a.25.25 0 0 1-.244-.304l.459-2.066A1.75 1.75 0 0 0 9.253 9H9Z" clip-rule="evenodd" /></svg>
+                      </div>
+                      <% } %>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <p class="text-sm font-medium text-gray-900 dark:text-slate-100 truncate"><%= entry.action %></p>
+                      <p class="text-xs text-gray-500 dark:text-slate-400 truncate"><%= entry.message.slice(0, 80) %></p>
+                    </div>
+                    <span class="text-xs text-gray-400 dark:text-slate-500 flex-shrink-0"><%= new Date(entry.timestamp).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) %></span>
+                  </li>
+                  <% } %>
+                </ul>
+              </div>
+            </div>
+            <% } %>
 <%- include("../layouts/tail") %>

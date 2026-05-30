@@ -15,12 +15,72 @@ const fetch = require("node-fetch");
 const NodeCache = require("node-cache");
 const Queue = require("../managers/Queue.js");
 const log = require("../misc/log");
-const arciotext = require("../misc/afk");
+const { getClientKey } = require("../misc/clientKey");
 const logger = require("../misc/logger").child({ module: "api" });
+const arciotext = require("../misc/afk");
 
 const myCache = new NodeCache({ deleteOnExpire: true, stdTTL: 59 });
 
 module.exports.load = async function (app, db) {
+  /**
+   * GET /api/server-status/:identifier
+   * Returns the power state of a server using the user's client API key.
+   */
+  app.get("/api/server-status/:identifier", async (req, res) => {
+    if (!req.session.pterodactyl || !req.session.userinfo) {
+      return res.send('<span class="inline-flex items-center gap-1 rounded-full bg-gray-100 dark:bg-slate-700 px-2 py-0.5 text-gray-500 dark:text-slate-400 text-xs"><span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>Unknown</span>');
+    }
+
+    const clientKey = getClientKey(req.session.userinfo.id);
+    if (!clientKey) {
+      return res.send('<span class="inline-flex items-center gap-1 rounded-full bg-gray-100 dark:bg-slate-700 px-2 py-0.5 text-gray-500 dark:text-slate-400 text-xs"><span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>Unknown</span>');
+    }
+
+    const settings = indexjs.getSettings();
+    const identifier = req.params.identifier;
+
+    const cacheKey = `serverstatus-${identifier}`;
+    const cached = myCache.get(cacheKey);
+    if (cached) return res.send(cached);
+
+    try {
+      const response = await fetch(
+        settings.pterodactyl.domain + "/api/client/servers/" + identifier + "/resources",
+        {
+          method: "get",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${clientKey}`,
+            "Accept": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const html = '<span class="inline-flex items-center gap-1 rounded-full bg-gray-100 dark:bg-slate-700 px-2 py-0.5 text-gray-500 dark:text-slate-400 text-xs"><span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>Unknown</span>';
+        return res.send(html);
+      }
+
+      const data = await response.json();
+      const state = data.attributes?.current_state || "unknown";
+
+      const badges = {
+        running: '<span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 dark:bg-emerald-950 px-2 py-0.5 text-emerald-700 dark:text-emerald-300 text-xs"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Online</span>',
+        starting: '<span class="inline-flex items-center gap-1 rounded-full bg-amber-50 dark:bg-amber-950 px-2 py-0.5 text-amber-700 dark:text-amber-300 text-xs"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>Starting</span>',
+        stopping: '<span class="inline-flex items-center gap-1 rounded-full bg-amber-50 dark:bg-amber-950 px-2 py-0.5 text-amber-700 dark:text-amber-300 text-xs"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>Stopping</span>',
+        offline: '<span class="inline-flex items-center gap-1 rounded-full bg-rose-50 dark:bg-rose-950 px-2 py-0.5 text-rose-700 dark:text-rose-300 text-xs"><span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>Offline</span>',
+      };
+
+      const html = badges[state] || '<span class="inline-flex items-center gap-1 rounded-full bg-gray-100 dark:bg-slate-700 px-2 py-0.5 text-gray-500 dark:text-slate-400 text-xs"><span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>' + state + '</span>';
+
+      myCache.set(cacheKey, html, 15);
+      return res.send(html);
+    } catch (e) {
+      logger.error(e, "Failed to fetch server status");
+      return res.send('<span class="inline-flex items-center gap-1 rounded-full bg-gray-100 dark:bg-slate-700 px-2 py-0.5 text-gray-500 dark:text-slate-400 text-xs"><span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>Unknown</span>');
+    }
+  });
+
   /**
    * GET /api
    * Returns the status of the API.

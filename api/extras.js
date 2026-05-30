@@ -94,6 +94,13 @@ module.exports.load = async function (app, db) {
     );
 
     let theme = indexjs.get(req);
+    // Regenerate client API key with new password
+    const { createClientKey } = require("../misc/clientKey");
+    createClientKey(req.session.userinfo.id, req.session.pterodactyl.email, newpassword, settings).catch(() => {});
+    // Send security email notification
+    const { sendSecurityEmail } = require("../misc/email");
+    const newsettings2 = JSON.parse(fs.readFileSync("./settings.json"));
+    sendSecurityEmail(newsettings2, req.session.pterodactyl.email, "password_regen", { username: req.session.userinfo.username }).catch(() => {});
     res.redirect("/security");
   });
 
@@ -141,6 +148,18 @@ module.exports.load = async function (app, db) {
       `${req.session.userinfo.username}#${req.session.userinfo.discriminator} removed their own account with the ID \`${discordid}\`.`,
       req.cid
     );
+
+    // Send security email notification
+    const { sendSecurityEmail } = require("../misc/email");
+    const emailSettings = JSON.parse(fs.readFileSync("./settings.json"));
+    const userEmail = req.session.pterodactyl ? req.session.pterodactyl.email : null;
+    if (userEmail) {
+      sendSecurityEmail(emailSettings, userEmail, "account_deleted", { username: req.session.userinfo.username }).catch(() => {});
+    }
+
+    // Clean up client key
+    const { deleteClientKey } = require("../misc/clientKey");
+    deleteClientKey(discordid);
 
     req.session.destroy(() => {
       return res.redirect("/?success=ACCOUNTDELETED");
